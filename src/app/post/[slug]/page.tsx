@@ -1,16 +1,23 @@
-`use server`;
 import fs from 'fs';
+import { getPostDetailed } from '../../../api/post';
 
 export const dynamicParams = false;
 
 export async function generateStaticParams(){
     const postDirectory = fs.readdirSync('src/post');
+    console.log(postDirectory);
     return postDirectory.map(file=>({ 
-        slug: file.replace(/\.md/,'') 
+        slug: file.replace(/\.md/,'')
     }));
-    // return [{slug: 'dummydata-to-this'}, {slug: 'record-for-build-blog'}];
 }
 
-export default function Page({ params } : {params: {slug: string}}){
-    return <div>Post Slug: {params.slug}</div>
+export default async function Page({ params } : {params: {slug: string}}){
+    const staticPostData = await getPostDetailed(params.slug);
+
+    return (
+        <div>
+            Post Slug: {params.slug}
+            Post Title: {staticPostData.toString()}
+        </div>
+    )
 }
