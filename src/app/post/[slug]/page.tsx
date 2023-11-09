@@ -12,12 +12,14 @@ export async function generateStaticParams(){
 }
 
 export default async function Page({ params } : {params: {slug: string}}){
-    const staticPostData = await getPostDetailed(params.slug);
+    const {title, published, content} = await getPostDetailed(params.slug);
 
     return (
         <div>
             Post Slug: {params.slug}
-            Post Title: {staticPostData.toString()}
+            <h1>{title}</h1>
+            <p>{published}</p>
+            <div dangerouslySetInnerHTML={{__html: content}}></div>
         </div>
     )
 }

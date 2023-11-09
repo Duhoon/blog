@@ -17,10 +17,15 @@ export async function getPostDetailed(filename: string){
         .use(remarkParseFrontmatter)
         .use(remarkRehype)
         .use(rehypeStringify)
-        // .use(remarkSanitize)
         .process(postFile);
 
     console.dir(post2html);
 
-    return post2html;
+    const metadata = post2html.data.frontmatter as any;
+
+    return {
+        title: metadata.title,
+        published: metadata.published,
+        content: post2html.value.toString()
+    };
 }
