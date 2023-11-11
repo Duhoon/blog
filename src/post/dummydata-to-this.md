@@ -1,6 +1,6 @@
 ---
 layout: post
-published: 2 Nomember 2023
+published: 2023-11-03
 title: Record for Building this blog2
 ---
 

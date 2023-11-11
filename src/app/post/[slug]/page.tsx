@@ -5,7 +5,6 @@ export const dynamicParams = false;
 
 export async function generateStaticParams(){
     const postDirectory = fs.readdirSync('src/post');
-    console.log(postDirectory);
     return postDirectory.map(file=>({ 
         slug: file.replace(/\.md/,'')
     }));
@@ -18,7 +17,7 @@ export default async function Page({ params } : {params: {slug: string}}){
         <div>
             Post Slug: {params.slug}
             <h1>{title}</h1>
-            <p>{published}</p>
+            <p>{published.toLocaleString()}</p>
             <div dangerouslySetInnerHTML={{__html: content}}></div>
         </div>
     )
