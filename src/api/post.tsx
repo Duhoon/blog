@@ -6,6 +6,7 @@ import remarkParseFrontmatter from 'remark-parse-frontmatter';
 import remarkRehype from 'remark-rehype';
 import rehypeStringify from 'rehype-stringify';
 import remarkGfm from 'remark-gfm';
+import rehypeHighlight from 'rehype-highlight';
 
 type PostList = {
     slug: string;
@@ -29,7 +30,7 @@ export async function getPostList(){
         const postMetadata = await unified()
         .use(remarkParse)
         .use(remarkFrontmatter)
-        .use(remarkParseFrontmatter)
+        .use(remarkParseFrontmatter)        
         .use(remarkRehype)
         .use(rehypeStringify)
         .process(postFile);
@@ -55,6 +56,7 @@ export async function getPostDetailed(filename: string){
         .use(remarkParseFrontmatter)
         .use(remarkGfm)
         .use(remarkRehype)
+        .use(rehypeHighlight)
         .use(rehypeStringify)
         .process(postFile);
 

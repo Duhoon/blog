@@ -1,5 +1,7 @@
 import fs from 'fs';
-import { getPostDetailed } from '../../../api/post';
+import { getPostDetailed } from '@/api/post';
+import 'highlight.js/styles/github-dark.css'
+import styles from './page.module.scss';
 
 export const dynamicParams = false;
 
@@ -15,7 +17,6 @@ export default async function Page({ params } : {params: {slug: string}}){
 
     return (
         <div>
-            Post Slug: {params.slug}
             <h1>{title}</h1>
             <p>{published.toLocaleString()}</p>
             <div dangerouslySetInnerHTML={{__html: content}}></div>
