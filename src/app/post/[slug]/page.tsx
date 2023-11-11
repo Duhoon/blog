@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import fs from 'fs';
 import { getPostDetailed } from '@/api/post';
 import 'highlight.js/styles/github-dark.css'
@@ -16,10 +17,15 @@ export default async function Page({ params } : {params: {slug: string}}){
     const {title, published, content} = await getPostDetailed(params.slug);
 
     return (
-        <div>
-            <h1>{title}</h1>
-            <p>{published.toLocaleString()}</p>
-            <div dangerouslySetInnerHTML={{__html: content}}></div>
-        </div>
+        <article className={styles.article}>
+            <div>
+                <Link href="/board">Go to Board</Link>
+            </div>
+            <div className={styles.post}>
+                <h1>{title}</h1>
+                <p>{published.toLocaleString()}</p>
+                <div dangerouslySetInnerHTML={{__html: content}}></div>
+            </div>
+        </article>
     )
 }
