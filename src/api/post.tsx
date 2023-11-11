@@ -43,6 +43,8 @@ export async function getPostList(){
             published: new Date(metadata.published),
         })
     }
+
+    resultLists.sort((a,b)=>b.published.getTime() - a.published.getTime());
     return resultLists;
 }
 
