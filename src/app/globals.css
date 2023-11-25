@@ -4,6 +4,11 @@
   --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
     'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
     'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+
+  --main-color: #03045e;
+  --white-color: #ffffff;
+  --gray-color: #ebebeb;
+  --black-color: #000000;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -14,6 +19,7 @@
 
 * {
   box-sizing: border-box;
+  list-style: none;
   padding: 0;
   margin: 0;
 }
