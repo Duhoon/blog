@@ -7,7 +7,6 @@ export default async function Page(){
 
     return (
         <div className={styles.board}>
-            <h1>Posts</h1>
             <ul>
                 {posts.map(post=>(
                     <li key={post.slug}>

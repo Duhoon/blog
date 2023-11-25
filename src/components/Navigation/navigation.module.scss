@@ -1,0 +1,22 @@
+.navigation {
+    background-color: var(--black-color);
+
+    .wrapper {
+        display: flex;
+        width: 1200px;
+        margin: auto;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--white-color);
+    }
+
+    ul > li {
+        font-weight: 600;
+        font-size: 1.2rem;
+
+        a {
+            display: inline-block;
+            padding: 0.8rem 0 0.8rem;
+        }
+    }
+}
