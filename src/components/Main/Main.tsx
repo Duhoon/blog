@@ -6,30 +6,29 @@ import { Canvas, useFrame } from '@react-three/fiber';
 
 function Box(props: any){
     const ref = useRef();
+
+    useFrame(()=>{
+        if (ref){
+            ref.current.rotation.x += 0.01;
+            ref.current.rotation.y += 0.01;
+        }
+    })
     return (
         <mesh
             {...props}
             ref={ref}
             scale={1}
-
         >
-            <boxGeometry args={[1, 1, 1]}/>
-            <meshStandardMaterial color='hotpink'/>
+            <boxGeometry args={[1, 1, 1]} />
+            <meshBasicMaterial color='blue'/>
         </mesh>
     )
 }
 
 export function Main(){
-    const scene = new Three.Scene();
-    const camera = new Three.PerspectiveCamera( 75, 3, 0.1, 1000 );
-
-    // renderer.setSize(window.innerWidth, window.innerHeight);
-    
-    // console.log(renderer.domElement);
-
     return (
         <Canvas>
-            <pointLight position={[10, 10, 10]}/>
+            <ambientLight intensity={0.1} position={[0, 0, 0]}/>
             <Box position={[0,0,0]}/>
         </Canvas>
     )
