@@ -3,18 +3,19 @@
 import * as Three from 'three';
 import { useRef } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
+import { MeshReflectorMaterial, OrbitControls, PerspectiveCamera, Reflector } from '@react-three/drei';
 
 
 function Box(props: any){
-    const ref = useRef();
+    const ref = useRef<any>(null);
 
     useFrame(()=>{
-        if (ref){
+        if (ref.current){
             ref.current.rotation.x += 0.005;
             ref.current.rotation.y += 0.005;
         }
     })
+
     return (
         <mesh
             {...props}
@@ -22,7 +23,25 @@ function Box(props: any){
             scale={1}
         >
             <boxGeometry args={[1, 1, 1]} />
-            <meshStandardMaterial color='blue'/>
+            <meshStandardMaterial color='blue' wireframe={true}/>
+        </mesh>
+    )
+}
+
+function Wall(props: any){
+    const ref =  useRef();
+
+    return (
+        <mesh
+            {...props}
+            ref={ref}
+        >
+            <boxGeometry args = {[5, 5, 0.1]}/>
+            <MeshReflectorMaterial
+                resolution = {1024}
+                mirror={2}
+                color={"white"}
+            />
         </mesh>
     )
 }
@@ -30,19 +49,17 @@ function Box(props: any){
 export function Main(){
     return (
         <Canvas
-            linear={true}
         >
-            <PerspectiveCamera makeDefault position={[0, 1, 5]} />
-            <OrbitControls/>
-            <ambientLight intensity={5} position={[10, 0, 0]}/>
+            <PerspectiveCamera makeDefault position={[0, 2, 3]} rotation={[ Math.PI / 4 , 0 , 0]} />
+            <OrbitControls position={[0, 0, 3]}/>
+            <ambientLight intensity={3} position={[0, 10, 0]}/>
             
-            <Box position={[0,0,5]}/>
+            <Box position={[0, 0, 0]}/>
 
-            <mesh position={[0, 0, 1]} rotation={[0, 0, 0]}>
-                <planeGeometry args={[10, 10]} />
-                <meshStandardMaterial color={'white'}/>
-            </mesh>
-            
+            <Wall position={[0, 0, 5]} rotation={[0, Math.PI, 0]}/>
+            <Wall position={[0, 0, -5]} rotation={[0, Math.PI * 2, 0]}/>
+            <Wall position={[5, 0, 0]} rotation={[0, Math.PI / 2 + Math.PI, 0]}/>
+            <Wall position={[-5, 0, 0]} rotation={[0, Math.PI / 2 + 2 * Math.PI, 0]}/>
         </Canvas>
     )
 }
