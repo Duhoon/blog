@@ -3,7 +3,8 @@
 
     .wrapper {
         display: flex;
-        width: 1200px;
+        width: 100%;
+        padding: 0 1rem;
         margin: auto;
         justify-content: space-between;
         align-items: center;
@@ -17,6 +18,24 @@
         a {
             display: inline-block;
             padding: 0.8rem 0 0.8rem;
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .navigation {
+        .wrapper {
+            width: 100%;
+            padding: 0 1rem;
+        }
+    }
+}
+
+@media (min-width: 1200px) {
+    .navigation {
+        .wrapper {
+            width: 1200px;
+            padding: 0 1rem;
         }
     }
 }
