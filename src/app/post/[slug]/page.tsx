@@ -1,3 +1,4 @@
+import { Metadata, ResolvingMetadata } from 'next';
 import Link from 'next/link';
 import fs from 'fs';
 import { getPostDetailed } from '@/api/post';
@@ -13,7 +14,26 @@ export async function generateStaticParams(){
     }));
 }
 
-export default async function Page({ params } : {params: {slug: string}}){
+type Props = {
+    params: {
+        slug: string,
+        
+    },
+    searchParams: { [key: string]: string | string[] | undefined },
+}
+
+export async function generateMetadata(
+    { params }: Props,
+    parent: ResolvingMetadata
+): Promise<Metadata>{
+    const slug = params.slug;
+
+    return {
+        title: slug
+    }
+};
+
+export default async function Page({ params } : Props){
     const {title, published, content} = await getPostDetailed(params.slug);
 
     return (
