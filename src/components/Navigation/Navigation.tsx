@@ -7,7 +7,7 @@ export function Navigation(){
             <div className={styles.wrapper}>
                 <h1><Link href='/'>ALROCK</Link></h1>
                 <ul>
-                    <li><Link href='/board'>POST</Link></li>
+                    <li><Link href='/blog'>BLOG</Link></li>
                 </ul>
             </div>
         </nav>
