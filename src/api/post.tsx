@@ -8,6 +8,9 @@ import rehypeStringify from 'rehype-stringify';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
 
+import { listAll, ref, getMetadata } from 'firebase/storage';
+import { storage } from '@/config/firebase';
+
 type PostList = {
     slug: string;
     title: string;
@@ -20,7 +23,7 @@ type PostMetadata = {
     layout: string;
 }
 
-export async function getPostList(){
+export async function getPostListFromLocal(){
     const postLists = fs.readdirSync('src/post');
 
     const resultLists: PostList[] = [];
@@ -48,7 +51,7 @@ export async function getPostList(){
     return resultLists;
 }
 
-export async function getPostDetailed(filename: string){
+export async function getPostDetailedFromLocal(filename: string){
     const postFile = fs.readFileSync(`src/post/${filename}.md`, 'utf-8');
 
     const post2html = await unified()
@@ -69,4 +72,21 @@ export async function getPostDetailed(filename: string){
         published: new Date(metadata.published),
         content: post2html.value.toString()
     };
+}
+
+export async function getPostListFromCloud(): Promise<PostList[]> {
+    const postsRef = ref(storage, 'posts');
+
+    const postsList = await listAll(postsRef)
+    const metadatas = await Promise.all(postsList.items.map( item => {
+            const metadata = getMetadata(item)
+            return metadata;
+        })
+    )
+
+    return metadatas.map( metadata => ({
+        slug: metadata.name.replace(/\.md/,''),
+        title: metadata.customMetadata?.title || '',
+        published: new Date(metadata.timeCreated),
+    }) as PostList);
 }
