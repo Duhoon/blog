@@ -1,17 +1,23 @@
-import styles from 'Button.module.scss';
+import styles from './Button.module.scss';
 
 type ButtonProps = {
-    text?: string;
+    children?: React.ReactNode;
 };
 
-export function Button ({text, }: ButtonProps){
+export function Button ({children}: ButtonProps){
     return (
-        <button>{text}</button>
+        <button>{children}</button>
     )
 }
 
-export function MainButton({text, }: ButtonProps){
+export function MainButton({children}: ButtonProps){
     return (
-        <button className={styles['main-button']}>{text}</button>
+        <button className={`${styles['button']} ${styles['main-button']}`}>{children}</button>
+    )
+}
+
+export function SecondaryButton({children}: ButtonProps){
+    return (
+        <button className={`${styles['button']} ${styles['secondary-button']}`}>{children}</button>
     )
 }
