@@ -7,14 +7,12 @@ import { MainButton } from "@/components/Button";
 import { SecondaryButton } from "@/components/Button/Button";
 
 export default function Page(){
-    const [content, setContent] = useState(`
----
+    const [content, setContent] = useState(`---
 layout: 
 category: 
 published: 
 title: 
----
-    `.replace(/\n/gm, ''));
+---`);
 
     useEffect(()=>{
         console.log(content);
@@ -29,6 +27,7 @@ title:
             />
             <div className={styles.editorBottom}>
                 <SecondaryButton>Cancel</SecondaryButton>
+                <MainButton>Save Temporarily</MainButton>
                 <MainButton>Save</MainButton>
             </div>
         </div>
