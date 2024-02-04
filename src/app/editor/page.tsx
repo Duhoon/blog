@@ -5,6 +5,7 @@ import MDEditor from '@uiw/react-md-editor';
 import styles from './page.module.scss';
 import { MainButton } from "@/components/Button";
 import { SecondaryButton } from "@/components/Button/Button";
+import { saveTempPost } from "@/api/eidtor";
 
 export default function Page(){
     const [content, setContent] = useState(`---
@@ -13,10 +14,7 @@ category:
 published: 
 title: 
 ---`);
-
-    useEffect(()=>{
-        console.log(content);
-    }, [content])
+    const [postId, setPostId] = useState('');
 
     return (
         <div>
@@ -27,7 +25,7 @@ title:
             />
             <div className={styles.editorBottom}>
                 <SecondaryButton>Cancel</SecondaryButton>
-                <MainButton>Save Temporarily</MainButton>
+                <MainButton clickHandler={()=>{saveTempPost(content)}}>Save Temporarily</MainButton>
                 <MainButton>Save</MainButton>
             </div>
         </div>

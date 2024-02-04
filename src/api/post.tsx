@@ -8,7 +8,7 @@ import rehypeStringify from 'rehype-stringify';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
 
-import { listAll, ref, getMetadata } from 'firebase/storage';
+import { list, ref, getMetadata } from 'firebase/storage';
 import { storage } from '@/config/firebase';
 
 type PostList = {
@@ -74,10 +74,13 @@ export async function getPostDetailedFromLocal(filename: string){
     };
 }
 
-export async function getPostListFromCloud(): Promise<PostList[]> {
+export async function getPostListFromCloud(
+        start?: number, 
+        length: number = 10
+    ): Promise<PostList[]> {
     const postsRef = ref(storage, 'posts');
 
-    const postsList = await listAll(postsRef)
+    const postsList = await list(postsRef, { maxResults: length })
     const metadatas = await Promise.all(postsList.items.map( item => {
             const metadata = getMetadata(item)
             return metadata;
