@@ -4,6 +4,7 @@ import fs from 'fs';
 import { getPostDetailedFromLocal } from '@/api/post';
 import 'highlight.js/styles/github-dark.css'
 import styles from './page.module.scss';
+import { NavigationWithSide } from '@/components/Navigation';
 
 export const dynamicParams = false;
 
@@ -37,15 +38,20 @@ export default async function Page({ params } : Props){
     const {title, published, content} = await getPostDetailedFromLocal(params.slug);
 
     return (
-        <article className={styles.article}>
+        <>
+            <NavigationWithSide/>
             <div>
-                <Link href="/board">Go to Board</Link>
+                <article className={styles.article}>
+                    <div>
+                        <Link href="/board">Go to Board</Link>
+                    </div>
+                    <div className={styles.post}>
+                        <h1>{title}</h1>
+                        <p>{published.toLocaleString()}</p>
+                        <div dangerouslySetInnerHTML={{__html: content}}></div>
+                    </div>
+                </article>
             </div>
-            <div className={styles.post}>
-                <h1>{title}</h1>
-                <p>{published.toLocaleString()}</p>
-                <div dangerouslySetInnerHTML={{__html: content}}></div>
-            </div>
-        </article>
+        </>
     )
 }

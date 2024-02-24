@@ -1,5 +1,10 @@
 .navigation {
+    position: fixed;
     background-color: var(--black-color);
+    width: 100vw;
+    height: 60px;
+    padding: 1rem;
+    z-index: 100;
 
     .wrapper {
         display: flex;
@@ -11,18 +16,38 @@
         color: var(--white-color);
     }
 
+    ul {
+        display: flex;
+        align-items: center;
+    }
+
     ul > li {
+        margin-right: 1rem;
         font-weight: 600;
         font-size: 1.2rem;
 
+        &:last-child {
+            margin-right: 0;
+        }
+
         a {
             display: inline-block;
-            padding: 0.8rem 0 0.8rem;
+            
+        }
+
+        svg {
+            width: 2rem;
+            height: 2rem;
+            color: #fff;
+
+            &:hover {
+                cursor: pointer;
+            }
         }
     }
 }
 
-@media (max-width: 768px) {
+@media (min-width: 768px) {
     .navigation {
         .wrapper {
             width: 100%;
@@ -37,5 +62,9 @@
             width: 1200px;
             padding: 0 1rem;
         }
+    }
+
+    .navigation ul li svg {
+        display: none;
     }
 }
