@@ -68,6 +68,31 @@ export async function getPostDetailedFromLocal(filename: string){
     };
 }
 
+export async function getPostDetailedFromCloud(filename: string){
+    const postRef = ref(storage, `posts/${filename}.md`);
+    const post = await getBytes(postRef);
+    const postInText = await new Blob([post], {type: 'text/plain'}).text();
+
+    const post2html = await unified()
+        // .use(remarkMdxFrontmatter)
+        .use(remarkParse)
+        .use(remarkFrontmatter, ['yaml'])
+        .use(remarkParseFrontmatter)
+        .use(remarkGfm)
+        .use(remarkRehype)
+        .use(rehypeHighlight)
+        .use(rehypeStringify)
+        .process(postInText.toString());
+
+    const metadata = post2html.data.frontmatter as any;
+
+    return {
+        title: metadata.title,
+        published: new Date(metadata.published),
+        content: post2html.value.toString()
+    };
+}
+
 export async function getPostListFromCloud(): Promise<PostList[]> {
     const dirRef = ref(storage, 'posts');
 

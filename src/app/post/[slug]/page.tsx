@@ -1,6 +1,6 @@
 import { Metadata, ResolvingMetadata } from 'next';
 import Link from 'next/link';
-import { getPostDetailedFromLocal } from '@/api/post';
+import { getPostDetailedFromCloud } from '@/api/post';
 import 'highlight.js/styles/github-dark.css'
 import styles from './page.module.scss';
 import { NavigationWithSide } from '@/components/Navigation';
@@ -37,7 +37,7 @@ export async function generateMetadata(
 };
 
 export default async function Page({ params } : Props){
-    const {title, published, content} = await getPostDetailedFromLocal(params.slug);
+    const {title, published, content} = await getPostDetailedFromCloud(params.slug);
 
     return (
         <>
