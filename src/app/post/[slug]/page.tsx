@@ -1,17 +1,19 @@
 import { Metadata, ResolvingMetadata } from 'next';
 import Link from 'next/link';
-import fs from 'fs';
 import { getPostDetailedFromLocal } from '@/api/post';
 import 'highlight.js/styles/github-dark.css'
 import styles from './page.module.scss';
 import { NavigationWithSide } from '@/components/Navigation';
+import { storage } from '@/config/firebase';
+import { ref, listAll } from 'firebase/storage';
 
 export const dynamicParams = false;
 
 export async function generateStaticParams(){
-    const postDirectory = fs.readdirSync('src/post');
-    return postDirectory.map(file=>({ 
-        slug: file.replace(/\.md/,'')
+    const directoryRef = ref(storage, 'posts');
+    const postList = await listAll(directoryRef);
+    return postList.items.map(post=>({ 
+        slug: post.name.replace(/\.md/,'')
     }));
 }
 
