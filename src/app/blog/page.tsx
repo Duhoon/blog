@@ -5,8 +5,8 @@ import Sidenav from '@/components/Sidenav';
 import { NavigationWithSide } from '@/components/Navigation';
 
 export default async function Page(){
-    const posts = await getPostListFromLocal();
-    // const posts = await getPostListFromCloud();
+    // const posts = await getPostListFromLocal();
+    const posts = await getPostListFromCloud();
 
     return (
         <>
@@ -16,7 +16,7 @@ export default async function Page(){
                     {posts.map(post=>(
                         <li key={post.slug}>
                             <Link href={`/post/${post.slug}`}>
-                                <h2>{post.slug}</h2>
+                                <h2>{post.title}</h2>
                                 <p>{post.published.toLocaleString()}</p>
                             </Link>
                         </li>

@@ -8,7 +8,7 @@ import rehypeStringify from 'rehype-stringify';
 import remarkGfm from 'remark-gfm';
 import rehypeHighlight from 'rehype-highlight';
 
-import { listAll, ref, getMetadata } from 'firebase/storage';
+import { listAll, ref, getMetadata, getBytes } from 'firebase/storage';
 import { storage } from '@/config/firebase';
 
 type PostList = {
@@ -30,13 +30,7 @@ export async function getPostListFromLocal(){
     for( let post of postLists){
         const postFile = fs.readFileSync(`src/post/${post}`, 'utf-8');
         
-        const postMetadata = await unified()
-        .use(remarkParse)
-        .use(remarkFrontmatter)
-        .use(remarkParseFrontmatter)        
-        .use(remarkRehype)
-        .use(rehypeStringify)
-        .process(postFile);
+        const postMetadata = await convertPostToHtml(postFile);
 
         const metadata = postMetadata.data.frontmatter as PostMetadata;
 
@@ -75,18 +69,41 @@ export async function getPostDetailedFromLocal(filename: string){
 }
 
 export async function getPostListFromCloud(): Promise<PostList[]> {
-    const postsRef = ref(storage, 'posts');
+    const dirRef = ref(storage, 'posts');
 
-    const postsList = await listAll(postsRef)
-    const metadatas = await Promise.all(postsList.items.map( item => {
-            const metadata = getMetadata(item)
-            return metadata;
-        })
-    )
+    const postsList = await listAll(dirRef);
+    const postRefList = postsList.items.map( item => {
+        return ref(storage, `posts/${item.name}`);
+    });
 
-    return metadatas.map( metadata => ({
-        slug: metadata.name.replace(/\.md/,''),
-        title: metadata.customMetadata?.title || '',
-        published: new Date(metadata.timeCreated),
-    }) as PostList);
+    const result = [];
+    for( const postRef of postRefList){ 
+        const post = await getBytes(postRef);;
+        const postInBlob = await new Blob([post], {type: 'text/plain'}).text();
+        const metadata = await convertPostToHtml(postInBlob.toString())
+            .then(parsedData => parsedData.data.frontmatter as PostMetadata);
+        
+        result.push({
+            title: metadata.title,
+            published: new Date(metadata.published),
+            slug: postRef.name.replace('.md',''),
+        } as PostList)
+    }
+
+    return result.sort((a,b)=>b.published.getTime() - a.published.getTime());
+}
+
+async function convertPostToHtml(postFile: string){
+    const post2html = await unified()
+        // .use(remarkMdxFrontmatter)
+        .use(remarkParse)
+        .use(remarkFrontmatter, ['yaml'])
+        .use(remarkParseFrontmatter)
+        .use(remarkGfm)
+        .use(remarkRehype)
+        .use(rehypeHighlight)
+        .use(rehypeStringify)
+        .process(postFile);
+
+    return post2html;
 }
