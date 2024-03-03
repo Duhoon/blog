@@ -12,15 +12,14 @@ export const dynamicParams = false;
 export async function generateStaticParams(){
     const dirRef = ref(storage, 'posts');
     const listSubDirRef = await listAll(dirRef).then((res) => res.prefixes);
-    // 내가 하려는 것은 subDirRef를 참조하는 것.
+    
     const result: string[] = [];
     for (const subDirRef of listSubDirRef) {
         const namesPost = await listAll(subDirRef)
             .then(
-                (res) => res.items.map((item) => item.name)
+                (res) => res.items.map((item) => item.name.replace('.md', ''))
             );
-        
-        result.concat(namesPost);
+        result.push(...namesPost);
     }
 
     return result;
@@ -47,7 +46,6 @@ export async function generateMetadata(
 };
 
 export default async function Page({ params } : Props){
-    
     const {title, published, content} = await getPostDetailedFromCloud(params.category, params.slug);
 
     return (
