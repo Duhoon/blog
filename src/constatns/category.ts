@@ -1,7 +1,7 @@
 export const Categories = [
     {
         name: 'Developement',
-        link: '/blog/developement',
+        link: '/blog/development',
     },
     {
         name: 'Book',

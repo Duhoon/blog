@@ -68,8 +68,9 @@ export async function getPostDetailedFromLocal(filename: string){
     };
 }
 
-export async function getPostDetailedFromCloud(filename: string){
-    const postRef = ref(storage, `posts/${filename}.md`);
+export async function getPostDetailedFromCloud(directory:string, filename: string){
+    const postRef = ref(storage, `posts/${directory}/${filename}.md`);
+    
     const post = await getBytes(postRef);
     const postInText = await new Blob([post], {type: 'text/plain'}).text();
 
@@ -93,12 +94,12 @@ export async function getPostDetailedFromCloud(filename: string){
     };
 }
 
-export async function getPostListFromCloud(): Promise<PostList[]> {
-    const dirRef = ref(storage, 'posts');
+export async function getPostListFromCloud(directory?: string): Promise<PostList[]> {
+    const dirRef = ref(storage, `posts/${directory ? directory : ''}`);
 
     const postsList = await listAll(dirRef);
     const postRefList = postsList.items.map( item => {
-        return ref(storage, `posts/${item.name}`);
+        return ref(storage, `posts/${directory}/${item.name}`);
     });
 
     const result = [];

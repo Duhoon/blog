@@ -1,0 +1,47 @@
+.board {
+    margin-top: 70px;
+
+    h1 {
+        margin: auto;
+        margin-bottom: 1rem;
+        width: 120px;
+        text-align: center;
+    }
+
+    ul {
+        margin: auto;
+        width: 800px;
+        padding: 0;
+
+        li {
+            margin-bottom: 1rem;
+        }
+
+        a {
+            padding: 2rem;
+            display: block;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 0.5rem;
+            transition: 0.3s cubic-bezier(0.47, 0, 0.745, 0.715);
+            
+            &:hover {
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+                background-color: var(--gray-color);
+                transform: translateY(-0.2rem);
+            }
+
+            h2 {
+                margin-bottom: 1rem;
+            }
+        }
+    }
+}
+
+@media ( max-width: 768px ) {
+    .board {
+        ul {
+            padding: 1rem;
+            width: 100%;
+        }
+    }
+}
