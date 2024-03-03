@@ -23,7 +23,7 @@ export default async function Page(
         <ul>
             {posts.map(post=>(
                 <li key={post.slug}>
-                    <Link href={`/post/${post.slug}`}>
+                    <Link href={`/post/${params.category}/${post.slug}`}>
                         <h2>{post.title}</h2>
                         <p>{post.published.toLocaleString()}</p>
                     </Link>
