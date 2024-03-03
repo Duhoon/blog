@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { getPostListFromCloud } from '@/api/post';
+import dayjs from 'dayjs';
 
 type Props =  {
     params: {
@@ -12,8 +13,6 @@ export async function generateStaticParams(){
     return ['book', 'movie', 'development'];
 }
 
-
-
 export default async function Page(
     {params}: Props
 ){
@@ -21,14 +20,16 @@ export default async function Page(
     
     return (
         <ul>
-            {posts.map(post=>(
-                <li key={post.slug}>
-                    <Link href={`/post/${params.category}/${post.slug}`}>
-                        <h2>{post.title}</h2>
-                        <p>{post.published.toLocaleString()}</p>
-                    </Link>
-                </li>
-            ))}
+            {
+                posts.length > 0 ? posts.map(post=>(
+                    <li key={post.slug}>
+                        <Link href={`/post/${params.category}/${post.slug}`}>
+                            <h2>{post.title}</h2>
+                            <p>{dayjs(post.published).format('MMMM DD, YYYY')}</p>
+                        </Link>
+                    </li>
+                )) : <li style={{textAlign: 'center'}}><a>There is no post</a></li>
+            }
         </ul>
     )
 }

@@ -6,6 +6,7 @@ import styles from './page.module.scss';
 import { NavigationWithSide } from '@/components/Navigation';
 import { storage } from '@/config/firebase';
 import { ref, listAll, } from 'firebase/storage';
+import dayjs from 'dayjs';
 
 export const dynamicParams = false;
 
@@ -18,15 +19,14 @@ export async function generateStaticParams(){
         const namesPost = await listAll(subDirRef)
             .then(
                 (res) => res.items.map((item) => (
-                        {
-                            category: subDirRef.name,
-                            slug: item.name.replace('.md', '')
-                        }
+                    {
+                        category: subDirRef.name,
+                        slug: item.name.replace('.md', '')
+                    }
                 ))
             );
         result.push(...namesPost);
     }
-    console.log(result);
     
     return result;
 }
@@ -40,15 +40,12 @@ type Props = {
     searchParams: { [key: string]: string | string[] | undefined },
 }
 
-export async function generateMetadata(
-    { params }: Props,
-    parent: ResolvingMetadata
-): Promise<Metadata>{
-    const slug = params.slug;
+export async function generateMetadata({params}: Props): Promise<Metadata>{
+    const { title } = await getPostDetailedFromCloud(params.category, params.slug);
 
     return {
-        
-        title: slug
+        title,
+        publisher: '412ock',
     }
 };
 
@@ -65,7 +62,7 @@ export default async function Page({ params } : Props){
                     </div>
                     <div className={styles.post}>
                         <h1>{title}</h1>
-                        <p>{published.toLocaleString()}</p>
+                        <p>{dayjs(published).format('MMMM DD, YYYY')}</p>
                         <div dangerouslySetInnerHTML={{__html: content}}></div>
                     </div>
                 </article>

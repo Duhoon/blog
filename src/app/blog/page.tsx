@@ -1,22 +1,22 @@
 import { getPostListFromCloud } from '@/api/post';
 import Link from 'next/link';
-import styles from './layout.module.scss';
+import dayjs from 'dayjs';
 
 export default async function Page(){
     const posts = await getPostListFromCloud('development');
 
     return (
-        <div className={styles.board}>
-            <ul>
-                {posts.map(post=>(
+        <ul>
+            {
+                posts.length > 0 ? posts.map(post=>(
                     <li key={post.slug}>
                         <Link href={`/post/development/${post.slug}`}>
                             <h2>{post.title}</h2>
-                            <p>{post.published.toLocaleString()}</p>
+                            <p>{dayjs(post.published).format('MMMM DD, YYYY')}</p>
                         </Link>
                     </li>
-                ))}
-            </ul>
-        </div>
+                )) : <li style={{textAlign: 'center'}}><a>There is no post</a></li>
+            }
+        </ul>
     )
 }
