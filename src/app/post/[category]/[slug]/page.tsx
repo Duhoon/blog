@@ -13,23 +13,30 @@ export async function generateStaticParams(){
     const dirRef = ref(storage, 'posts');
     const listSubDirRef = await listAll(dirRef).then((res) => res.prefixes);
     
-    const result: string[] = [];
+    const result: Params[] = [];
     for (const subDirRef of listSubDirRef) {
         const namesPost = await listAll(subDirRef)
             .then(
-                (res) => res.items.map((item) => item.name.replace('.md', ''))
+                (res) => res.items.map((item) => (
+                        {
+                            category: subDirRef.name,
+                            slug: item.name.replace('.md', '')
+                        }
+                ))
             );
         result.push(...namesPost);
     }
-
+    console.log(result);
+    
     return result;
 }
 
+type Params = {
+    category: string,
+    slug: string,
+}
 type Props = {
-    params: {
-        category: string,
-        slug: string,
-    },
+    params: Params
     searchParams: { [key: string]: string | string[] | undefined },
 }
 
