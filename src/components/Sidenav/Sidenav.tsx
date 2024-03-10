@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Link from 'next/link';
 import { Categories } from '../../constatns/category';
 import './sidenav.scss';
@@ -9,16 +9,17 @@ interface SidenavProps {
 }
 
 export default function Sidenav({}: SidenavProps) {
-    const [isOpen, setIsOpen] = useState(false);
+    const sidenavWrapperRef = useRef<HTMLDivElement>(null);
+    const sidenavRef = useRef<HTMLUListElement>(null);
 
     const toggleOpen = () => {
-        setIsOpen(!isOpen);
+        sidenavWrapperRef.current?.classList.toggle('sidenav-wrapper-open');
+        sidenavRef.current?.classList.toggle('sidenav-open');
     }
 
     return (
-        <div className={'sidenav-wrapper' + (isOpen ? ' sidenav-wrapper-open' : '')}>
-            <ul className={'sidenav' + (isOpen ? ' sidenav-open' : '')}>
-
+        <div className={'sidenav-wrapper'} ref={sidenavWrapperRef}>
+            <ul className={'sidenav'} ref={sidenavRef}>
                 { 
                     Categories.map((category, index) => {
                         if ( category.name === 'Development'){

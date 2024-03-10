@@ -51,12 +51,13 @@ button svg {
     }
 
     .sidenav {
-        content-visibility: hidden;
+        display:none
     }
 
     .sidenav-open, .sidenav-wrapper-open {
+        display: block;
         width: 200px;
-        content-visibility: visible;
+        
     }
 }
 
