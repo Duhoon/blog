@@ -10,7 +10,7 @@
 
     ul {
         margin: auto;
-        width: 800px;
+        width: 768px;
         padding: 0;
 
         li {
@@ -42,6 +42,14 @@
         ul {
             padding: 1rem;
             width: 100%;
+        }
+    }
+}
+
+@media ( min-width : 1200px ) {
+    .board {
+        ul {
+            width: 1200px;
         }
     }
 }

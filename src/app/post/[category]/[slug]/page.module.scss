@@ -17,7 +17,7 @@
     margin-top: 60px;
     padding-left: 1rem;
     padding-right: 1rem;
-    width: 1200px;
+    width: 800px;
     
     * {
         margin-bottom: 1rem;
@@ -53,3 +53,8 @@
     }
 }
 
+@media ( min-width: 1600px ) {
+    .post {
+        width: 1200px;
+    }
+}

@@ -1,11 +1,11 @@
-import { Metadata, ResolvingMetadata } from 'next';
+import { Metadata } from 'next';
 import Link from 'next/link';
 import { getPostDetailedFromCloud } from '@/api/post';
 import 'highlight.js/styles/github-dark.css'
 import styles from './page.module.scss';
-import { NavigationWithSide } from '@/components/Navigation';
 import { storage } from '@/config/firebase';
 import { ref, listAll, } from 'firebase/storage';
+import Sidenav from '@/components/Sidenav';
 import dayjs from 'dayjs';
 
 export const dynamicParams = false;
@@ -54,7 +54,7 @@ export default async function Page({ params } : Props){
 
     return (
         <>
-            <NavigationWithSide/>
+            <Sidenav/>
             <div>
                 <article className={styles.article}>
                     <div>

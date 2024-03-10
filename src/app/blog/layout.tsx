@@ -1,4 +1,4 @@
-import { NavigationWithSide } from "@/components/Navigation";
+import Sidenav from "@/components/Sidenav";
 import { ReactNode } from "react";
 import styles from './layout.module.scss';
 
@@ -9,7 +9,7 @@ interface BlogLayoutProps {
 export default function BlogLayout ({children} : BlogLayoutProps){
     return (
         <>
-            <NavigationWithSide/>
+            <Sidenav/>
             <div className={styles.board}>
                 {children}
             </div>
