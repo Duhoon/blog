@@ -25,7 +25,7 @@ export default function Sidenav({}: SidenavProps) {
                         if ( category.name === 'Development'){
                             return (
                                 <li key={index}>
-                                    <Link href={category.link}>
+                                    <Link href={category.link} className='nav-category'>
                                         <h2>{category.name}</h2>
                                     </Link>
                                 </li>
