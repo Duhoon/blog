@@ -4,19 +4,20 @@ import {
     AmbientLight,
     HemisphereLight, 
     HemisphereLightHelper, 
+    LoadingManager, 
     Mesh, 
     SpotLightHelper,
     TextureLoader,
 } from 'three';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { 
     MeshReflectorMaterial, 
     OrbitControls, 
     PerspectiveCamera, 
     useHelper,
+    useProgress,
 } from '@react-three/drei';
-import { Dir } from 'fs';
 
 
 function Mable(props: any){
@@ -117,8 +118,6 @@ function DirectionLight(){
 }
 
 export function Scene(){
-    
-
     return (
         <Canvas
             shadows={true}
