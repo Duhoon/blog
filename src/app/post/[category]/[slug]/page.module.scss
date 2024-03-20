@@ -45,16 +45,25 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 800px) {
     .post {
         display: block;
         width: 100%;
         padding: 0 1rem;
+        margin-left: 0;
     }
 }
 
-@media ( min-width: 1600px ) {
+@media (max-width: 1400px) {
+    .post {
+        display: block;
+        padding: 0 1rem;
+    }
+}
+
+@media ( min-width: 1400px ) {
     .post {
         width: 1200px;
+        margin-left: 200px;
     }
 }

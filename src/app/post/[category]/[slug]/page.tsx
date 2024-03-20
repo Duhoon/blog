@@ -56,7 +56,7 @@ export default async function Page({ params } : Props){
         <>
             <Sidenav/>
             <div>
-                <article className={styles.article}>
+                <article className={styles.article} id={'article'}>
                     <div>
                         <Link href="/board">Go to Board</Link>
                     </div>

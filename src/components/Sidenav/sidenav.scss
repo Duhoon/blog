@@ -8,10 +8,14 @@
 
 .sidenav-wrapper {
     position: fixed;
-    transition: 0.3s;
     background-color: #000;
+    transition: 0.3s;
     height: 100%;
     z-index: 10;
+}
+
+.sidenav-trick {
+    display: inline-block;
 }
 
 .sidenav {
@@ -46,7 +50,7 @@ button svg {
 }
 
 @media (max-width: 1200px) {
-    .sidenav-wrapper {
+    .sidenav-wrapper, .sidenav-trick {
         width: 0;
     }
 
@@ -54,15 +58,14 @@ button svg {
         display:none
     }
 
-    .sidenav-open, .sidenav-wrapper-open {
+    .sidenav-open, .sidenav-wrapper-open, .sidenav-trick-open {
         display: block;
         width: 200px;
-        
     }
 }
 
 @media( min-width: 1200px) {
-    .sidenav-wrapper {
+    .sidenav-wrapper, .sidenav-trick {
         width: 200px;
     }
 
