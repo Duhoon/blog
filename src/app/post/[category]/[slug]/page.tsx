@@ -58,10 +58,10 @@ export default async function Page({ params } : Props){
             <Sidenav/>
             <div>
                 <article className={styles.article} id={'article'}>
-                    <div>
-                        <Link href="/board">Go to Board</Link>
-                    </div>
                     <div className={styles.post}>
+                        <div>
+                            <Link href={`/blog/${params.category}`}>Go to Board</Link>
+                        </div>
                         <h1>{title}</h1>
                         <p>{dayjs(published).format('MMMM DD, YYYY')}</p>
                         <div dangerouslySetInnerHTML={{__html: content}}></div>
