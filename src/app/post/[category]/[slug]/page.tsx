@@ -64,7 +64,7 @@ export default async function Page({ params } : Props){
                         </div>
                         <h1>{title}</h1>
                         <p>{dayjs(published).format('MMMM DD, YYYY')}</p>
-                        <div dangerouslySetInnerHTML={{__html: content}}></div>
+                        <div dangerouslySetInnerHTML={{__html: content}} style={{width: '100%'}}></div>
                         <Reply slug={params.slug}/>
                     </div>
                 </article>

@@ -46,7 +46,6 @@
 
 @media (max-width: 800px) {
     .post {
-        display: block;
         width: 100%;
         padding: 0 1rem;
         margin-left: 0;
@@ -55,8 +54,8 @@
 
 @media (max-width: 1400px) {
     .post {
-        display: block;
         padding: 0 1rem;
+        margin-left: 0;
     }
 }
 
