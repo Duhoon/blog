@@ -3,7 +3,11 @@
 import { useEffect, useRef, useCallback, Suspense } from 'react';
 import './reply.scss';
 
-export default function Reply(){
+interface ReplyProps {
+    slug: string,
+}
+
+export default function Reply({slug}: ReplyProps){
     const commentRef = useRef<HTMLDivElement>(null);
     const createUtterances = useCallback(() => {
         if (commentRef.current === null) return;
@@ -18,7 +22,7 @@ export default function Reply(){
         const utterancesConfig = {
             src: 'https://utteranc.es/client.js',
             repo: 'Duhoon/blog',
-            'issue-term': 'pathname',
+            'issue-term': slug,
             theme: 'github-light',
             async: 'true',
             crossorigin: 'annoymous',
