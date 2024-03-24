@@ -10,7 +10,7 @@
 
 .progress {
     position: relative;
-    width: 500px;
+    width: 480px;
     border: 2px solid #000;
     border-radius: 0.5rem;
     height: 20px;
@@ -26,5 +26,12 @@
     transition: width 0.3s;
 }
 
+@media (max-width: 1400px) {
+    .loadingWrapper {
+        padding: 0 2rem 0 2rem;
+    }
 
-
+    .progress {
+        width: 100%;
+    }
+}
