@@ -7,6 +7,7 @@ import { storage } from '@/config/firebase';
 import { ref, listAll, } from 'firebase/storage';
 import Sidenav from '@/components/Sidenav';
 import dayjs from 'dayjs';
+import Reply from '@/components/Reply';
 
 export const dynamicParams = false;
 
@@ -64,6 +65,7 @@ export default async function Page({ params } : Props){
                         <h1>{title}</h1>
                         <p>{dayjs(published).format('MMMM DD, YYYY')}</p>
                         <div dangerouslySetInnerHTML={{__html: content}}></div>
+                        <Reply/>
                     </div>
                 </article>
             </div>
