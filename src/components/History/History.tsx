@@ -24,10 +24,16 @@ export default function History({history, }: HistoryProps){
     }
   }, [])
 
-  return (
-    <div className='history' style={{height: deviceHeight - 60}}>
-      {history.map((record, index) => <Record record={record} key={index}/>)}
-      <Timeline numOfCircle={4}/>
-    </div>
-  )
+  if(deviceHeight){
+    return (
+      <div className='history' style={{height: deviceHeight - 60}}>
+        {history.map((record, index) => <Record record={record} key={index}/>)}
+        { deviceHeight ? <Timeline numOfCircle={4}/> : null }
+      </div>
+    )
+  }else {
+    return (
+      <div></div>
+    )
+  }
 }

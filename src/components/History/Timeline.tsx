@@ -3,7 +3,7 @@ import './history.scss';
 import { RecordData } from '@/types/about.type';
 
 interface TimelineProps {
-  history: RecordData[];
+  history?: RecordData[];
   numOfCircle: number;
 }
 
@@ -15,11 +15,9 @@ export default function Timeline({numOfCircle}: TimelineProps){
     if (!window || !timelineRef){
       return
     } else {
-      const {height} = window.getComputedStyle(timelineRef.current);
-      setHeight(height as any);
-      console.log(height);
+      setHeight(timelineRef.current.clientHeight);
     }
-  }, [timelineRef])
+  }, [])
 
   return (
     <div className="timeline" ref={timelineRef}>
