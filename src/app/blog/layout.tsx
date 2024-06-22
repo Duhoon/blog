@@ -10,9 +10,9 @@ export default function BlogLayout ({children} : BlogLayoutProps){
     return (
         <>
             <Sidenav/>
-            <div className={styles.board}>
+            <main className={styles.board}>
                 {children}
-            </div>
+            </main>
         </>
     )
 }
