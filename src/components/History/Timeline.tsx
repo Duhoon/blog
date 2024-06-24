@@ -15,7 +15,7 @@ export default function Timeline({numOfCircle}: TimelineProps){
     if (!window || !timelineRef){
       return
     } else {
-      setHeight(timelineRef.current.clientHeight);
+      setHeight(timelineRef.current.offsetHeight);
     }
   }, [])
 
@@ -24,7 +24,9 @@ export default function Timeline({numOfCircle}: TimelineProps){
       { typeof height === 'number' && height !== 0 ? 
         Array.from(
           {length: numOfCircle}, 
-          (v, i)=> (<Circle key={i} top={height / numOfCircle * i}/>)) : null
+          (v, i)=> {
+            return (<Circle key={i} top={height / (numOfCircle - 1) * i - 4}/>)
+          }) : null
       }
     </div>
   )
@@ -36,22 +38,22 @@ interface CircleProps{
 
 function Circle ({top}: CircleProps) {
   return (
-    <div className="circle" style={{top}}>
-
-    </div>
+    <div className="circle" style={{top}}/>
   )
 }
 
 function CircleActivated({}: CircleProps){
   return (
-    <div className='circle circle-activate'/>
+    <div className='circle circle-activate'>
+      <Badge/>
+    </div>
   )
 }
 
 function Badge() {
   return (
     <div className='badge'>
-      <span>2024</span>
+      <span>July 22</span>
     </div>
   )
 }
