@@ -13,7 +13,7 @@ export default function Timeline({history, cursor}: TimelineProps){
   const [ height, setHeight ] = useState(0);
   
   useEffect(()=>{
-    if (!window || !timelineRef){
+    if (!window || !timelineRef || !timelineRef.current){
       return
     } else {
       setHeight(timelineRef.current.offsetHeight);
@@ -21,17 +21,19 @@ export default function Timeline({history, cursor}: TimelineProps){
   }, [])
 
   return (
-    <div className="timeline" ref={timelineRef}>
-      { typeof height === 'number' && height !== 0 ? 
-        Array.from(
-          {length: history.length}, 
-          (v, i)=> {
-            /** -4 top detail contorll */
-            return i === cursor
-            ? (<CircleActivated key={i} top={height / (history.length - 1) * i - 4}><Badge date={history[i].date}/></CircleActivated>) 
-            : (<Circle key={i} top={height / (history.length - 1) * i - 4}/>)
-          }) : null
-      }
+    <div className='timeline-wrapper'>
+      <div className="timeline" ref={timelineRef}>
+        { typeof height === 'number' && height !== 0 ? 
+          Array.from(
+            {length: history.length}, 
+            (v, i)=> {
+              /** -4 top detail contorll */
+              return i === cursor
+              ? (<CircleActivated key={i} top={timelineRef.current.clientHeight / (history.length - 1) * i - 4}><Badge date={history[i].date}/></CircleActivated>) 
+              : (<Circle key={i} top={timelineRef.current.clientHeight / (history.length - 1) * i - 4}/>)
+            }) : null
+        }
+      </div>
     </div>
   )
 }

@@ -69,6 +69,10 @@ export default function History({history, }: HistoryProps){
     } else {
       setDeviceHeight(window.innerHeight);
       setLastScroll(recordsRef.current.scrollTop);
+
+      window.addEventListener('resize', ()=>{
+        setDeviceHeight(window.innerHeight);
+      })
     }
   }, [])
 

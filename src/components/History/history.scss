@@ -11,10 +11,6 @@
   scrollbar-width: none;
 }
 
-.record-end {
-  
-}
-
 .record-wrapper {
   width: 300px;
   height: 100%;
@@ -25,8 +21,19 @@
     margin-bottom: 1rem;
   }
 
-  .record-img {
+  .record-img-wrapper {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
 
+    .record-img {
+      height: 100%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
   }
 
   .record-title {
@@ -71,4 +78,35 @@
   width: 40px;
   font-size: 0.6rem;
   text-align: center;
+}
+
+@media screen and ( min-width: 400px ) {
+  .history {
+    justify-content: center;
+    padding: 0 0.5rem;
+  }
+
+  .record-wrapper {
+    width: 1024px;
+    padding: 0 5rem;
+
+    .record-img-wrapper {
+        width: 100%;
+        height: 600px;
+
+      .record-img {
+        height: 100%;
+      }
+    }
+  }
+  
+  .timeline-wrapper {
+    padding: 0.5rem;
+    
+    .timeline {
+      height: 100%;
+    }
+  }
+  
+  
 }

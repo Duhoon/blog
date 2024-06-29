@@ -2,15 +2,21 @@ import { RecordData } from "@/types/about.type";
 
 export const history: RecordData[] = [
   {
-    image: 'https://c.wallhere.com/photos/95/15/new_travel_newzealand_mountains_southwest_clouds_digital_island-949877.jpg!d',
-    title: 'What is Lorem Ipsum?',
-    date: new Date('2024-06-22 00:00:00'),
-    content: "Lorem Ipsum is simply dummy text of the printing and typesetting industry."
+    image: 'https://firebasestorage.googleapis.com/v0/b/blog-9afa3.appspot.com/o/images%2Fglitch_hackathon_1.jpeg?alt=media&token=140ccf62-bd5a-4ba2-8875-9b164f7129bf',
+    title: 'Seoul Glitch Hackathon',
+    date: new Date('2023-05-21 00:00:00'),
+    content: "It was so meaningful day for me ever! In Glitch Hackathon, I was first winner in Near Protocol. I was work on ‘What’s next’ project as a team leader. It is a cartoon platform to draw next scene resulted by votes of community members through using AI Image generator. It was very long three days in hackathon. I was awake in all day and night with my team member."
   },
   {
-    image: 'https://c.wallhere.com/photos/95/15/new_travel_newzealand_mountains_southwest_clouds_digital_island-949877.jpg!d',
-    title: 'What is Lorem Ipsum?',
-    date: new Date('2024-06-22 00:00:00'),
-    content: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."
-  }
+    image: 'https://firebasestorage.googleapis.com/v0/b/blog-9afa3.appspot.com/o/images%2Fethseoul_1.jpeg?alt=media&token=ed2b31f4-fd66-425f-9974-11cf6dc0ea81',
+    title: 'Undefined Hacker House.',
+    date: new Date('2023-05-26 00:00:00'),
+    content: "For being competitive to other team in this hackathon, I should come up with creative idea. I chose the lens protocol track, and propose survey platform connected with open SNS, Lens Protocol. It was estimated that it could provide the demand of market research in crypto. Being winner, Our team could go Tokyo Hackathon. I was awesome."
+  },
+  {
+    image: 'https://firebasestorage.googleapis.com/v0/b/blog-9afa3.appspot.com/o/images%2Fundefined_hackathon_1.jpeg?alt=media&token=b6799552-86f4-4830-aa1e-50933afe59d2',
+    title: 'ETH Seoul 2023',
+    date: new Date('2024-06-04 00:00:00'),
+    content: "By this hackathon, I could get 3 prizes in this season. With Same team in Glitch Hackathon, we participated in this hackathon with new idea. We plan to provide NFT having utility about artist’s drawing style. By learning AI, the AI can generate new scene with each artist drawing style. It’s good for keeping artists copyright and they can earn additionary profit."
+  },
 ]
