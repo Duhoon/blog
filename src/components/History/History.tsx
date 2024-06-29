@@ -17,9 +17,22 @@ export default function History({history, }: HistoryProps){
   const [ cur, setCur ] = useState(0);
   const [ lastScroll, setLastScroll ] = useState(0);
 
+  const throttle = (callback: Function, delay: number) => {
+    let timer:any;
+
+    return (event: any) => {
+      if(timer) return;
+      timer = setTimeout(()=>{
+        callback(event);
+        timer= null;
+      }, delay );
+    };
+  };
+
   const historyScrollHandler = (event: UIEvent)=>{
     const currentScroll = recordsRef.current.scrollTop;
     const historyHeight = recordsRef.current.clientHeight;
+    const targetIndex = Math.floor( currentScroll / historyHeight );
     
     let scrollTo: number = 0;
     let current: number = 0;
@@ -27,14 +40,17 @@ export default function History({history, }: HistoryProps){
     if (lastScroll === currentScroll || 
         currentScroll === 0 || 
         currentScroll % historyHeight === 0
-    ) return;
+    ) {
+      setCur(targetIndex);
+      return;
+    };
 
-    if( lastScroll > currentScroll ){ // up
+    if( targetIndex < cur ){ // up
       current = Math.max(0, Math.min(history.length - 1, cur-1));
       scrollTo = Math.min(((history.length - 1) * historyHeight), historyHeight * (current));
     }
     
-    if( lastScroll < currentScroll ) { // lastScroll < currentScroll down
+    if( targetIndex >= cur ) { // lastScroll < currentScroll down
       current = Math.min(history.length - 1, Math.max(0, cur+1))
       scrollTo = Math.max(0, historyHeight * (current))
     }
@@ -47,18 +63,6 @@ export default function History({history, }: HistoryProps){
     setLastScroll(scrollTo);
     setCur(current);
   }
-
-  const throttle = (callback: Function, delay: number) => {
-    let timer:any;
-
-    return (event: any) => {
-      if(timer) return;
-      timer = setTimeout(()=>{
-        callback(event);
-        timer= null;
-      }, delay );
-    };
-  };
 
   useEffect(()=>{
     if(!window || !recordsRef || !recordsRef.current){
@@ -73,7 +77,7 @@ export default function History({history, }: HistoryProps){
         <div className='record' ref={recordsRef} onScroll={throttle(historyScrollHandler, 1000)}>
           {deviceHeight ? (history.map((record, index) => <Record record={record} key={index}/>)): null}
         </div>
-        { deviceHeight ? <Timeline numOfCircle={4}/> : null }
+        { deviceHeight ? <Timeline history={history} cursor={cur}/> : null }
     </div>
   )
 }

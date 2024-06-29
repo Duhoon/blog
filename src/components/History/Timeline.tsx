@@ -1,15 +1,16 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect, useState, ReactElement } from 'react';
 import './history.scss';
 import { RecordData } from '@/types/about.type';
+import dayjs from 'dayjs';
 
 interface TimelineProps {
-  history?: RecordData[];
-  numOfCircle: number;
+  history: RecordData[];
+  cursor: number;
 }
 
-export default function Timeline({numOfCircle}: TimelineProps){
+export default function Timeline({history, cursor}: TimelineProps){
   const timelineRef = useRef(null) as any;
-  const [ height, setHeight] = useState(0)
+  const [ height, setHeight ] = useState(0);
   
   useEffect(()=>{
     if (!window || !timelineRef){
@@ -23,9 +24,12 @@ export default function Timeline({numOfCircle}: TimelineProps){
     <div className="timeline" ref={timelineRef}>
       { typeof height === 'number' && height !== 0 ? 
         Array.from(
-          {length: numOfCircle}, 
+          {length: history.length}, 
           (v, i)=> {
-            return (<Circle key={i} top={height / (numOfCircle - 1) * i - 4}/>)
+            /** -4 top detail contorll */
+            return i === cursor
+            ? (<CircleActivated key={i} top={height / (history.length - 1) * i - 4}><Badge date={history[i].date}/></CircleActivated>) 
+            : (<Circle key={i} top={height / (history.length - 1) * i - 4}/>)
           }) : null
       }
     </div>
@@ -36,24 +40,32 @@ interface CircleProps{
   top: number,
 }
 
+interface CircleActivatedProps extends CircleProps{
+  children: ReactElement,
+}
+
 function Circle ({top}: CircleProps) {
   return (
     <div className="circle" style={{top}}/>
   )
 }
 
-function CircleActivated({}: CircleProps){
+function CircleActivated({children, top}: CircleActivatedProps){
   return (
-    <div className='circle circle-activate'>
-      <Badge/>
+    <div className='circle circle-activate' style={{top}}>
+      {children}
     </div>
   )
 }
 
-function Badge() {
+interface BadgeProps {
+  date: Date;
+}
+
+function Badge({date}: BadgeProps) {
   return (
     <div className='badge'>
-      <span>July 22</span>
+      <span>{dayjs(date).format('MMM, D')}</span>
     </div>
   )
 }
