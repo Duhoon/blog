@@ -1,6 +1,6 @@
 'use client'
 import { RecordData } from "@/types/about.type";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, EventHandler } from "react";
 import './history.scss';
 
 import Record from "./Record";
@@ -17,43 +17,60 @@ export default function History({history, }: HistoryProps){
   const [ cur, setCur ] = useState(0);
   const [ lastScroll, setLastScroll ] = useState(0);
 
+  const historyScrollHandler = (event: UIEvent)=>{
+    const currentScroll = recordsRef.current.scrollTop;
+    const historyHeight = recordsRef.current.clientHeight;
+    
+    let scrollTo: number = 0;
+    let current: number = 0;
+
+    if (lastScroll === currentScroll || 
+        currentScroll === 0 || 
+        currentScroll % historyHeight === 0
+    ) return;
+
+    if( lastScroll > currentScroll ){ // up
+      current = Math.max(0, Math.min(history.length - 1, cur-1));
+      scrollTo = Math.min(((history.length - 1) * historyHeight), historyHeight * (current));
+    }
+    
+    if( lastScroll < currentScroll ) { // lastScroll < currentScroll down
+      current = Math.min(history.length - 1, Math.max(0, cur+1))
+      scrollTo = Math.max(0, historyHeight * (current))
+    }
+
+    recordsRef.current.scrollTo({
+      top: scrollTo,
+      behavior: 'smooth'
+    })
+    
+    setLastScroll(scrollTo);
+    setCur(current);
+  }
+
+  const throttle = (callback: Function, delay: number) => {
+    let timer:any;
+
+    return (event: any) => {
+      if(timer) return;
+      timer = setTimeout(()=>{
+        callback(event);
+        timer= null;
+      }, delay );
+    };
+  };
+
   useEffect(()=>{
     if(!window || !recordsRef || !recordsRef.current){
     } else {
       setDeviceHeight(window.innerHeight);
       setLastScroll(recordsRef.current.scrollTop);
-      
-      recordsRef.current.addEventListener('scroll',()=>{
-        const currentScroll = recordsRef.current.scrollTop;
-        console.log(`lastScroll ${lastScroll}`);
-        console.log(`currentScroll ${currentScroll}`);
-        
-        if(lastScroll > currentScroll){ // up
-          recordsRef.current.scrollTo({
-            top: recordsRef.current.clientHeight * cur-1,
-            // behavior: 'auto'
-          });
-          setCur(Math.max(0, cur-1));
-          setLastScroll(currentScroll)
-        } else {
-          recordsRef.current.scrollTo({
-            top: recordsRef.current.clientHeight * cur+1,
-            // behavior: 'auto'
-          });
-          setCur(Math.min(history.length, cur+1));
-          setLastScroll(currentScroll)
-        }
-      })
     }
   }, [])
 
-  // useEffect(()=>{
-  //   console.log(scroll);
-  // }, [scroll])
-
   return (
     <div className='history' style={{height: deviceHeight - 60}}>
-        <div className='record' ref={recordsRef}>
+        <div className='record' ref={recordsRef} onScroll={throttle(historyScrollHandler, 1000)}>
           {deviceHeight ? (history.map((record, index) => <Record record={record} key={index}/>)): null}
         </div>
         { deviceHeight ? <Timeline numOfCircle={4}/> : null }
