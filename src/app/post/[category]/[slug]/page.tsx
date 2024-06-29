@@ -56,7 +56,7 @@ export default async function Page({ params } : Props){
     return (
         <>
             <Sidenav/>
-            <div>
+            <main>
                 <article className={styles.article} id={'article'}>
                     <div className={styles.post}>
                         <div>
@@ -68,7 +68,7 @@ export default async function Page({ params } : Props){
                         <Reply slug={params.slug}/>
                     </div>
                 </article>
-            </div>
+            </main>
         </>
     )
 }
