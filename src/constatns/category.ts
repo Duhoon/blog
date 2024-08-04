@@ -1,14 +1,24 @@
 export const Categories = [
     {
-        name: 'Developement',
-        link: '/blog/development',
+        name: 'About',
+        link: '/about',
     },
     {
-        name: 'Book',
-        link : '/blog/book'
+        name: 'Blog',
+        link : '/blog',
+        sub: [
+            {
+                name: 'Development',
+                link : '/blog/development'
+            },
+            {
+                name: 'Book',
+                link: '/blog/book',
+            },
+            {
+                name: 'Movie',
+                link: '/blog/movie'
+            }
+        ]
     },
-    {
-        name: 'Movie',
-        link: '/blog/movie'
-    }
 ]

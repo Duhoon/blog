@@ -1,49 +1,85 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { ReactNode, Ref } from 'react';
 import Link from 'next/link';
 import { Categories } from '../../constatns/category';
 import './sidenav.scss';
 
 interface SidenavProps {
+    wrapperRef: Ref<any>,
+    sidenavRef: Ref<any>,
 }
 
-export default function Sidenav({}: SidenavProps) {
-    const sidenavWrapperRef = useRef<HTMLDivElement>(null);
-    const sidenavRef = useRef<HTMLUListElement>(null);
-
-    const toggleOpen = () => {
-        sidenavWrapperRef.current?.classList.toggle('sidenav-wrapper-open');
-        sidenavRef.current?.classList.toggle('sidenav-open');
+export default function Sidenav({wrapperRef, sidenavRef}: SidenavProps) {
+    const closeSidenav = ()=>{
+        if ( wrapperRef && sidenavRef){
+            (wrapperRef as any).current?.classList.toggle('sidenav-wrapper-open');
+            (sidenavRef as any).current?.classList.toggle('sidenav-open');
+        }
     }
 
     return (
-        <div className={'sidenav-wrapper'} ref={sidenavWrapperRef}>
+        <div className={'sidenav-wrapper'} ref={wrapperRef} onClick={closeSidenav}>
             <ul className={'sidenav'} ref={sidenavRef}>
                 { 
                     Categories.map((category, index) => {
-                        if ( category.name === 'Development'){
+                        if (category.sub) {
                             return (
-                                <li key={index}>
-                                    <Link href={category.link} className='nav-category'>
-                                        <h2>{category.name}</h2>
-                                    </Link>
-                                </li>
-                            ) 
+                                <Category key={index} link={category.link} text={category.name}>
+                                    {
+                                        category.sub.map((subCategory, subIndex)=>
+                                            (<SubCategory key={subIndex} link={subCategory.link} text={subCategory.name} />)
+                                        )
+                                    }
+                                </Category>
+                            )
                         }
+
                         return (
-                            <li key={index}>
-                                <Link href={category.link}>
-                                    <h2>{category.name}</h2>
-                                </Link>
-                            </li>
+                            <Category key={index} link={category.link} text={category.name}/>
                         )
                     })
                 }
             </ul>
-            <button className='button-sidenav' onClick={toggleOpen}>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill='#000000' d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>
-            </button>
         </div>
+    )
+}
+
+interface CategoryProps {
+    link: string,
+    text: string,
+    children?: ReactNode,
+}
+
+function Category({link, text, children}: CategoryProps) {
+    return (
+        <li>
+            <Link href={link}>
+                <h2>{text}</h2>
+            </Link>
+            {
+                children?             
+                    <ul className='sub-category'>
+                        {children}
+                    </ul>
+                : null
+            }
+
+        </li>
+    )
+}
+
+interface SubCategoryProps{
+    link: string,
+    text: string,
+}
+
+function SubCategory({link, text}: SubCategoryProps){
+    return (
+        <li>
+            <Link href={link}>
+                <h2>{text}</h2>
+            </Link>
+        </li>
     )
 }

@@ -1,4 +1,21 @@
 .main-button{
-    background-color: var(--main-color);
-    color: var(--white-color);
+  background-color: var(--main-color);
+  color: var(--white-color);
+}
+
+.hamburgerButton{
+  background-color: transparent;
+  border: none;
+}
+
+@media (max-width: 1200px) {
+  .hamburgerButton {
+      display:block;
+  }
+}
+
+@media( min-width: 1200px) {
+  .hamburgerButton{
+      display:none;
+  }
 }

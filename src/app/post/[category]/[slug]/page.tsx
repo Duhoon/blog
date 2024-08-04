@@ -55,7 +55,6 @@ export default async function Page({ params } : Props){
 
     return (
         <>
-            <Sidenav/>
             <main>
                 <article className={styles.article} id={'article'}>
                     <div className={styles.post}>

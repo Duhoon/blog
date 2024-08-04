@@ -9,7 +9,6 @@ interface BlogLayoutProps {
 export default function BlogLayout ({children} : BlogLayoutProps){
     return (
         <>
-            <Sidenav/>
             <main className={styles.board}>
                 {children}
             </main>
