@@ -75,27 +75,15 @@ button svg {
     padding-left: 2rem;
 }
 
-@media (max-width: 1200px) {
-    .sidenav-wrapper, .sidenav-trick {
-        width: 0;
-    }
-
-    .sidenav {
-        display:none
-    }
-
-    .sidenav-open, .sidenav-wrapper-open, .sidenav-trick-open {
-        display: block;
-        width: 200px;
-    }
+.sidenav-wrapper, .sidenav-trick {
+    width: 0;
 }
 
-@media( min-width: 1200px) {
-    .sidenav-wrapper, .sidenav-trick {
-        width: 200px;
-    }
+.sidenav {
+    display:none
+}
 
-    .button-sidenav {
-        display: none;
-    }
+.sidenav-open, .sidenav-wrapper-open, .sidenav-trick-open {
+    display: block;
+    width: 200px;
 }
