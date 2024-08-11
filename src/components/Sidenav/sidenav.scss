@@ -26,6 +26,7 @@
 }
 
 .sidenav-wrapper {
+    right: 0;
     position: fixed;
     background-color: #000;
     transition: 0.3s;
@@ -51,7 +52,7 @@ button svg {
     }
 }
 
-.sidenav > li > a, .sidenav .sub-category > li > a {
+.sidenav > li > a, .sub-category > li > a {
     transition: 0.3s;
 
     &:hover {
@@ -63,17 +64,19 @@ button svg {
     margin-bottom: 0.8rem;
 }
 
-.sidenav li a{
+.sidenav > li > a, .sidenav > li > h2, .sub-category > li > a {
     display: block;
     padding: 1rem;
     height: 100%;
-    font-size: 0.8rem;
     color: #fff;
 }
 
 .sidenav .sub-category a {
     padding-left: 2rem;
+    font-size: 0.8rem;
 }
+
+.sidenav .sub-category 
 
 .sidenav-wrapper, .sidenav-trick {
     width: 0;

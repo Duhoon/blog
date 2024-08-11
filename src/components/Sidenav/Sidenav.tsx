@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, Ref } from 'react';
+import { ReactNode, Ref, useState } from 'react';
 import Link from 'next/link';
 import { Categories } from '../../constatns/category';
 import './sidenav.scss';
@@ -11,10 +11,14 @@ interface SidenavProps {
 }
 
 export default function Sidenav({wrapperRef, sidenavRef}: SidenavProps) {
-    const closeSidenav = ()=>{
+    const closeSidenav = (e: React.MouseEvent<HTMLElement>)=>{
+        const target = e.target as HTMLElement
+
         if ( wrapperRef && sidenavRef){
-            (wrapperRef as any).current?.classList.toggle('sidenav-wrapper-open');
-            (sidenavRef as any).current?.classList.toggle('sidenav-open');
+            if ( target.className === 'link-text' ){
+                (wrapperRef as any).current?.classList.toggle('sidenav-wrapper-open');
+                (sidenavRef as any).current?.classList.toggle('sidenav-open');
+            }
         }
     }
 
@@ -25,13 +29,13 @@ export default function Sidenav({wrapperRef, sidenavRef}: SidenavProps) {
                     Categories.map((category, index) => {
                         if (category.sub) {
                             return (
-                                <Category key={index} link={category.link} text={category.name}>
+                                <CategoryWithSub key={index} text={category.name}>
                                     {
                                         category.sub.map((subCategory, subIndex)=>
                                             (<SubCategory key={subIndex} link={subCategory.link} text={subCategory.name} />)
                                         )
                                     }
-                                </Category>
+                                </CategoryWithSub>
                             )
                         }
 
@@ -55,16 +59,28 @@ function Category({link, text, children}: CategoryProps) {
     return (
         <li>
             <Link href={link}>
-                <h2>{text}</h2>
+                <h2 className='link-text'>{text}</h2>
             </Link>
-            {
-                children?             
-                    <ul className='sub-category'>
-                        {children}
-                    </ul>
-                : null
-            }
+        </li>
+    )
+}
 
+interface CategoryWithSubProps {
+    text: string,
+    children?: ReactNode,
+}
+
+function CategoryWithSub({text, children}: CategoryWithSubProps) {
+    const [isOpen, setIsOpen] = useState(false)
+
+    return (
+        <li>
+            <h2>{text}</h2>
+            {             
+                <ul className='sub-category'>
+                    {children}
+                </ul>
+            }
         </li>
     )
 }
@@ -78,7 +94,7 @@ function SubCategory({link, text}: SubCategoryProps){
     return (
         <li>
             <Link href={link}>
-                <h2>{text}</h2>
+                <h2 className='link-text'>{text}</h2>
             </Link>
         </li>
     )
