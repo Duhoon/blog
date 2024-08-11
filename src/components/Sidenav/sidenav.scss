@@ -52,7 +52,7 @@ button svg {
     }
 }
 
-.sidenav > li > a, .sub-category > li > a {
+.sidenav > li > a, .sub-category > li > a, .sidenav li .sub-category-header {
     transition: 0.3s;
 
     &:hover {
@@ -64,11 +64,17 @@ button svg {
     margin-bottom: 0.8rem;
 }
 
-.sidenav > li > a, .sidenav > li > h2, .sub-category > li > a {
+.sidenav > li > a, .sidenav > li > .sub-category-header, .sub-category > li > a {
     display: block;
     padding: 1rem;
     height: 100%;
     color: #fff;
+}
+
+.sidenav li .sub-category-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .sidenav .sub-category a {
