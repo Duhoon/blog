@@ -1,4 +1,50 @@
 .sidenav-wrapper  {
+    right: 0;
+    position: fixed;
+    background-color: #000;
+    transition: 0.3s;
+    height: 100%;
+    z-index: 10;
+
+    .sidenav {
+        display: none;
+        padding-top: 60px;
+
+        li {
+            margin-bottom: 0.8rem;
+
+            .sub-category-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 1rem;
+                height: 100%;
+                color: #fff;
+            }
+
+            .sub-category {
+                a {
+                    padding-left: 2rem;
+                    font-size: 0.8rem;
+                }
+            }
+
+            a, .sub-category {
+                display: block;
+                padding: 1rem;
+                height: 100%;
+                color: #fff;
+            }
+        }
+
+        li > a, .sub-category > li > a {
+            display: block;
+            padding: 1rem;
+            height: 100%;
+            color: #fff;
+        }
+    }
+
     .button-sidenav-wrapper {
         display: flex;
         position: absolute;
@@ -23,77 +69,18 @@
             background-color: transparent;
         }
     }
-}
 
-.sidenav-wrapper {
-    right: 0;
-    position: fixed;
-    background-color: #000;
-    transition: 0.3s;
-    height: 100%;
-    z-index: 10;
-}
-
-.sidenav-trick {
-    display: inline-block;
-}
-
-.sidenav {
-    padding-top: 60px;
-}
-
-button svg {
-    width: 2rem;
-    height: 2rem;
-    fill: #fff;
-
-    &:hover {
-        cursor: pointer;
+    .sub-category > li > a, .sidenav li .sub-category-header {
+        transition: 0.3s;
+    
+        &:hover {
+            background-color: rgb(255, 255, 255, 0.8);
+            cursor: pointer;
+        }
     }
-}
 
-.sidenav > li > a, .sub-category > li > a, .sidenav li .sub-category-header {
-    transition: 0.3s;
-
-    &:hover {
-        background-color: rgb(255, 255, 255, 0.8);
-        cursor: pointer;
+    .sidenav-open, .sidenav-wrapper-open, .sidenav-trick-open {
+        display: block;
+        width: 200px;
     }
-}
-
-.sidenav > li {
-    margin-bottom: 0.8rem;
-}
-
-.sidenav > li > a, .sidenav > li > .sub-category-header, .sub-category > li > a {
-    display: block;
-    padding: 1rem;
-    height: 100%;
-    color: #fff;
-}
-
-.sidenav li .sub-category-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.sidenav .sub-category a {
-    padding-left: 2rem;
-    font-size: 0.8rem;
-}
-
-.sidenav .sub-category 
-
-.sidenav-wrapper, .sidenav-trick {
-    width: 0;
-}
-
-.sidenav {
-    display:none
-}
-
-.sidenav-open, .sidenav-wrapper-open, .sidenav-trick-open {
-    display: block;
-    width: 200px;
 }

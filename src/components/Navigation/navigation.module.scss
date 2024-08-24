@@ -6,6 +6,16 @@
     padding: 1rem;
     z-index: 100;
 
+    button svg {
+        width: 2rem;
+        height: 2rem;
+        fill: #fff;
+    
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
     .wrapper {
         display: flex;
         width: 100%;

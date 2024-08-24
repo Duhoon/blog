@@ -26,8 +26,6 @@ export function CategoryWithSub({text, children}: CategoryWithSubProps) {
   const [isOpen, setIsOpen] = useState(false)
 
   const toggleOpen = (e: React.MouseEvent<HTMLElement>)=>{
-    console.log(isOpen);
-
     setIsOpen(!isOpen)
   }
 
