@@ -11,7 +11,15 @@
         padding-top: 60px;
 
         li {
-            margin-bottom: 0.8rem;
+            a { 
+                margin-bottom: 0.8rem;
+                transition: 0.3s;
+        
+                &:hover {
+                    background-color: rgb(255, 255, 255, 0.8);
+                    cursor: pointer;
+                }
+            }
 
             .sub-category-header {
                 display: flex;
@@ -24,24 +32,20 @@
 
             .sub-category {
                 a {
-                    padding-left: 2rem;
                     font-size: 0.8rem;
+
+                    h2 {
+                        padding-left: 1rem;
+                    }
                 }
             }
 
-            a, .sub-category {
+            a {
                 display: block;
                 padding: 1rem;
                 height: 100%;
                 color: #fff;
             }
-        }
-
-        li > a, .sub-category > li > a {
-            display: block;
-            padding: 1rem;
-            height: 100%;
-            color: #fff;
         }
     }
 
@@ -79,7 +83,7 @@
         }
     }
 
-    .sidenav-open, .sidenav-wrapper-open, .sidenav-trick-open {
+    .sidenav-open, .sidenav-wrapper-open {
         display: block;
         width: 200px;
     }
