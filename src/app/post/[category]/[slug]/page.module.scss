@@ -45,6 +45,22 @@
     img {
         width: 100%;
     }
+
+    ul {
+        padding-left: 1rem;
+
+        li {
+            list-style-type: disc;
+        }
+    }
+
+    a {
+        color: #0000EE;
+        
+        &:hover {
+            text-decoration: underline #0000EE;
+        }
+    }
 }
 
 @media (max-width: 800px) {
