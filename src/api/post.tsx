@@ -14,12 +14,14 @@ import { storage } from '@/config/firebase';
 type PostList = {
     slug: string;
     title: string;
+    thumbnail?: string
     published: Date;
 };
 
 type PostMetadata = {
     title: string;
     published: string;
+    thumbnail?: string
     layout: string;
 }
 
@@ -112,6 +114,7 @@ export async function getPostListFromCloud(directory?: string): Promise<PostList
         result.push({
             title: metadata.title,
             published: new Date(metadata.published),
+            thumbnail: metadata.thumbnail,
             slug: postRef.name.replace('.md',''),
         } as PostList)
     }

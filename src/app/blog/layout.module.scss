@@ -16,11 +16,22 @@
         }
 
         a {
-            padding: 2rem;
-            display: block;
+            display: flex;
+            padding: 0.5rem;
+            justify-content: left;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 0.5rem;
             transition: 0.3s cubic-bezier(0.47, 0, 0.745, 0.715);
+
+            .board-item-info {
+                height: 100%;
+                width: 100%;
+                padding: 2rem;
+
+                h2 {
+                    margin-bottom: 1rem;
+                }
+            }
             
             &:hover {
                 box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -28,9 +39,7 @@
                 transform: translateY(-0.2rem);
             }
 
-            h2 {
-                margin-bottom: 1rem;
-            }
+
         }
     }
 }
