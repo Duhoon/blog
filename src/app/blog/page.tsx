@@ -13,7 +13,7 @@ export default async function Page(){
                 posts.length > 0 ? posts.map(post=>(
                     <li key={post.slug}>
                         <Link href={`/post/development/${post.slug}`}>
-                            {post.thumbnail? <div><Image src={post.thumbnail} alt={`${post.title} thumbnail`} layout={'fill'} width={200}></Image></div> 
+                            {post.thumbnail? <div className={styles['board-item-thumbnail']}><Image src={post.thumbnail} alt={`${post.title} thumbnail`} layout={'fill'} width={200}></Image></div> 
                             : <div></div>}
                             <div className={styles[`board-item-info`]}>
                                 <h2>{post.title}</h2>
