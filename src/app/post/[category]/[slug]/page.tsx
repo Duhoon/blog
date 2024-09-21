@@ -8,6 +8,7 @@ import { ref, listAll, } from 'firebase/storage';
 import Sidenav from '@/components/Sidenav';
 import dayjs from 'dayjs';
 import Reply from '@/components/Reply';
+import Image from 'next/image';
 
 export const dynamicParams = false;
 
@@ -51,7 +52,7 @@ export async function generateMetadata({params}: Props): Promise<Metadata>{
 };
 
 export default async function Page({ params } : Props){
-    const {title, published, content} = await getPostDetailedFromCloud(params.category, params.slug);
+    const {title, published, content, thumbnail} = await getPostDetailedFromCloud(params.category, params.slug);
 
     return (
         <>
@@ -63,7 +64,12 @@ export default async function Page({ params } : Props){
                         </div>
                         <h1 className={styles.title}>{title}</h1>
                         <p className={styles.published}>{dayjs(published).format('MMMM DD, YYYY')}</p>
-                        {/* <div className={}></div> */}
+                        {thumbnail ? 
+                            <div className={styles.thumbnail}>
+                                <Image src={thumbnail} width={200} height={300} alt='thumbnail'/>
+                            </div> 
+                            : null
+                        }
                         <div className={styles.post} dangerouslySetInnerHTML={{__html: content}} style={{width: '100%'}}></div>
                         <Reply slug={params.slug}/>
                     </div>

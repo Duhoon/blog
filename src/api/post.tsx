@@ -92,7 +92,8 @@ export async function getPostDetailedFromCloud(directory:string, filename: strin
     return {
         title: metadata.title,
         published: new Date(metadata.published),
-        content: post2html.value.toString()
+        content: post2html.value.toString(),
+        thumbnail: metadata.thumbnail,
     };
 }
 
