@@ -56,14 +56,15 @@ export default async function Page({ params } : Props){
     return (
         <>
             <main>
-                <article className={styles.article} id={'article'}>
-                    <div className={styles.post}>
+                <article className={styles[`article-wrapper`]}>
+                    <div className={styles.article}>
                         <div>
                             <Link href={`/blog/${params.category}`}>Go to Board</Link>
                         </div>
-                        <h1>{title}</h1>
-                        <p>{dayjs(published).format('MMMM DD, YYYY')}</p>
-                        <div dangerouslySetInnerHTML={{__html: content}} style={{width: '100%'}}></div>
+                        <h1 className={styles.title}>{title}</h1>
+                        <p className={styles.published}>{dayjs(published).format('MMMM DD, YYYY')}</p>
+                        {/* <div className={}></div> */}
+                        <div className={styles.post} dangerouslySetInnerHTML={{__html: content}} style={{width: '100%'}}></div>
                         <Reply slug={params.slug}/>
                     </div>
                 </article>

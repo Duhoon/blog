@@ -1,4 +1,4 @@
-.article {
+.article-wrapper {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -6,80 +6,88 @@
     padding: 2rem 0;
     width: 100%;
     margin: 0 auto;
-}
 
-.post {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    width: 800px;
-    
     * {
         margin-bottom: 1rem;
     }
 
-    .title {
-        font-size: 2rem;
-        font-weight: 700;
-    }
-    
-    .published {
-        font-size: 0.8rem;
-        font-weight: 600;
-    }
-
-    p > code {
-        color: #e83e8c;
-        background-color: var(--gray-color);
-        padding: 0.2rem 0.4rem;
-        border-radius: 0.2rem;
-    }
-
-    pre > code {
-        border-radius: 0.4rem;
-    }
-
-    img {
-        width: 100%;
-    }
-
-    ul {
+    .article {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         padding-left: 1rem;
-
-        li {
-            list-style-type: disc;
+        padding-right: 1rem;
+        width: 800px;
+    
+        .title {
+            font-size: 2rem;
+            font-weight: 700;
         }
-    }
-
-    a {
-        color: #0000EE;
         
-        &:hover {
-            text-decoration: underline #0000EE;
+        .published {
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+    
+        .post {
+            img {
+                width: 100%;
+            }
+
+            p > code {
+                color: #e83e8c;
+                background-color: var(--gray-color);
+                padding: 0.2rem 0.4rem;
+                border-radius: 0.2rem;
+            }
+        
+            pre > code {
+                border-radius: 0.4rem;
+            }
+        
+            ul {
+                padding-left: 1rem;
+        
+                li {
+                    list-style-type: disc;
+                }
+            }
+        
+            a {
+                color: #0000EE;
+                
+                &:hover {
+                    text-decoration: underline #0000EE;
+                }
+            }
         }
     }
 }
 
 @media (max-width: 800px) {
-    .post {
-        width: 100%;
-        padding: 0 1rem;
-        margin-left: 0;
+    .article-wrapper {
+        .article {
+            width: 100%;
+            padding: 0 1rem;
+            margin-left: 0;
+        }
     }
 }
 
 @media (max-width: 1400px) {
-    .post {
-        padding: 0 1rem;
-        margin-left: 0;
-    }
+    .article-wrapper {
+        .article {
+            padding: 0 1rem;
+            margin-left: 0;
+        }
+    }   
 }
 
 @media ( min-width: 1400px ) {
-    .post {
-        width: 1200px;
+    .article-wrapper {
+        .article {
+            width: 1200px;
+        }
     }
 }
