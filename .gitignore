@@ -38,6 +38,7 @@ next-env.d.ts
 # post
 src/post
 src/post/*
+/**/post
 
 # Env
 .env

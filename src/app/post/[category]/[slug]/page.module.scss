@@ -31,11 +31,15 @@
         }
     
         .post {
+            h1 {
+                margin-top: 2rem;
+            }
+
             img {
                 width: 100%;
             }
 
-            p > code {
+            p > code, li > code {
                 color: #e83e8c;
                 background-color: var(--gray-color);
                 padding: 0.2rem 0.4rem;
