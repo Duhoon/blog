@@ -43,10 +43,14 @@ type Props = {
 }
 
 export async function generateMetadata({params}: Props): Promise<Metadata>{
-    const { title } = await getPostDetailedFromCloud(params.category, params.slug);
+    const { title, content } = await getPostDetailedFromCloud(params.category, params.slug);
 
     return {
         title,
+        openGraph: {
+            title,
+            siteName: "ALROCK Blog",
+        },
         publisher: '412ock',
     }
 };
