@@ -14,7 +14,7 @@ export default function Record({record, isCur}: RecordProps){
     <article className='record-wrapper'>
       <div className='record-start'></div>
       <div className='record-img-wrapper'>
-        <Image src={record.image} alt='image' fill={true} loading={"lazy"}/>
+        <Image src={record.image} alt='image' fill={true} loading={"lazy"} placeholder="blur" blurDataURL="https://www.paintscapes.ca/products/t9-payne-s-gray"/>
       </div>
       <div className='record-body'>
         <h1 className='record-title'>{record.title}</h1>
