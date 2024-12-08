@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import Link from "next/link";
 import styles from './navigation.module.scss';
-import { HamburgerButton } from "../Button";
+import { HamburgerButton } from "../commons/Button";
 import Sidenav from "../Sidenav";
 
 export function Navigation(){
