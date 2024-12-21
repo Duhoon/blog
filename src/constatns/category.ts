@@ -5,19 +5,19 @@ export const Categories = [
     },
     {
         name: 'Blog',
-        link : '/blog',
+        link : '/list',
         sub: [
             {
                 name: 'Development',
-                link : '/blog/development'
+                link : '/list/development'
             },
             {
                 name: 'Book',
-                link: '/blog/book',
+                link: '/list/book',
             },
             {
                 name: 'Movie',
-                link: '/blog/movie'
+                link: '/list/movie'
             }
         ]
     },
