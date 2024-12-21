@@ -1,5 +1,5 @@
 .sidenav-wrapper  {
-    right: 0;
+    right: -200px;
     position: fixed;
     background-color: #000;
     transition: 0.3s;
@@ -7,7 +7,7 @@
     z-index: 10;
 
     .sidenav {
-        display: none;
+        width: 200px;
         padding-top: 60px;
 
         li {
@@ -49,6 +49,10 @@
         }
     }
 
+    &.sidenav-wrapper-open {
+        right: 0;
+    }
+
     .button-sidenav-wrapper {
         display: flex;
         position: absolute;
@@ -81,10 +85,5 @@
             background-color: rgb(255, 255, 255, 0.8);
             cursor: pointer;
         }
-    }
-
-    .sidenav-open, .sidenav-wrapper-open {
-        display: block;
-        width: 200px;
     }
 }

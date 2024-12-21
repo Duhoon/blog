@@ -12,7 +12,6 @@ export function Navigation(){
 
     const toggleOpen = (e: React.MouseEvent<HTMLElement>) => {
         sidenavWrapperRef.current?.classList.toggle('sidenav-wrapper-open');
-        sidenavRef.current?.classList.toggle('sidenav-open');
     }
 
     return (

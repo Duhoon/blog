@@ -17,7 +17,6 @@ export default function Sidenav({wrapperRef, sidenavRef}: SidenavProps) {
         if ( wrapperRef && sidenavRef){
             if ( target.className === 'link-text' || target.tagName === 'A' ){
                 (wrapperRef as any).current?.classList.toggle('sidenav-wrapper-open');
-                (sidenavRef as any).current?.classList.toggle('sidenav-open');
             }
         }
     }
