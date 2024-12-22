@@ -5,7 +5,6 @@ import 'highlight.js/styles/github-dark.css'
 import styles from './page.module.scss';
 import { storage } from '@/config/firebase';
 import { ref, listAll, } from 'firebase/storage';
-import Sidenav from '@/components/Sidenav';
 import dayjs from 'dayjs';
 import Reply from '@/components/Reply';
 import Image from 'next/image';
@@ -51,6 +50,9 @@ export async function generateMetadata({params}: Props): Promise<Metadata>{
             title,
             siteName: "ALROCK Blog",
         },
+        twitter: {
+            title,
+        },
         publisher: '412ock',
     }
 };
@@ -64,7 +66,7 @@ export default async function Page({ params } : Props){
                 <article className={styles[`article-wrapper`]}>
                     <div className={styles.article}>
                         <div>
-                            <Link href={`/blog/${params.category}`}>Go to Board</Link>
+                            <Link href={`/list/${params.category}`}>Go to Board</Link>
                         </div>
                         <h1 className={styles.title}>{title}</h1>
                         <p className={styles.published}>{dayjs(published).format('MMMM DD, YYYY')}</p>
