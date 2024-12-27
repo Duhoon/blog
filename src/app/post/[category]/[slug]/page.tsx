@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import Link from 'next/link';
-import { getPostDetailedFromCloud } from '@/api/post';
+import { getPostDetailedFromCloud, getPostDetailedFromLocal } from '@/api/post';
 import 'highlight.js/styles/github-dark.css'
 import styles from './page.module.scss';
 import { storage } from '@/config/firebase';
@@ -42,13 +42,15 @@ type Props = {
 }
 
 export async function generateMetadata({params}: Props): Promise<Metadata>{
-    const { title, content } = await getPostDetailedFromCloud(params.category, params.slug);
+    const { title, content, tags } = process.env.POST_LOCATION === 'local' ? 
+        await getPostDetailedFromLocal(params.slug) : await getPostDetailedFromCloud(params.category, params.slug);
 
     return {
         title,
         openGraph: {
             title,
             siteName: "ALROCK Blog",
+            tags,
         },
         twitter: {
             title,
@@ -58,7 +60,8 @@ export async function generateMetadata({params}: Props): Promise<Metadata>{
 };
 
 export default async function Page({ params } : Props){
-    const {title, published, content, thumbnail} = await getPostDetailedFromCloud(params.category, params.slug);
+    const {title, published, content, thumbnail, tags} = process.env.POST_LOCATION === 'local' ? 
+        await getPostDetailedFromLocal(params.slug) : await getPostDetailedFromCloud(params.category, params.slug);
 
     return (
         <>
@@ -68,6 +71,9 @@ export default async function Page({ params } : Props){
                         <div>
                             <Link href={`/list/${params.category}`}>Go to Board</Link>
                         </div>
+                        <ul className={styles["tag-list"]}>
+                            { tags ? tags.map((tag)=> (<li className={styles["tag-item"]}>{tag}</li>)) : <></>}
+                        </ul>
                         <h1 className={styles.title}>{title}</h1>
                         <p className={styles.published}>{dayjs(published).format('MMMM DD, YYYY')}</p>
                         {thumbnail ? 

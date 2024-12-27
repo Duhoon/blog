@@ -1,12 +1,13 @@
 import Link from 'next/link';
-import { getPostListFromCloud } from '@/api/post';
+import { getPostListFromCloud, getPostListFromLocal } from '@/api/post';
 import dayjs from 'dayjs';
 import Image from 'next/image';
 import styles from '../layout.module.scss';
+import { PostCategory } from '@/types/post.type';
 
 type Props =  {
     params: {
-        category: 'book' | 'movie' | 'development',
+        category: PostCategory
     },
     searchParams: { [key: string]: string | string[] | undefined },
 }
@@ -18,7 +19,7 @@ export async function generateStaticParams(){
 export default async function Page(
     {params}: Props
 ){
-    const posts = await getPostListFromCloud(params.category);
+    const posts = process.env.POST_LOCATION === 'local' ? await getPostListFromLocal() : await getPostListFromCloud(params.category);
     
     return (
         <ul>

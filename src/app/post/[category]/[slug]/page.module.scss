@@ -19,6 +19,19 @@
         padding-left: 1rem;
         padding-right: 1rem;
         width: 800px;
+
+        .tag-list {
+            margin-bottom: 0.5rem;
+            width: 100%;
+            
+            .tag-item {
+                border-radius: 1rem;
+                background-color: var(--gray-color);
+                display: inline-block;
+                padding: 0.5rem 0.8rem;
+                margin-right: 1rem;
+            }   
+        }
     
         .title {
             font-size: 2rem;

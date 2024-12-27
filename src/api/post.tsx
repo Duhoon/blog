@@ -21,16 +21,17 @@ type PostList = {
 type PostMetadata = {
     title: string;
     published: string;
-    thumbnail?: string
+    thumbnail?: string;
+    tags?: string[];
     layout: string;
 }
 
 export async function getPostListFromLocal(){
-    const postLists = fs.readdirSync('src/post');
+    const postLists = fs.readdirSync('post');
 
     const resultLists: PostList[] = [];
     for( let post of postLists){
-        const postFile = fs.readFileSync(`src/post/${post}`, 'utf-8');
+        const postFile = fs.readFileSync(`post/${post}`, 'utf-8');
         
         const postMetadata = await convertPostToHtml(postFile);
 
@@ -48,7 +49,7 @@ export async function getPostListFromLocal(){
 }
 
 export async function getPostDetailedFromLocal(filename: string){
-    const postFile = fs.readFileSync(`src/post/${filename}.md`, 'utf-8');
+    const postFile = fs.readFileSync(`post/${filename}.md`, 'utf-8');
 
     const post2html = await unified()
         // .use(remarkMdxFrontmatter)
@@ -61,12 +62,14 @@ export async function getPostDetailedFromLocal(filename: string){
         .use(rehypeStringify)
         .process(postFile);
 
-    const metadata = post2html.data.frontmatter as any;
+    const metadata = post2html.data.frontmatter as PostMetadata;
 
     return {
         title: metadata.title,
         published: new Date(metadata.published),
-        content: post2html.value.toString()
+        tags: metadata.tags,
+        content: post2html.value.toString(),
+        thumbnail: metadata.thumbnail,
     };
 }
 
@@ -87,11 +90,12 @@ export async function getPostDetailedFromCloud(directory:string, filename: strin
         .use(rehypeStringify)
         .process(postInText.toString());
 
-    const metadata = post2html.data.frontmatter as any;
+    const metadata = post2html.data.frontmatter as PostMetadata;
 
     return {
         title: metadata.title,
         published: new Date(metadata.published),
+        tags: metadata.tags,
         content: post2html.value.toString(),
         thumbnail: metadata.thumbnail,
     };
