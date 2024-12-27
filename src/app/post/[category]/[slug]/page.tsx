@@ -47,6 +47,7 @@ export async function generateMetadata({params}: Props): Promise<Metadata>{
 
     return {
         title,
+        keywords: tags,
         openGraph: {
             title,
             siteName: "ALROCK Blog",
