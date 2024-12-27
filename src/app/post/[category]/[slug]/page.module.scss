@@ -49,7 +49,8 @@
             }
 
             img {
-                width: 100%;
+                display: block;
+                margin: 0 auto;
             }
 
             p > code, li > code {
@@ -97,6 +98,10 @@
         .article {
             padding: 0 1rem;
             margin-left: 0;
+        }
+
+        img {
+            width: 100%;
         }
     }   
 }
