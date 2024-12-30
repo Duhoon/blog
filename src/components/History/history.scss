@@ -17,7 +17,10 @@
   overflow-y: auto;
   scrollbar-width: none;
 
-  .record-img, .record-title, .record-date, .record-content{
+  .record-img,
+  .record-title,
+  .record-date,
+  .record-content {
     margin-bottom: 1rem;
   }
 
@@ -37,7 +40,6 @@
   }
 
   .record-title {
-
   }
 
   .record-date {
@@ -80,7 +82,7 @@
   text-align: center;
 }
 
-@media screen and ( min-width: 400px ) {
+@media screen and (min-width: 400px) {
   .history {
     justify-content: center;
     padding: 0 0.5rem;
@@ -91,22 +93,20 @@
     padding: 0 5rem;
 
     .record-img-wrapper {
-        width: 100%;
-        height: 600px;
+      width: 100%;
+      height: 600px;
 
       .record-img {
         height: 100%;
       }
     }
   }
-  
+
   .timeline-wrapper {
     padding: 0.5rem;
-    
+
     .timeline {
       height: 100%;
     }
   }
-  
-  
 }

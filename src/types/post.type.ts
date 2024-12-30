@@ -1,1 +1,1 @@
-export type PostCategory = 'book' | 'movie' | 'development'
+export type PostCategory = "book" | "movie" | "development";

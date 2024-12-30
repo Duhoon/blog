@@ -1,28 +1,30 @@
-'use client';
+"use client";
 
 import { useRef } from "react";
 import Link from "next/link";
-import styles from './navigation.module.scss';
+import styles from "./navigation.module.scss";
 import { HamburgerButton } from "../commons/Button";
 import Sidenav from "../Sidenav";
 
-export function Navigation(){
-    const sidenavWrapperRef = useRef<HTMLDivElement>(null);
-    const sidenavRef = useRef<HTMLUListElement>(null);
+export function Navigation() {
+  const sidenavWrapperRef = useRef<HTMLDivElement>(null);
+  const sidenavRef = useRef<HTMLUListElement>(null);
 
-    const toggleOpen = (e: React.MouseEvent<HTMLElement>) => {
-        sidenavWrapperRef.current?.classList.toggle('sidenav-wrapper-open');
-    }
+  const toggleOpen = (e: React.MouseEvent<HTMLElement>) => {
+    sidenavWrapperRef.current?.classList.toggle("sidenav-wrapper-open");
+  };
 
-    return (
-        <>
-            <nav className={styles.navigation}>
-                <div className={styles.wrapper}>
-                    <h1><Link href='/'>ALROCK</Link></h1>
-                    <HamburgerButton onClick={toggleOpen}/>
-                </div>
-            </nav>
-            <Sidenav wrapperRef={sidenavWrapperRef} sidenavRef={sidenavRef}/>
-        </>
-    )
+  return (
+    <>
+      <nav className={styles.navigation}>
+        <div className={styles.wrapper}>
+          <h1>
+            <Link href="/">ALROCK</Link>
+          </h1>
+          <HamburgerButton onClick={toggleOpen} />
+        </div>
+      </nav>
+      <Sidenav wrapperRef={sidenavWrapperRef} sidenavRef={sidenavRef} />
+    </>
+  );
 }

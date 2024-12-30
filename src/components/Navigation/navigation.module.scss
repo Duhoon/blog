@@ -1,76 +1,75 @@
 .navigation {
-    position: fixed;
-    background-color: var(--black-color);
-    width: 100vw;
-    height: 60px;
-    padding: 1rem;
-    z-index: 100;
+  position: fixed;
+  background-color: var(--black-color);
+  width: 100vw;
+  height: 60px;
+  padding: 1rem;
+  z-index: 100;
 
-    button svg {
-        width: 2rem;
-        height: 2rem;
-        fill: #fff;
-    
-        &:hover {
-            cursor: pointer;
-        }
+  button svg {
+    width: 2rem;
+    height: 2rem;
+    fill: #fff;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .wrapper {
+    display: flex;
+    width: 100%;
+    padding: 0 1rem;
+    margin: auto;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--white-color);
+  }
+
+  ul {
+    display: flex;
+    align-items: center;
+  }
+
+  ul > li {
+    margin-right: 1rem;
+    font-weight: 600;
+    font-size: 1rem;
+
+    &:last-child {
+      margin-right: 0;
     }
 
-    .wrapper {
-        display: flex;
-        width: 100%;
-        padding: 0 1rem;
-        margin: auto;
-        justify-content: space-between;
-        align-items: center;
-        color: var(--white-color);
+    a {
+      display: inline-block;
     }
 
-    ul {
-        display: flex;
-        align-items: center;
+    svg {
+      width: 2rem;
+      height: 2rem;
+      color: #fff;
+
+      &:hover {
+        cursor: pointer;
+      }
     }
-
-    ul > li {
-        margin-right: 1rem;
-        font-weight: 600;
-        font-size: 1rem;
-
-        &:last-child {
-            margin-right: 0;
-        }
-
-        a {
-            display: inline-block;
-            
-        }
-
-        svg {
-            width: 2rem;
-            height: 2rem;
-            color: #fff;
-
-            &:hover {
-                cursor: pointer;
-            }
-        }
-    }
+  }
 }
 
 @media (min-width: 768px) {
-    .navigation {
-        .wrapper {
-            width: 100%;
-            padding: 0 1rem;
-        }
+  .navigation {
+    .wrapper {
+      width: 100%;
+      padding: 0 1rem;
     }
+  }
 }
 
 @media (min-width: 1200px) {
-    .navigation {
-        .wrapper {
-            width: 1200px;
-            padding: 0 1rem;
-        }
+  .navigation {
+    .wrapper {
+      width: 1200px;
+      padding: 0 1rem;
     }
+  }
 }
