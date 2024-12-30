@@ -42,3 +42,6 @@ src/post/*
 
 # Env
 .env
+
+# Editor
+.vscode/*
