@@ -8,9 +8,14 @@ import { Category, CategoryWithSub, SubCategory } from "./Category";
 interface SidenavProps {
   wrapperRef: Ref<any>;
   sidenavRef: Ref<any>;
+  lang?: string;
 }
 
-export default function Sidenav({ wrapperRef, sidenavRef }: SidenavProps) {
+export default function Sidenav({
+  wrapperRef,
+  sidenavRef,
+  lang,
+}: SidenavProps) {
   const closeSidenav = (e: React.MouseEvent<HTMLElement>) => {
     const target = e.target as HTMLElement;
 
@@ -31,7 +36,7 @@ export default function Sidenav({ wrapperRef, sidenavRef }: SidenavProps) {
                 {category.sub.map((subCategory, subIndex) => (
                   <SubCategory
                     key={subIndex}
-                    link={subCategory.link}
+                    link={`${lang ? "/" + lang : ""}${subCategory.link}`}
                     text={subCategory.name}
                   />
                 ))}
