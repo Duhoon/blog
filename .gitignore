@@ -37,11 +37,11 @@ next-env.d.ts
 
 # post
 src/post
-src/post/*
-/**/post
+/post
 
 # Env
 .env
 
 # Editor
+.vscode
 .vscode/*
