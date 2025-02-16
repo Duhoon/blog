@@ -1,35 +1,37 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { getPostDetailedFromCloud, getPostDetailedFromLocal } from "@/api/post";
+import { getPostDetailedFromCloud } from "@/api/post";
 import "highlight.js/styles/github-dark.css";
 import styles from "./page.module.scss";
-import { storage } from "@/config/firebase";
-import { ref, listAll } from "firebase/storage";
+// import { storage } from "@/config/firebase";
+// import { ref, listAll } from "firebase/storage";
 import dayjs from "dayjs";
 import Reply from "@/components/Reply";
 import Image from "next/image";
+// import { locales } from "@/middleware";
 
 export const dynamicParams = false;
 
-export async function generateStaticParams() {
-  const dirRef = ref(storage, "posts");
-  const listSubDirRef = await listAll(dirRef).then((res) => res.prefixes);
+// export async function generateStaticParams() {
+//   const dirRef = ref(storage, "posts");
+//   const listSubDirRef = await listAll(dirRef).then((res) => res.prefixes);
 
-  const result: Params[] = [];
-  for (const subDirRef of listSubDirRef) {
-    const namesPost = await listAll(subDirRef).then((res) =>
-      res.items.map((item) => ({
-        category: subDirRef.name,
-        slug: item.name.replace(".md", ""),
-      })),
-    );
-    result.push(...namesPost);
-  }
+//   const result: Params[] = [];
+//   for (const subDirRef of listSubDirRef) {
+//     const namesPost = await listAll(subDirRef).then((res) =>
+//       res.items.map((item) => ({
+//         category: subDirRef.name,
+//         slug: item.name.replace(".md", ""),
+//       })),
+//     );
+//     result.push(...namesPost);
+//   }
 
-  return result;
-}
+//   return result;
+// }
 
 type Params = {
+  lang: string;
   category: string;
   slug: string;
 };
@@ -39,10 +41,11 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { title, tags } =
-    process.env.POST_LOCATION === "local"
-      ? await getPostDetailedFromLocal(params.slug)
-      : await getPostDetailedFromCloud(params.category, params.slug);
+  const { title, tags } = await getPostDetailedFromCloud(
+    params.lang,
+    params.category,
+    params.slug,
+  );
 
   return {
     title,
@@ -61,9 +64,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const { title, published, content, thumbnail, tags } =
-    process.env.POST_LOCATION === "local"
-      ? await getPostDetailedFromLocal(params.slug)
-      : await getPostDetailedFromCloud(params.category, params.slug);
+    await getPostDetailedFromCloud(params.lang, params.category, params.slug);
 
   return (
     <>
@@ -71,7 +72,9 @@ export default async function Page({ params }: Props) {
         <article className={styles[`article-wrapper`]}>
           <div className={styles.article}>
             <div>
-              <Link href={`/list/${params.category}`}>Go to Board</Link>
+              <Link href={`/${params.lang}/list/${params.category}`}>
+                Go to Board
+              </Link>
             </div>
             <ul className={styles["tag-list"]}>
               {tags ? (

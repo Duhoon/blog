@@ -1,4 +1,3 @@
-import Sidenav from "@/components/Sidenav";
 import { ReactNode } from "react";
 import styles from "./layout.module.scss";
 

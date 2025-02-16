@@ -8,6 +8,7 @@ import PaginationButton from "@/components/commons/Button/PaginationButton";
 
 type Props = {
   params: {
+    lang: string;
     category: PostCategory;
   };
   searchParams: {
@@ -19,6 +20,7 @@ type Props = {
 
 export default async function Page({ params, searchParams }: Props) {
   const { metadatas, nextToken } = await getPostListByPageFromCloud(
+    params.lang,
     params.category,
     searchParams.currentToken,
   );
@@ -31,7 +33,9 @@ export default async function Page({ params, searchParams }: Props) {
         {metadatas.length > 0 ? (
           metadatas.map((metadata) => (
             <li key={metadata.slug}>
-              <Link href={`/post/${params.category}/${metadata.slug}`}>
+              <Link
+                href={`/${params.lang}/post/${params.category}/${metadata.slug}`}
+              >
                 {metadata.thumbnail ? (
                   <div className={styles["board-item-thumbnail"]}>
                     <Image
