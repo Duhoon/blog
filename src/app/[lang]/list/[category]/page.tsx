@@ -17,10 +17,6 @@ type Props = {
   };
 };
 
-export async function generateStaticParams() {
-  return ["book", "movie", "development"];
-}
-
 export default async function Page({ params, searchParams }: Props) {
   const { metadatas, nextToken } = await getPostListByPageFromCloud(
     params.category,
