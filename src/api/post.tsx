@@ -118,7 +118,7 @@ export async function getPostListFromCloud(
 
   const postsList = await listAll(dirRef);
   const postRefList = postsList.items.map((item) => {
-    return ref(storage, `posts/${directory}/${item.name}`);
+    return ref(storage, `posts/${lang}/${directory}/${item.name}`);
   });
 
   const result = [];

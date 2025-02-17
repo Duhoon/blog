@@ -1,4 +1,5 @@
 import { getPostListFromCloud } from "@/api/post";
+import { locales } from "@/middleware";
 import { MetadataRoute } from "next";
 
 const baseUrl = "https://www.412ock.dev";
@@ -26,23 +27,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   const categories = ["development", "book", "movie"];
-
   for (const category of categories) {
-    const posts = await getPostListFromCloud(category);
-    sitemap.push({
-      url: `${baseUrl}/blog/${category}`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.8,
-    });
+    for (const locale of locales) {
+      const posts = await getPostListFromCloud(locale, category);
+      sitemap.push({
+        url: `${baseUrl}/${locale}/list/${category}`,
+        lastModified: new Date(),
+        changeFrequency: "monthly",
+        priority: 0.8,
+      });
 
-    const info = posts.map((post) => ({
-      url: `${baseUrl}/post/${category}/${post.slug}`,
-      lastModified: new Date(post.published),
-      changeFrequency: "monthly",
-      priority: 0.5,
-    })) as MetadataRoute.Sitemap;
-    sitemap.push(...info);
+      const info = posts.map((post) => ({
+        url: `${baseUrl}/${locale}/post/${category}/${post.slug}`,
+        lastModified: new Date(post.published),
+        changeFrequency: "monthly",
+        priority: 0.5,
+      })) as MetadataRoute.Sitemap;
+      sitemap.push(...info);
+    }
   }
 
   return sitemap;
