@@ -45,10 +45,12 @@
     
         .post { 
             h1 {
+                font-size: 2rem;
                 margin-top: 2rem;
             }
 
             img {
+                width: 100%;
                 display: block;
                 margin: 0 auto;
             }
@@ -106,10 +108,6 @@
         .article {
             padding: 0 1rem;
             margin-left: 0;
-        }
-
-        img {
-            width: 100%;
         }
     }   
 }
