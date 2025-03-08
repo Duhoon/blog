@@ -8,6 +8,7 @@ import styles from "./page.module.scss";
 import dayjs from "dayjs";
 import Reply from "@/components/Reply";
 import Image from "next/image";
+import { OpenGraph } from "next/dist/lib/metadata/types/opengraph-types";
 // import { locales } from "@/middleware";
 
 export const dynamicParams = false;
@@ -41,20 +42,23 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { title, tags } = await getPostDetailedFromCloud(
+  const { title, tags, thumbnail } = await getPostDetailedFromCloud(
     params.lang,
     params.category,
     params.slug,
   );
 
+  const openGraph: OpenGraph = {
+    title,
+    siteName: "ALROCK Blog",
+    tags,
+    images: thumbnail,
+  };
+
   return {
     title,
     keywords: tags,
-    openGraph: {
-      title,
-      siteName: "ALROCK Blog",
-      tags,
-    },
+    openGraph,
     twitter: {
       title,
     },
