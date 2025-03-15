@@ -1,5 +1,5 @@
-// import { Canvas } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 
-// export default function Main() {
-//     return <Canvas></Canvas>
-// }
+export default function Main() {
+  return <Canvas></Canvas>;
+}

@@ -1,7 +1,9 @@
-const path = require("path");
+import path from "path";
+import createMDX from "@next/mdx";
+import { NextConfig } from "next";
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
+  pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")],
   },
@@ -17,4 +19,5 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+const withMDX = createMDX({});
+export default withMDX(nextConfig);
