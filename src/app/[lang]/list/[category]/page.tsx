@@ -19,10 +19,12 @@ type Props = {
 };
 
 export default async function Page({ params, searchParams }: Props) {
+  const { lang, category } = await params;
+  const { currentToken } = await searchParams;
   const { metadatas, nextToken } = await getPostListByPageFromCloud(
-    params.lang,
-    params.category,
-    searchParams.currentToken,
+    lang,
+    category,
+    currentToken,
   );
   // process.env.POST_LOCATION === "local"
   //   ? await getPostListFromLocal()

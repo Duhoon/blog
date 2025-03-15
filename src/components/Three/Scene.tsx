@@ -1,35 +1,22 @@
 "use client";
 
-import {
-  AmbientLight,
-  HemisphereLight,
-  HemisphereLightHelper,
-  LoadingManager,
-  Mesh,
-  SpotLightHelper,
-  TextureLoader,
-} from "three";
+import { HemisphereLight, Mesh, TextureLoader } from "three";
 import { useRef } from "react";
 import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import {
   MeshReflectorMaterial,
   OrbitControls,
   PerspectiveCamera,
-  useHelper,
-  useProgress,
 } from "@react-three/drei";
 
 function Mable(props: any) {
   const objectRef = useRef<Mesh>(null);
-  const [colorMap, normalMap, roughnessMap, displacementMap] = useLoader(
-    TextureLoader,
-    [
-      "./assets/texture/Marble_Red_004_basecolor.jpg",
-      "./assets/texture/Marble_Red_004_normal.jpg",
-      "./assets/texture/Marble_Red_004_roughness.jpg",
-      "./assets/texture/Marble_Red_004_height.png",
-    ],
-  );
+  const [colorMap, normalMap, , displacementMap] = useLoader(TextureLoader, [
+    "./assets/texture/Marble_Red_004_basecolor.jpg",
+    "./assets/texture/Marble_Red_004_normal.jpg",
+    "./assets/texture/Marble_Red_004_roughness.jpg",
+    "./assets/texture/Marble_Red_004_height.png",
+  ]);
 
   useFrame(() => {
     if (objectRef.current) {
@@ -126,7 +113,6 @@ export function Scene() {
         rotation={[Math.PI / 4, 0, 0]}
       />
       <OrbitControls
-        position={[0, 0, 10]}
         maxDistance={25}
         minDistance={5}
         maxPolarAngle={Math.PI / 2}
@@ -134,9 +120,9 @@ export function Scene() {
       <Light />
       <DirectionLight />
 
-      <Floor />
+      {/* <Floor /> */}
 
-      <Mable position={[0, 1, 0]} />
+      {/* <Mable position={[0, 1, 0]} /> */}
 
       <Wall position={[0, 0, 25]} rotation={[0, Math.PI, 0]} />
       <Wall position={[0, 0, -25]} rotation={[0, Math.PI * 2, 0]} />

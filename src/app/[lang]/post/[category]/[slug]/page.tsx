@@ -41,11 +41,8 @@ type Props = {
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { title, tags } = await getPostDetailedFromCloud(
-    params.lang,
-    params.category,
-    params.slug,
-  );
+  const { lang, category, slug } = await params;
+  const { title, tags } = await getPostDetailedFromCloud(lang, category, slug);
 
   return {
     title,
@@ -63,8 +60,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function Page({ params }: Props) {
+  const { lang, category, slug } = await params;
   const { title, published, content, thumbnail, tags } =
-    await getPostDetailedFromCloud(params.lang, params.category, params.slug);
+    await getPostDetailedFromCloud(lang, category, slug);
 
   return (
     <>
@@ -72,9 +70,7 @@ export default async function Page({ params }: Props) {
         <article className={styles[`article-wrapper`]}>
           <div className={styles.article}>
             <div>
-              <Link href={`/${params.lang}/list/${params.category}`}>
-                Go to Board
-              </Link>
+              <Link href={`/${lang}/list/${category}`}>Go to Board</Link>
             </div>
             <ul className={styles["tag-list"]}>
               {tags ? (
@@ -102,7 +98,7 @@ export default async function Page({ params }: Props) {
               dangerouslySetInnerHTML={{ __html: content }}
               style={{ width: "100%" }}
             ></div>
-            <Reply slug={params.slug} />
+            <Reply slug={slug} />
           </div>
         </article>
       </main>
