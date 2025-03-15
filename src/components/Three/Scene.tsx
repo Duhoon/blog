@@ -1,85 +1,24 @@
 "use client";
 
-import { HemisphereLight, Mesh, TextureLoader } from "three";
+import { HemisphereLight, Mesh } from "three";
 import { useRef } from "react";
-import { Canvas, useFrame, useLoader } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import {
   MeshReflectorMaterial,
   OrbitControls,
   PerspectiveCamera,
 } from "@react-three/drei";
 
-function Mable(props: any) {
-  const objectRef = useRef<Mesh>(null);
-  const [colorMap, normalMap, , displacementMap] = useLoader(TextureLoader, [
-    "./assets/texture/Marble_Red_004_basecolor.jpg",
-    "./assets/texture/Marble_Red_004_normal.jpg",
-    "./assets/texture/Marble_Red_004_roughness.jpg",
-    "./assets/texture/Marble_Red_004_height.png",
-  ]);
-
-  useFrame(() => {
-    if (objectRef.current) {
-      objectRef.current.rotation.x += 0.005;
-      objectRef.current.rotation.y += 0.005;
-    }
-  });
-
-  return (
-    <mesh {...props} ref={objectRef} scale={1} castShadow={true}>
-      <sphereGeometry args={[2, 360, 360]} />
-      <meshPhongMaterial
-        map={colorMap}
-        normalMap={normalMap}
-        displacementMap={displacementMap}
-        shininess={5}
-        specular={"#ffffff"}
-      />
-    </mesh>
-  );
+interface WallProps {
+  position: [number, number, number];
+  rotation: [number, number, number];
 }
 
-function Floor() {
-  const base = useLoader(
-    TextureLoader,
-    "./assets/texture/Concrete_019_BaseColor.jpg",
-  );
-  const normal = useLoader(
-    TextureLoader,
-    "./assets/texture/Concrete_019_Normal.jpg",
-  );
-  const height = useLoader(
-    TextureLoader,
-    "./assets/texture/Concrete_019_Height.png",
-  );
-  const roughness = useLoader(
-    TextureLoader,
-    "./assets/texture/Concrete_019_Roughness.jpg",
-  );
-
-  return (
-    <mesh
-      rotation={[-Math.PI / 2, 0, 0]}
-      position={[0, -2, 0]}
-      receiveShadow={true}
-    >
-      <planeGeometry args={[50, 50]} />
-      <meshStandardMaterial
-        map={base}
-        normalMap={normal}
-        displacementMap={height}
-        displacementScale={0.1}
-        roughnessMap={roughness}
-      />
-    </mesh>
-  );
-}
-
-function Wall(props: any) {
+function Wall(props: WallProps) {
   const ref = useRef<Mesh>(null);
 
   return (
-    <mesh {...props} ref={ref}>
+    <mesh position={props.position} rotation={props.rotation} ref={ref}>
       <boxGeometry args={[50, 50, 0.1]} />
       <MeshReflectorMaterial resolution={2048} mirror={4} color={"white"} />
     </mesh>

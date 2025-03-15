@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useCallback, Suspense } from "react";
+import { useEffect, useRef, useCallback } from "react";
 import "./reply.scss";
 
 interface ReplyProps {

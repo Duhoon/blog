@@ -9,7 +9,7 @@ interface TimelineProps {
 }
 
 export default function Timeline({ history, cursor }: TimelineProps) {
-  const timelineRef = useRef(null) as any;
+  const timelineRef = useRef<HTMLDivElement>(null);
   const [height, setHeight] = useState(0);
 
   useEffect(() => {

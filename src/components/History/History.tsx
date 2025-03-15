@@ -1,6 +1,6 @@
 "use client";
 import { RecordData } from "@/types/about.type";
-import { useState, useEffect, useRef, EventHandler } from "react";
+import { useState, useEffect, useRef } from "react";
 import "./history.scss";
 
 import Record from "./Record";
@@ -12,67 +12,71 @@ export interface HistoryProps {
 
 /** History Component in About */
 export default function History({ history }: HistoryProps) {
-  const recordsRef = useRef(null) as any;
+  const recordsRef = useRef<HTMLDivElement>(null);
   const [deviceHeight, setDeviceHeight] = useState<number>(0);
   const [cur, setCur] = useState(0);
   const [lastScroll, setLastScroll] = useState(0);
 
-  const throttle = (callback: Function, delay: number) => {
-    let timer: any;
+  const throttle = (
+    callback: (event: React.SyntheticEvent) => void,
+    delay: number,
+  ) => {
+    let timer: number = 0;
 
-    return (event: any) => {
+    return (event: React.SyntheticEvent) => {
       if (timer) return;
-      timer = setTimeout(() => {
+      timer = window.setTimeout(() => {
         callback(event);
-        timer = null;
+        timer = 0;
       }, delay);
     };
   };
 
-  const historyScrollHandler = (event: UIEvent) => {
-    const currentScroll = recordsRef.current.scrollTop;
-    const historyHeight = recordsRef.current.clientHeight;
-    const targetIndex = Math.floor(currentScroll / historyHeight);
+  const historyScrollHandler = () => {
+    if (window && recordsRef && recordsRef.current) {
+      const currentScroll = recordsRef.current.scrollTop;
+      const historyHeight = recordsRef.current.clientHeight;
+      const targetIndex = Math.floor(currentScroll / historyHeight);
 
-    let scrollTo: number = 0;
-    let current: number = 0;
+      let scrollTo: number = 0;
+      let current: number = 0;
 
-    if (
-      lastScroll === currentScroll ||
-      currentScroll === 0 ||
-      currentScroll % historyHeight === 0
-    ) {
-      setCur(targetIndex);
-      return;
+      if (
+        lastScroll === currentScroll ||
+        currentScroll === 0 ||
+        currentScroll % historyHeight === 0
+      ) {
+        setCur(targetIndex);
+        return;
+      }
+
+      if (targetIndex < cur) {
+        // up
+        current = Math.max(0, Math.min(history.length - 1, cur - 1));
+        scrollTo = Math.min(
+          (history.length - 1) * historyHeight,
+          historyHeight * current,
+        );
+      }
+
+      if (targetIndex >= cur) {
+        // lastScroll < currentScroll down
+        current = Math.min(history.length - 1, Math.max(0, cur + 1));
+        scrollTo = Math.max(0, historyHeight * current);
+      }
+
+      recordsRef.current.scrollTo({
+        top: scrollTo,
+        behavior: "smooth",
+      });
+
+      setLastScroll(scrollTo);
+      setCur(current);
     }
-
-    if (targetIndex < cur) {
-      // up
-      current = Math.max(0, Math.min(history.length - 1, cur - 1));
-      scrollTo = Math.min(
-        (history.length - 1) * historyHeight,
-        historyHeight * current,
-      );
-    }
-
-    if (targetIndex >= cur) {
-      // lastScroll < currentScroll down
-      current = Math.min(history.length - 1, Math.max(0, cur + 1));
-      scrollTo = Math.max(0, historyHeight * current);
-    }
-
-    recordsRef.current.scrollTo({
-      top: scrollTo,
-      behavior: "smooth",
-    });
-
-    setLastScroll(scrollTo);
-    setCur(current);
   };
 
   useEffect(() => {
-    if (!window || !recordsRef || !recordsRef.current) {
-    } else {
+    if (window && recordsRef && recordsRef.current) {
       setDeviceHeight(window.innerHeight);
       setLastScroll(recordsRef.current.scrollTop);
 

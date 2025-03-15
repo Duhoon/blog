@@ -6,8 +6,8 @@ import "./sidenav.scss";
 import { Category, CategoryWithSub, SubCategory } from "./Category";
 
 interface SidenavProps {
-  wrapperRef: Ref<any>;
-  sidenavRef: Ref<any>;
+  wrapperRef: Ref<HTMLDivElement>;
+  sidenavRef: Ref<HTMLUListElement>;
   lang?: string;
 }
 
@@ -21,7 +21,7 @@ export default function Sidenav({
 
     if (wrapperRef && sidenavRef) {
       if (target.className === "link-text" || target.tagName === "A") {
-        (wrapperRef as any).current?.classList.toggle("sidenav-wrapper-open");
+        wrapperRef.current.classList.toggle("sidenav-wrapper-open");
       }
     }
   };

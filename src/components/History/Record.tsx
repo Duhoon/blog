@@ -8,7 +8,7 @@ interface RecordProps {
   isCur?: boolean;
 }
 
-export default function Record({ record, isCur }: RecordProps) {
+export default function Record({ record }: RecordProps) {
   return (
     <article className="record-wrapper">
       <div className="record-start"></div>
