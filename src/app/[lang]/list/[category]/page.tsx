@@ -7,15 +7,15 @@ import { PostCategory } from "@/types/post.type";
 import PaginationButton from "@/components/commons/Button/PaginationButton";
 
 type Props = {
-  params: {
+  params: Promise<{
     lang: string;
     category: PostCategory;
-  };
-  searchParams: {
+  }>;
+  searchParams: Promise<{
     [key: string]: string | string[] | undefined;
     beforeToken?: string;
     currentToken?: string;
-  };
+  }>;
 };
 
 export default async function Page({ params, searchParams }: Props) {
@@ -35,9 +35,7 @@ export default async function Page({ params, searchParams }: Props) {
         {metadatas.length > 0 ? (
           metadatas.map((metadata) => (
             <li key={metadata.slug}>
-              <Link
-                href={`/${params.lang}/post/${params.category}/${metadata.slug}`}
-              >
+              <Link href={`/${lang}/post/${category}/${metadata.slug}`}>
                 {metadata.thumbnail ? (
                   <div className={styles["board-item-thumbnail"]}>
                     <Image

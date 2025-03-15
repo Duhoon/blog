@@ -6,7 +6,7 @@ import pluginPrettier from "eslint-plugin-prettier/recommended";
 export default tseslint.config(
   {
     files: ["**/*.{js,mjs,cjs,ts,jsx,tsx}"],
-    ignores: ["eslint.config.mjs"],
+    ignores: ["eslint.config.mjs", "node_modules"],
   },
   eslint.configs.recommended,
   tseslint.configs.recommended,

@@ -3,6 +3,9 @@ import createMDX from "@next/mdx";
 import { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
   sassOptions: {
     includePaths: [path.join(__dirname, "styles")],

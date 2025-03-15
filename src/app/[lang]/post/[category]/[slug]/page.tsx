@@ -37,8 +37,8 @@ type Params = {
   slug: string;
 };
 type Props = {
-  params: Params;
-  searchParams: { [key: string]: string | string[] | undefined };
+  params: Promise<Params>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

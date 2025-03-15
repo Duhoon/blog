@@ -30,7 +30,8 @@ export default function Timeline({ history, cursor }: TimelineProps) {
                 <CircleActivated
                   key={i}
                   top={
-                    (timelineRef.current.clientHeight / (history.length - 1)) *
+                    (timelineRef.current?.clientHeight ||
+                      0 / (history.length - 1)) *
                       i -
                     4
                   }
@@ -41,7 +42,8 @@ export default function Timeline({ history, cursor }: TimelineProps) {
                 <Circle
                   key={i}
                   top={
-                    (timelineRef.current.clientHeight / (history.length - 1)) *
+                    (timelineRef.current?.clientHeight ||
+                      0 / (history.length - 1)) *
                       i -
                     4
                   }

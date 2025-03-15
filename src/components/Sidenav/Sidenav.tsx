@@ -1,13 +1,13 @@
 "use client";
 
-import { Ref } from "react";
+import { RefObject } from "react";
 import { Categories } from "../../constatns/category";
 import "./sidenav.scss";
 import { Category, CategoryWithSub, SubCategory } from "./Category";
 
 interface SidenavProps {
-  wrapperRef: Ref<HTMLDivElement>;
-  sidenavRef: Ref<HTMLUListElement>;
+  wrapperRef: RefObject<HTMLDivElement>;
+  sidenavRef: RefObject<HTMLUListElement>;
   lang?: string;
 }
 
@@ -21,7 +21,7 @@ export default function Sidenav({
 
     if (wrapperRef && sidenavRef) {
       if (target.className === "link-text" || target.tagName === "A") {
-        wrapperRef.current.classList.toggle("sidenav-wrapper-open");
+        wrapperRef.current?.classList.toggle("sidenav-wrapper-open");
       }
     }
   };
