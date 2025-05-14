@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { getPostDetailedFromCloud } from "@/api/post";
+import { getPostDetailedFromCloud } from "@/api/posts.firebase";
 import "highlight.js/styles/github-dark.css";
 import styles from "./page.module.scss";
 // import { storage } from "@/config/firebase";

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getPostListByPageFromCloud } from "@/api/post";
+import { getPostListByPageFromCloud } from "@/api/posts.firebase";
 import dayjs from "dayjs";
 import Image from "next/image";
 import styles from "../layout.module.scss";

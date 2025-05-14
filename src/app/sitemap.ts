@@ -1,4 +1,4 @@
-import { getPostListFromCloud } from "@/api/post";
+import { getPostListFromCloud } from "@/api/posts.firebase";
 import { locales } from "@/middleware";
 import { MetadataRoute } from "next";
 
