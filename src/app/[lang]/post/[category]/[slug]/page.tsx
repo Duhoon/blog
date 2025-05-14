@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 import Reply from "@/components/Reply";
 import Image from "next/image";
 import { OpenGraph } from "next/dist/lib/metadata/types/opengraph-types";
+import { getPostDetailed } from "@/api/posts.supabase";
 // import { locales } from "@/middleware";
 
 export const dynamicParams = false;
@@ -43,7 +44,8 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang, category, slug } = await params;
-  const { title, tags, thumbnail } = await getPostDetailedFromCloud(
+
+  const { title, tags, thumbnail } = await getPostDetailed(
     lang,
     category,
     slug,

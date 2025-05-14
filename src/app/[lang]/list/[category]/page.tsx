@@ -1,10 +1,10 @@
 import Link from "next/link";
-import { getPostListByPageFromCloud } from "@/api/posts.firebase";
 import dayjs from "dayjs";
 import Image from "next/image";
 import styles from "../layout.module.scss";
 import { PostCategory } from "@/types/post.type";
 import PaginationButton from "@/components/commons/Button/PaginationButton";
+import { getPostList } from "@/api/posts.supabase";
 
 type Props = {
   params: Promise<{
@@ -18,16 +18,10 @@ type Props = {
   }>;
 };
 
-export default async function Page({ params, searchParams }: Props) {
+export default async function Page({ params }: Props) {
   const { lang, category } = await params;
-  const { currentToken } = await searchParams;
-  const { metadatas, nextToken } = await getPostListByPageFromCloud(
-    lang,
-    category,
-    currentToken,
-  );
-  // process.env.POST_LOCATION === "local"
-  //   ? await getPostListFromLocal()
+
+  const { metadatas, nextToken } = await getPostList(lang, category);
 
   return (
     <div>
