@@ -1,82 +1,7 @@
-import fs from "fs";
-import { unified } from "unified";
-import remarkParse from "remark-parse";
-import remarkFrontmatter from "remark-frontmatter";
-import remarkParseFrontmatter from "remark-parse-frontmatter";
-import remarkRehype from "remark-rehype";
-import rehypeStringify from "rehype-stringify";
-import remarkGfm from "remark-gfm";
-import rehypeHighlight from "rehype-highlight";
-
 import { listAll, ref, getBytes, list } from "firebase/storage";
 import { storage } from "@/config/firebase";
-
-type PostList = {
-  slug: string;
-  title: string;
-  thumbnail?: string;
-  published: Date;
-};
-
-type PostListResult = {
-  metadatas: PostList[];
-  nextToken?: string;
-};
-
-type PostMetadata = {
-  title: string;
-  published: string;
-  thumbnail?: string;
-  tags?: string[];
-  layout: string;
-};
-
-export async function getPostListFromLocal() {
-  const postLists = fs.readdirSync("post");
-
-  const resultLists: PostList[] = [];
-  for (const post of postLists) {
-    const postFile = fs.readFileSync(`post/${post}`, "utf-8");
-
-    const postMetadata = await convertPostToHtml(postFile);
-
-    const metadata = postMetadata.data.frontmatter as PostMetadata;
-
-    resultLists.push({
-      slug: post.replace(/\.md/, ""),
-      title: metadata.title,
-      published: new Date(metadata.published),
-    });
-  }
-
-  resultLists.sort((a, b) => b.published.getTime() - a.published.getTime());
-  return resultLists;
-}
-
-export async function getPostDetailedFromLocal(filename: string) {
-  const postFile = fs.readFileSync(`post/${filename}.md`, "utf-8");
-
-  const post2html = await unified()
-    // .use(remarkMdxFrontmatter)
-    .use(remarkParse)
-    .use(remarkFrontmatter, ["yaml"])
-    .use(remarkParseFrontmatter)
-    .use(remarkGfm)
-    .use(remarkRehype)
-    .use(rehypeHighlight)
-    .use(rehypeStringify)
-    .process(postFile);
-
-  const metadata = post2html.data.frontmatter as PostMetadata;
-
-  return {
-    title: metadata.title,
-    published: new Date(metadata.published),
-    tags: metadata.tags,
-    content: post2html.value.toString(),
-    thumbnail: metadata.thumbnail,
-  };
-}
+import { convertPostToHtml } from "./utils";
+import { PostList, PostListResult, PostMetadata } from "./post";
 
 export async function getPostDetailedFromCloud(
   lang: string,
@@ -88,16 +13,7 @@ export async function getPostDetailedFromCloud(
   const post = await getBytes(postRef);
   const postInText = await new Blob([post], { type: "text/plain" }).text();
 
-  const post2html = await unified()
-    // .use(remarkMdxFrontmatter)
-    .use(remarkParse)
-    .use(remarkFrontmatter, ["yaml"])
-    .use(remarkParseFrontmatter)
-    .use(remarkGfm)
-    .use(remarkRehype)
-    .use(rehypeHighlight)
-    .use(rehypeStringify)
-    .process(postInText.toString());
+  const post2html = await convertPostToHtml(postInText);
 
   const metadata = post2html.data.frontmatter as PostMetadata;
 
@@ -125,7 +41,7 @@ export async function getPostListFromCloud(
   for (const postRef of postRefList) {
     const post = await getBytes(postRef);
     const postInBlob = await new Blob([post], { type: "text/plain" }).text();
-    const metadata = await convertPostToHtml(postInBlob.toString()).then(
+    const metadata = await convertPostToHtml(postInBlob).then(
       (parsedData) => parsedData.data.frontmatter as PostMetadata,
     );
 
@@ -159,7 +75,7 @@ export async function getPostListByPageFromCloud(
   for (const postRef of postRefList) {
     const post = await getBytes(postRef);
     const postInBlob = await new Blob([post], { type: "text/plain" }).text();
-    const metadata = await convertPostToHtml(postInBlob.toString()).then(
+    const metadata = await convertPostToHtml(postInBlob).then(
       (parsedData) => parsedData.data.frontmatter as PostMetadata,
     );
 
@@ -174,19 +90,4 @@ export async function getPostListByPageFromCloud(
   metadatas.sort((a, b) => b.published.getTime() - a.published.getTime());
 
   return { metadatas, nextToken: postsList.nextPageToken };
-}
-
-async function convertPostToHtml(postFile: string) {
-  const post2html = await unified()
-    // .use(remarkMdxFrontmatter)
-    .use(remarkParse)
-    .use(remarkFrontmatter, ["yaml"])
-    .use(remarkParseFrontmatter)
-    .use(remarkGfm)
-    .use(remarkRehype)
-    .use(rehypeHighlight)
-    .use(rehypeStringify)
-    .process(postFile);
-
-  return post2html;
 }
