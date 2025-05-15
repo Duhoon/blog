@@ -1,40 +1,17 @@
 import { Metadata } from "next";
 import Link from "next/link";
-import { getPostDetailedFromCloud } from "@/api/posts.firebase";
-import "highlight.js/styles/github-dark.css";
-import styles from "./page.module.scss";
-// import { storage } from "@/config/firebase";
-// import { ref, listAll } from "firebase/storage";
 import dayjs from "dayjs";
 import Reply from "@/components/Reply";
 import Image from "next/image";
 import { OpenGraph } from "next/dist/lib/metadata/types/opengraph-types";
 import { getPostDetailed } from "@/api/posts.supabase";
-// import { locales } from "@/middleware";
-
-export const dynamicParams = false;
-
-// export async function generateStaticParams() {
-//   const dirRef = ref(storage, "posts");
-//   const listSubDirRef = await listAll(dirRef).then((res) => res.prefixes);
-
-//   const result: Params[] = [];
-//   for (const subDirRef of listSubDirRef) {
-//     const namesPost = await listAll(subDirRef).then((res) =>
-//       res.items.map((item) => ({
-//         category: subDirRef.name,
-//         slug: item.name.replace(".md", ""),
-//       })),
-//     );
-//     result.push(...namesPost);
-//   }
-
-//   return result;
-// }
+import "highlight.js/styles/github-dark.css";
+import styles from "./page.module.scss";
+import { PostCategory } from "@/types/post.type";
 
 type Params = {
   lang: string;
-  category: string;
+  category: PostCategory;
   slug: string;
 };
 type Props = {
@@ -71,8 +48,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const { lang, category, slug } = await params;
-  const { title, published, content, thumbnail, tags } =
-    await getPostDetailedFromCloud(lang, category, slug);
+  const { title, published, content, thumbnail, tags } = await getPostDetailed(
+    lang,
+    category,
+    slug,
+  );
 
   return (
     <>

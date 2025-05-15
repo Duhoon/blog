@@ -20,7 +20,6 @@ type Props = {
 
 export default async function Page({ params }: Props) {
   const { lang, category } = await params;
-
   const { metadatas, nextToken } = await getPostList(lang, category);
 
   return (

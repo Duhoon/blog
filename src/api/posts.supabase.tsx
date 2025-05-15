@@ -2,6 +2,7 @@ import { createClient } from "@supabase/supabase-js";
 import path from "path";
 import { convertPostToHtml } from "./utils";
 import { PostList, PostListResult, PostMetadata } from "./post";
+import { PostCategory } from "@/types/post.type";
 
 const supabaseUrl = "https://rpghzgqushnkznqrdbeq.supabase.co";
 const supabaseKey = process.env.SUPABASE_KEY!;
@@ -11,18 +12,10 @@ const storage = supabase.storage.from(BUCKET_NAME);
 
 export async function getPostList(
   lang: string,
-  directory?: string,
+  directory?: PostCategory,
 ): Promise<PostListResult> {
   const filepath = path.join("posts", lang, directory || "");
-
-  const { data: postsList, error } = await storage.list(filepath, {
-    limit: 100,
-    sortBy: { column: "name", order: "asc" },
-  });
-
-  if (error) {
-    throw new Error(error.message);
-  }
+  const postsList = await callGetPostList(filepath);
 
   const postRefList = postsList.map((item) => {
     const {
@@ -43,7 +36,7 @@ export async function getPostList(
       title: metadata.title,
       published: new Date(metadata.published),
       thumbnail: metadata.thumbnail,
-      slug: name,
+      slug: name.replace(".md", ""),
     } as PostList);
   }
 
@@ -63,10 +56,11 @@ export async function getPostDetailed(
     .from(BUCKET_NAME)
     .getPublicUrl(path.join("posts", lang, directory, `${filename}.md`));
 
-  const post = await fetch(publicUrl).then((res) => res.text());
-  const postInText = await new Blob([post], { type: "text/plain" }).text();
+  const post = await fetch(publicUrl, { cache: "force-cache" }).then((res) =>
+    res.text(),
+  );
 
-  const post2html = await convertPostToHtml(postInText);
+  const post2html = await convertPostToHtml(post);
 
   const metadata = post2html.data.frontmatter as PostMetadata;
 
@@ -77,4 +71,17 @@ export async function getPostDetailed(
     content: post2html.value.toString(),
     thumbnail: metadata.thumbnail,
   };
+}
+
+export async function callGetPostList(path: string) {
+  const { data, error } = await storage.list(path, {
+    limit: 100,
+    sortBy: { column: "name", order: "asc" },
+  });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
 }
