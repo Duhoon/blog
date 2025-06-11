@@ -7,10 +7,11 @@ import { useMemo } from "react";
 import { PerspectiveCamera } from "@react-three/drei";
 import { TextureLoader } from "three";
 import { Flash } from "./items/Flash";
+import { Rain } from "./items/Rain";
 
 export function Raindrop() {
   const { width, height } = useWindowSize();
-  const cloudTexture = useLoader(TextureLoader, "./assets/texture/Smoke.png");
+  const cloudTexture = useLoader(TextureLoader, "/assets/texture/Smoke.png");
 
   const clouds = useMemo(
     () =>
@@ -31,7 +32,11 @@ export function Raindrop() {
   );
 
   return (
-    <Canvas style={{ background: "black" }}>
+    <Canvas
+      /** */
+      style={{ background: "black" }}
+      shadows
+    >
       <PerspectiveCamera
         makeDefault
         position={[0, 0, 1]}
@@ -39,8 +44,9 @@ export function Raindrop() {
         fov={60}
         aspect={width / height}
         near={1}
-        far={1000}
+        far={3000}
       />
+      <Flash />
       <ambientLight color={0x555555} />
       <directionalLight color={0xffeedd} position={[0, 0, 1]} />
       {clouds.map(({ key, position, rotation }) => (
@@ -51,7 +57,7 @@ export function Raindrop() {
           texture={cloudTexture}
         />
       ))}
-      <Flash />
+      <Rain />
     </Canvas>
   );
 }
