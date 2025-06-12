@@ -14,12 +14,18 @@ export function Cloud({ position, rotation, texture }: CloudProps) {
   const ref = useRef<Mesh>(null);
   useFrame(() => {
     if (ref.current) {
-      ref.current.rotation.z -= 0.002;
+      ref.current.rotation.z -= 0.0008;
     }
   });
 
   return (
-    <mesh position={position} rotation={rotation} ref={ref}>
+    <mesh
+      position={position}
+      rotation={rotation}
+      ref={ref}
+      receiveShadow
+      castShadow
+    >
       <planeGeometry args={[500, 500]} />
       <meshLambertMaterial map={texture} opacity={0.6} transparent />
     </mesh>
