@@ -1,8 +1,10 @@
+"use client";
+
 import styles from "./page.module.scss";
-import Scene from "@/components/Three";
 import { Navigation } from "@/components/Navigation";
-import { Suspense } from "react";
 import Loading from "@/components/Three/Loading";
+import { RainyDay } from "@/components/Three/RainyDay";
+import { Suspense } from "react";
 
 export default function Home() {
   return (
@@ -10,7 +12,7 @@ export default function Home() {
       <Navigation />
       <main className={styles.mainWrapper}>
         <Suspense fallback={<Loading />}>
-          <Scene />
+          <RainyDay />
         </Suspense>
       </main>
     </>

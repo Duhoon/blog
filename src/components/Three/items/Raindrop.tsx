@@ -6,7 +6,7 @@ import { BufferAttribute, BufferGeometry, Points } from "three";
 
 const rainCount = 15000;
 
-export function Rain() {
+export function Raindrop() {
   const ref = useRef<Points>();
 
   const geometry = new BufferGeometry();

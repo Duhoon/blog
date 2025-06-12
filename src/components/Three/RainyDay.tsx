@@ -7,9 +7,9 @@ import { useMemo } from "react";
 import { PerspectiveCamera } from "@react-three/drei";
 import { TextureLoader } from "three";
 import { Flash } from "./items/Flash";
-import { Rain } from "./items/Rain";
+import { Raindrop } from "./items/Raindrop";
 
-export function Raindrop() {
+export function RainyDay() {
   const { width, height } = useWindowSize();
   const cloudTexture = useLoader(TextureLoader, "/assets/texture/Smoke.png");
 
@@ -57,7 +57,7 @@ export function Raindrop() {
           texture={cloudTexture}
         />
       ))}
-      <Rain />
+      <Raindrop />
     </Canvas>
   );
 }
