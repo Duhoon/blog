@@ -2,34 +2,16 @@
 
 import { Canvas, useLoader } from "@react-three/fiber";
 import { useWindowSize } from "@/hooks/useWindowSize";
-import { Cloud } from "./items/Cloud";
-import { useMemo } from "react";
+import { Clouds } from "./items/Cloud";
 import { PerspectiveCamera } from "@react-three/drei";
-import { TextureLoader } from "three";
 import { Flash } from "./items/Flash";
 import { Raindrop } from "./items/Raindrop";
+import { memo } from "react";
+import { TextureLoader } from "three";
 
-export function RainyDay() {
+export default memo(function RainyDay() {
   const { width, height } = useWindowSize();
   const cloudTexture = useLoader(TextureLoader, "/assets/texture/Smoke.png");
-
-  const clouds = useMemo(
-    () =>
-      [...Array(25)].map((_, idx) => ({
-        key: idx,
-        position: [
-          Math.random() * 800 - 400,
-          500,
-          Math.random() * 500 - 450,
-        ] as [number, number, number],
-        rotation: [1.16, -0.12, Math.random() * 360] as [
-          number,
-          number,
-          number,
-        ],
-      })),
-    [],
-  );
 
   return (
     <Canvas
@@ -49,15 +31,8 @@ export function RainyDay() {
       <Flash />
       <ambientLight color={0x555555} />
       <directionalLight color={0xffeedd} position={[0, 0, 1]} />
-      {clouds.map(({ key, position, rotation }) => (
-        <Cloud
-          key={key}
-          position={position}
-          rotation={rotation}
-          texture={cloudTexture}
-        />
-      ))}
+      <Clouds texture={cloudTexture} />
       <Raindrop />
     </Canvas>
   );
-}
+});
