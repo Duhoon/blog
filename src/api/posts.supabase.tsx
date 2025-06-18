@@ -1,6 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import path from "path";
-import { convertPostToHtml } from "./utils";
+import { convertPostToHtml, exportFrontmatter } from "./utils";
 import { PostList, PostListResult, PostMetadata } from "./post";
 import { PostCategory } from "@/types/post.type";
 
@@ -28,7 +28,7 @@ export async function getPostList(
   for (const [url, name] of postRefList) {
     const post = await fetch(url).then((res) => res.text());
     const postInBlob = await new Blob([post], { type: "text/plain" }).text();
-    const metadata = await convertPostToHtml(postInBlob).then(
+    const metadata = await exportFrontmatter(postInBlob).then(
       (parsedData) => parsedData.data.frontmatter as PostMetadata,
     );
 

@@ -9,6 +9,22 @@ import rehypeHighlight from "rehype-highlight";
 
 /**
  *
+ * @description export metadata from markdown file
+ * @param postFile
+ * @returns
+ */
+export async function exportFrontmatter(postFile: string) {
+  return await unified()
+    .use(remarkParse)
+    .use(remarkFrontmatter, ["yaml"])
+    .use(remarkParseFrontmatter)
+    .use(remarkRehype)
+    .use(rehypeStringify)
+    .process(postFile);
+}
+
+/**
+ *
  * @description convert markdown file to HTML
  * @param postFile
  * @returns
