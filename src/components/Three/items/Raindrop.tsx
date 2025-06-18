@@ -42,19 +42,23 @@ export function Raindrop() {
 
   useEffect(() => {
     const listener = new AudioListener();
-    camera.add(listener);
     const audio = new Audio(listener);
-
-    document.body.addEventListener("click", () => {
+    const handler = () => {
       audio.setBuffer(rainSoundBuffer);
       audio.setLoop(true);
       audio.setVolume(1);
       audio.play();
-    });
+    };
+
+    if (camera && rainSoundBuffer) {
+      camera.add(listener);
+      document.body.onclick = handler;
+    }
 
     return () => {
       audio.stop();
       camera.remove(listener);
+      document.body.onclick = null;
     };
   }, [camera, rainSoundBuffer]);
 
