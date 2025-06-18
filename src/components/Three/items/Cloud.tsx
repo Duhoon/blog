@@ -11,8 +11,6 @@ interface CloudProps {
 }
 
 export function Clouds({ texture }: { texture: Texture }) {
-  console.log("...Cloud Rendering");
-
   const clouds = useMemo(
     () =>
       [...Array(25)].map((_, idx) => ({

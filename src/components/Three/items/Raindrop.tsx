@@ -1,13 +1,26 @@
 "use client";
 
-import { useFrame } from "@react-three/fiber";
-import { useMemo, useRef } from "react";
-import { BufferAttribute, BufferGeometry, Points } from "three";
+import { useFrame, useLoader, useThree } from "@react-three/fiber";
+import { useEffect, useMemo, useRef } from "react";
+import {
+  AudioListener,
+  AudioLoader,
+  Audio,
+  BufferAttribute,
+  BufferGeometry,
+  Points,
+} from "three";
 
 const rainCount = 15000;
 
 export function Raindrop() {
+  const { camera } = useThree();
   const ref = useRef<Points>();
+
+  const rainSoundBuffer = useLoader(
+    AudioLoader,
+    "/assets/sound/Rain_Light_Sound_Effect.mp3",
+  );
 
   const geometry = new BufferGeometry();
   const vertices = useMemo(() => {
@@ -26,6 +39,24 @@ export function Raindrop() {
   }, []);
 
   geometry.setAttribute("position", new BufferAttribute(vertices, 3));
+
+  useEffect(() => {
+    const listener = new AudioListener();
+    camera.add(listener);
+    const audio = new Audio(listener);
+
+    document.body.addEventListener("click", () => {
+      audio.setBuffer(rainSoundBuffer);
+      audio.setLoop(true);
+      audio.setVolume(1);
+      audio.play();
+    });
+
+    return () => {
+      audio.stop();
+      camera.remove(listener);
+    };
+  }, [camera, rainSoundBuffer]);
 
   useFrame(() => {
     const pos = geometry.attributes.position as BufferAttribute;

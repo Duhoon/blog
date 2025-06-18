@@ -6,19 +6,16 @@ import { Clouds } from "./items/Cloud";
 import { PerspectiveCamera } from "@react-three/drei";
 import { Flash } from "./items/Flash";
 import { Raindrop } from "./items/Raindrop";
-import { memo } from "react";
+import { memo, useRef } from "react";
 import { TextureLoader } from "three";
 
 export default memo(function RainyDay() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const { width, height } = useWindowSize();
   const cloudTexture = useLoader(TextureLoader, "/assets/texture/Smoke.png");
 
   return (
-    <Canvas
-      /** */
-      style={{ background: "black" }}
-      shadows
-    >
+    <Canvas style={{ background: "black" }} shadows ref={canvasRef}>
       <PerspectiveCamera
         makeDefault
         position={[0, 0, 1]}

@@ -3,8 +3,8 @@
 import styles from "./page.module.scss";
 import { Navigation } from "@/components/Navigation";
 import Loading from "@/components/Three/Loading";
-import dynamic from "next/dynamic";
 import { Suspense } from "react";
+import dynamic from "next/dynamic";
 const RainyDay = dynamic(() => import("@/components/Three/RainyDay"), {
   ssr: false,
 });
