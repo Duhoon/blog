@@ -1,10 +1,10 @@
-import Link from 'next/link';
-import { 
+import Link from "next/link";
+import {
   SidebarHeader as SBHeader,
   SidebarMenu,
   SidebarMenuItem,
-  SidebarMenuButton
-} from '@/components/ui/sidebar';
+  SidebarMenuButton,
+} from "@/components/ui/sidebar";
 
 export default function SidebarHeader() {
   return (
@@ -22,5 +22,5 @@ export default function SidebarHeader() {
         </SidebarMenuItem>
       </SidebarMenu>
     </SBHeader>
-  )
+  );
 }
