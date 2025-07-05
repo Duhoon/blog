@@ -9,7 +9,7 @@ export default function RootLayout({children}: {children: ReactNode}) {
       <body>
       <SidebarProvider>
         <AppSidebar/>
-        <main>
+        <main className={"w-screen"}>
           <SidebarTrigger/>
           {children}
         </main>

@@ -35,10 +35,10 @@ function Category({title, list}: {title: string, list: CategoryItem[]}) {
   return (
     <Collapsible className="group/collapsible" defaultOpen>
       <SidebarGroup>
-        <SidebarGroupLabel asChild>
+        <SidebarGroupLabel className={"mb-2"} asChild>
           <SidebarMenuButton asChild>
             <CollapsibleTrigger>
-              {title}
+              <span className={"text-lg"}>{title}</span>
               <ChevronDown className="ml-auto transition-transform group-data-[state=open]/collapsible:rotate-180" />
             </CollapsibleTrigger>
           </SidebarMenuButton>
