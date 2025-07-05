@@ -1,9 +1,30 @@
-import { LucideIcon, Notebook, Clapperboard, BookOpenText, ChevronDown } from "lucide-react";
-import { SidebarContent as SidebarContentWrapper, SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from "@/components/ui/sidebar";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import {
+  LucideIcon,
+  Notebook,
+  Clapperboard,
+  BookOpenText,
+  ChevronDown,
+} from "lucide-react";
+import {
+  SidebarContent as SidebarContentWrapper,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/components/ui/sidebar";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import Link from "next/link";
 
-interface CategoryItem {title: string, href: string, icon: LucideIcon}
+interface CategoryItem {
+  title: string;
+  href: string;
+  icon: LucideIcon;
+}
 
 const bloglist: CategoryItem[] = [
   {
@@ -21,17 +42,17 @@ const bloglist: CategoryItem[] = [
     href: "/list/book",
     icon: BookOpenText,
   },
-]
+];
 
 export default function SidebarContent() {
   return (
     <SidebarContentWrapper>
-      <Category title={"Blog"} list={bloglist}/>
+      <Category title={"Blog"} list={bloglist} />
     </SidebarContentWrapper>
-  )
+  );
 }
 
-function Category({title, list}: {title: string, list: CategoryItem[]}) {
+function Category({ title, list }: { title: string; list: CategoryItem[] }) {
   return (
     <Collapsible className="group/collapsible" defaultOpen>
       <SidebarGroup>
@@ -45,19 +66,19 @@ function Category({title, list}: {title: string, list: CategoryItem[]}) {
         </SidebarGroupLabel>
         <CollapsibleContent>
           <SidebarMenu>
-            {list.map((item)=> 
+            {list.map((item) => (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton asChild>
                   <Link href={item.href}>
-                    <item.icon/>
+                    <item.icon />
                     <span>{item.title}</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
-            )}
+            ))}
           </SidebarMenu>
         </CollapsibleContent>
       </SidebarGroup>
     </Collapsible>
-  )
+  );
 }

@@ -1,9 +1,7 @@
-import {
-  Sidebar,
-} from "@/components/ui/sidebar"
-import SidebarHeader from "./sidebar-header"
-import SidebarContent from "./sidebar-content"
-import SidebarFooter from "./sidebar-footer"
+import { Sidebar } from "@/components/ui/sidebar";
+import SidebarHeader from "./sidebar-header";
+import SidebarContent from "./sidebar-content";
+import SidebarFooter from "./sidebar-footer";
 
 export function AppSidebar() {
   return (
@@ -12,5 +10,5 @@ export function AppSidebar() {
       <SidebarContent />
       <SidebarFooter />
     </Sidebar>
-  )
+  );
 }
