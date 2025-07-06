@@ -14,7 +14,7 @@ export default function SidebarHeader() {
         <SidebarMenuItem>
           <SidebarMenuButton className={"h-12"} asChild>
             <Link href="/">
-              <div className="bg-primary relative text-sidebar-primary-foreground flex aspect-square size-12 items-center justify-center rounded-lg">
+              <div className="bg-primary relative text-sidebar-primary-foreground flex aspect-square size-12 items-center justify-center rounded-lg overflow-hidden">
                 <Image
                   src={"/logo-light.png"}
                   alt={"blog logo"}
