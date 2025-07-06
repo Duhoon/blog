@@ -24,7 +24,7 @@ export default async function RootLayout({
         <NextIntlClientProvider>
           <SidebarProvider>
             <AppSidebar />
-            <main className={"w-screen"}>
+            <main className="w-full">
               <SidebarTrigger />
               {children}
             </main>
