@@ -24,19 +24,27 @@ export async function getPostList(
   });
 
   const metadatas = [];
-  for (const [url, name] of postRefList) {
-    const post = await fetch(url).then((res) => res.text());
-    const postInBlob = await new Blob([post], { type: "text/plain" }).text();
-    const metadata = await exportFrontmatter(postInBlob).then(
-      (parsedData) => parsedData.data.frontmatter as PostMetadata,
-    );
+  const posts = await Promise.all(
+    postRefList.map(async ([url, name]) => {
+      const post = await (await fetch(url)).text();
+      return [post, name];
+    }),
+  );
+  for (const [data, name] of posts) {
+    try {
+      const metadata = await exportFrontmatter(data).then(
+        (parsedData) => parsedData.data.frontmatter as PostMetadata,
+      );
 
-    metadatas.push({
-      title: metadata.title,
-      published: new Date(metadata.published),
-      thumbnail: metadata.thumbnail,
-      slug: name.replace(".md", ""),
-    } as PostList);
+      metadatas.push({
+        title: metadata.title,
+        published: new Date(metadata.published),
+        thumbnail: metadata.thumbnail,
+        slug: name.replace(".md", ""),
+      } as PostList);
+    } catch (err) {
+      console.log(`"${name}" file download doesn't worked`, err);
+    }
   }
 
   metadatas.sort((a, b) => b.published.getTime() - a.published.getTime());
