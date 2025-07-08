@@ -44,7 +44,10 @@ export default function ListPagination({
           )}
         </PaginationItem>
         <PaginationItem>
-          <PaginationLink href={`${path}`} isActive>
+          <PaginationLink
+            href={{ pathname: path, query: { page: page } }}
+            isActive
+          >
             {page}
           </PaginationLink>
         </PaginationItem>
