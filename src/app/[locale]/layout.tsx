@@ -19,13 +19,13 @@ export default async function RootLayout({
   }
 
   return (
-    <html>
-      <body>
+    <html lang={locale}>
+      <body suppressHydrationWarning>
         <NextIntlClientProvider>
           <SidebarProvider>
             <AppSidebar />
             <main className="w-full">
-              <SidebarTrigger />
+              <SidebarTrigger className="z-100" />
               {children}
             </main>
           </SidebarProvider>
