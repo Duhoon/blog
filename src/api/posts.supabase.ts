@@ -2,6 +2,7 @@ import { createClient } from "@supabase/supabase-js";
 import path from "path";
 import { convertPostToHtml, exportFrontmatter } from "./utils";
 import { PostCategory, PostList, PostListResult, PostMetadata } from "./post";
+import { notFound } from "next/navigation";
 
 const supabaseUrl = "https://rpghzgqushnkznqrdbeq.supabase.co";
 const supabaseKey = process.env.SUPABASE_KEY!;
@@ -64,21 +65,26 @@ export async function getPostDetailed(
     .from(BUCKET_NAME)
     .getPublicUrl(path.join("posts", lang, directory, `${filename}.md`));
 
-  const post = await fetch(publicUrl, { cache: "force-cache" }).then((res) =>
-    res.text(),
-  );
+  try {
+    const post = await fetch(publicUrl, { cache: "force-cache" }).then((res) =>
+      res.text(),
+    );
 
-  const post2html = await convertPostToHtml(post);
+    const post2html = await convertPostToHtml(post);
 
-  const metadata = post2html.data.frontmatter as PostMetadata;
+    const metadata = post2html.data.frontmatter as PostMetadata;
 
-  return {
-    title: metadata.title,
-    published: new Date(metadata.published),
-    tags: metadata.tags,
-    content: post2html.value.toString(),
-    thumbnail: metadata.thumbnail,
-  };
+    return {
+      title: metadata.title,
+      published: new Date(metadata.published),
+      tags: metadata.tags,
+      content: post2html.value.toString(),
+      thumbnail: metadata.thumbnail,
+    };
+  } catch (error) {
+    console.log(error);
+    notFound();
+  }
 }
 
 export async function callGetPostList(path: string, page = 1, limit = 6) {
