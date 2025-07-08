@@ -44,7 +44,7 @@ export default async function ListPage({ params, searchParams }: Props) {
                 <div className={"w-full h-64 relative overflow-hidden"}>
                   <Image
                     className={
-                      "absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 z-50"
+                      "absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 z-5"
                     }
                     src={
                       metadata.thumbnail || "https://placehold.co/600x400/png"
