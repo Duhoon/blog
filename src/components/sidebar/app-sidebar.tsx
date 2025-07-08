@@ -5,7 +5,7 @@ import SidebarFooter from "./sidebar-footer";
 
 export function AppSidebar() {
   return (
-    <Sidebar>
+    <Sidebar className="z-10">
       <SidebarHeader />
       <SidebarContent />
       <SidebarFooter />

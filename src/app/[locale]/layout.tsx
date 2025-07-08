@@ -25,7 +25,7 @@ export default async function RootLayout({
           <SidebarProvider>
             <AppSidebar />
             <main className="w-full">
-              <SidebarTrigger className="z-100" />
+              <SidebarTrigger className="z-5" />
               {children}
             </main>
           </SidebarProvider>
