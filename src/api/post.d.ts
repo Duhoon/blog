@@ -9,6 +9,7 @@ export type PostList = {
 
 export type PostListResult = {
   metadatas: PostList[];
+  total: number;
   nextToken?: string;
 };
 

@@ -12,9 +12,10 @@ const storage = supabase.storage.from(BUCKET_NAME);
 export async function getPostList(
   lang: string,
   directory?: PostCategory,
+  page = 1,
 ): Promise<PostListResult> {
   const filepath = path.join("posts", lang, directory || "");
-  const postsList = await callGetPostList(filepath);
+  const { total, data: postsList } = await callGetPostList(filepath, page);
 
   const postRefList = postsList.map((item) => {
     const {
@@ -49,7 +50,7 @@ export async function getPostList(
 
   metadatas.sort((a, b) => b.published.getTime() - a.published.getTime());
 
-  return { metadatas };
+  return { total, metadatas };
 }
 
 export async function getPostDetailed(
@@ -80,15 +81,17 @@ export async function getPostDetailed(
   };
 }
 
-export async function callGetPostList(path: string) {
+export async function callGetPostList(path: string, page = 1, limit = 6) {
   const { data, error } = await storage.list(path, {
-    limit: 100,
-    sortBy: { column: "name", order: "asc" },
+    sortBy: { column: "created_at", order: "desc" },
   });
 
   if (error) {
     throw new Error(error.message);
   }
 
-  return data;
+  const total = data.length;
+  const dataReduced = data.slice((page - 1) * limit, page * limit);
+
+  return { total, data: dataReduced };
 }
