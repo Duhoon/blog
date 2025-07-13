@@ -44,6 +44,7 @@ export async function convertPostToHtml(postFile: string) {
       ul: "list-disc pl-6 mb-4",
       ol: "list-decimal pl-6 mb-4",
       code: "bg-gray-100 px-1 rounded text-sm text-red-500",
+      pre: "mb-4",
       a: "text-blue-600 hover:underline",
     })
     .use(rehypeHighlight)

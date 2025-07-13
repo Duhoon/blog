@@ -36,7 +36,7 @@ export default async function ListPage({ params, searchParams }: Props) {
           metadatas.map((metadata) => (
             <li
               className={
-                "relative min-h-96 w-full lg:w-84 shadow-md rounded-lg"
+                "relative min-h-96 w-full lg:w-84 shadow-md rounded-lg overflow-hidden"
               }
               key={metadata.slug}
             >
