@@ -16,8 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  const categories = ["development", "book", "movie"] as PostCategory[];
-  for (const category of categories) {
+  for (const category of PostCategory) {
     for (const locale of locales) {
       const filepath = path.join("posts", locale, category);
       const { data } = await callGetPostList(filepath, 1, 1000);

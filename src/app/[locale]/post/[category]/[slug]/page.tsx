@@ -5,13 +5,13 @@ import Image from "next/image";
 import { OpenGraph } from "next/dist/lib/metadata/types/opengraph-types";
 import { getPostDetailed } from "@/api/posts.supabase";
 import "highlight.js/styles/github-dark.css";
-import { PostCategory } from "@/api/post";
+import { PostCategoryType } from "@/api/post";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 
 type Params = {
   locale: string;
-  category: PostCategory;
+  category: PostCategoryType;
   slug: string;
 };
 type Props = {

@@ -1,14 +1,14 @@
 import Link from "next/link";
 import dayjs from "dayjs";
 import Image from "next/image";
-import { PostCategory } from "@/api/post";
+import { PostCategoryType } from "@/api/post";
 import { getPostList } from "@/api/posts.supabase";
 import Pagination from "@/components/list/pagination";
 
 type Props = {
   params: Promise<{
     locale: string;
-    category: PostCategory;
+    category: PostCategoryType;
   }>;
   searchParams: Promise<{
     [key: string]: string | string[] | undefined;

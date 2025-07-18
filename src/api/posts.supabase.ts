@@ -1,7 +1,12 @@
 import { createClient } from "@supabase/supabase-js";
 import path from "path";
 import { convertPostToHtml, exportFrontmatter } from "./utils";
-import { PostCategory, PostList, PostListResult, PostMetadata } from "./post";
+import {
+  PostCategoryType,
+  PostList,
+  PostListResult,
+  PostMetadata,
+} from "./post";
 import { notFound } from "next/navigation";
 
 const supabaseUrl = "https://rpghzgqushnkznqrdbeq.supabase.co";
@@ -12,7 +17,7 @@ const storage = supabase.storage.from(BUCKET_NAME);
 
 export async function getPostList(
   lang: string,
-  directory?: PostCategory,
+  directory?: PostCategoryType,
   page = 1,
 ): Promise<PostListResult> {
   const filepath = path.join("posts", lang, directory || "");

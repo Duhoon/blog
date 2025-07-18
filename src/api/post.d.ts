@@ -1,4 +1,6 @@
-export type PostCategory = "book" | "movie" | "development";
+export const PostCategory = ["book", "movie", "development"] as const;
+
+export type PostCategoryType = (typeof PostCategory)[number];
 
 export type PostList = {
   slug: string;
