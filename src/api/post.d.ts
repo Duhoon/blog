@@ -1,4 +1,4 @@
-export const PostCategory = ["book", "movie", "development"] as const;
+import { PostCategory } from "./constants";
 
 export type PostCategoryType = (typeof PostCategory)[number];
 

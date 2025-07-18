@@ -1,5 +1,5 @@
 import { callGetPostList } from "@/api/posts.supabase";
-import { PostCategory } from "@/api/post";
+import { PostCategory } from "@/api/constants";
 import { MetadataRoute } from "next";
 import path from "path";
 
