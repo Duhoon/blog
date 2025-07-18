@@ -22,7 +22,7 @@ type Props = {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, category, slug } = await params;
 
-  const { title, tags, thumbnail } = await getPostDetailed(
+  const { title, description, tags, thumbnail } = await getPostDetailed(
     locale,
     category,
     slug,
@@ -30,6 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const openGraph: OpenGraph = {
     title,
+    description,
     siteName: "ALROCK Blog",
     tags,
     images: thumbnail,
@@ -37,7 +38,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title,
-    description: "Trying to record my dev journey",
+    description,
     keywords: tags,
     openGraph,
     robots: {

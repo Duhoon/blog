@@ -53,3 +53,11 @@ export async function convertPostToHtml(postFile: string) {
 
   return post2html;
 }
+
+export async function getDescription(post: string) {
+  return post
+    .replaceAll(/<h1 .*>.*<\/h1>/g, "")
+    .replaceAll(/<[^\>]*>/g, "")
+    .slice(0, 90)
+    .replaceAll("\n", " ");
+}

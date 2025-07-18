@@ -1,6 +1,6 @@
 import { createClient } from "@supabase/supabase-js";
 import path from "path";
-import { convertPostToHtml, exportFrontmatter } from "./utils";
+import { convertPostToHtml, exportFrontmatter, getDescription } from "./utils";
 import {
   PostCategoryType,
   PostList,
@@ -37,11 +37,10 @@ export async function getPostList(
       return [post, name];
     }),
   );
-  for (const [data, name] of posts) {
+  for (const [file, name] of posts) {
     try {
-      const metadata = await exportFrontmatter(data).then(
-        (parsedData) => parsedData.data.frontmatter as PostMetadata,
-      );
+      const { data } = await exportFrontmatter(file);
+      const metadata = data.frontmatter as PostMetadata;
 
       metadatas.push({
         title: metadata.title,
@@ -74,13 +73,14 @@ export async function getPostDetailed(
     const post = await fetch(publicUrl, { cache: "force-cache" }).then((res) =>
       res.text(),
     );
-
     const post2html = await convertPostToHtml(post);
+    const description = await getDescription(post2html.value.toString());
 
     const metadata = post2html.data.frontmatter as PostMetadata;
 
     return {
       title: metadata.title,
+      description,
       published: new Date(metadata.published),
       tags: metadata.tags,
       content: post2html.value.toString(),
