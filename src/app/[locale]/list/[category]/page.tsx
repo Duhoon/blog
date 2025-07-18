@@ -47,7 +47,8 @@ export default async function ListPage({ params, searchParams }: Props) {
                       "absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 z-5"
                     }
                     src={
-                      metadata.thumbnail || "https://placehold.co/600x400/png"
+                      metadata.thumbnail ||
+                      "https://placehold.co/600x400/png?text=No+Thumbnail"
                     }
                     alt={`${metadata.title} thumbnail`}
                     width={600}
