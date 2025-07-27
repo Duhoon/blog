@@ -19,9 +19,14 @@ export async function getPostList(
   lang: string,
   directory?: PostCategoryType,
   page = 1,
+  limit = 6,
 ): Promise<PostListResult> {
   const filepath = path.join("posts", lang, directory || "");
-  const { total, data: postsList } = await callGetPostList(filepath, page);
+  const { total, data: postsList } = await callGetPostList(
+    filepath,
+    page,
+    limit,
+  );
 
   const postRefList = postsList.map((item) => {
     const {
