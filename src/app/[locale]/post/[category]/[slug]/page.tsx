@@ -102,8 +102,10 @@ export default async function PostPage({ params }: Props) {
         </p>
         <Separator className="my-4" />
         {thumbnail ? (
-          <div>
-            <Image src={thumbnail} width={200} height={300} alt="thumbnail" />
+          <div
+            className={"flex justify-center h-[600px] relative overflow-hidden"}
+          >
+            <Image src={thumbnail} alt="thumbnail" fill={true} />
           </div>
         ) : null}
         <div dangerouslySetInnerHTML={{ __html: content }}></div>
