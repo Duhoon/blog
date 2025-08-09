@@ -1,4 +1,5 @@
 import { unified } from "unified";
+import { visit } from "unist-util-visit";
 import remarkParse from "remark-parse";
 import remarkFrontmatter from "remark-frontmatter";
 import remarkParseFrontmatter from "remark-parse-frontmatter";
@@ -7,6 +8,7 @@ import rehypeStringify from "rehype-stringify";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import classNames from "rehype-class-names";
+import { Root, Heading } from "mdast";
 
 /**
  *
@@ -33,6 +35,7 @@ export async function exportFrontmatter(postFile: string) {
 export async function convertPostToHtml(postFile: string) {
   const post2html = await unified()
     .use(remarkParse)
+    .use(remarkShiftHeading)
     .use(remarkFrontmatter, ["yaml"])
     .use(remarkParseFrontmatter)
     .use(remarkGfm)
@@ -60,4 +63,22 @@ export async function getDescription(post: string) {
     .replaceAll(/<[^\>]*>/g, "")
     .slice(0, 90)
     .replaceAll("\n", " ");
+}
+
+export default function remarkShiftHeading(
+  options = { shift: 1, maxDepth: 6 },
+) {
+  const { shift = 1, maxDepth = 6 } = options;
+
+  return (tree: Root) => {
+    visit(tree, "heading", (node) => {
+      // ensure node.depth exists and is a number
+      if (typeof node.depth === "number") {
+        node.depth = Math.min(
+          maxDepth,
+          Math.max(1, node.depth + shift),
+        ) as Heading["depth"];
+      }
+    });
+  };
 }
