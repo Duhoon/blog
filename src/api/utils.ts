@@ -7,6 +7,8 @@ import remarkRehype from "remark-rehype";
 import rehypeStringify from "rehype-stringify";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 import classNames from "rehype-class-names";
 import { Root, Heading } from "mdast";
 
@@ -35,11 +37,12 @@ export async function exportFrontmatter(postFile: string) {
 export async function convertPostToHtml(postFile: string) {
   const post2html = await unified()
     .use(remarkParse)
+    .use(remarkGfm)
+    .use(remarkMath)
     .use(remarkShiftHeading)
     .use(remarkFrontmatter, ["yaml"])
     .use(remarkParseFrontmatter)
-    .use(remarkGfm)
-    .use(remarkRehype)
+    .use(remarkRehype, { allowDangerousHtml: true })
     .use(classNames, {
       h1: "text-4xl font-bold mb-4",
       h2: "text-2xl font-semibold mt-6 mb-2",
@@ -51,6 +54,7 @@ export async function convertPostToHtml(postFile: string) {
       a: "text-blue-600 hover:underline",
     })
     .use(rehypeHighlight)
+    .use(rehypeKatex, { output: "mathml" })
     .use(rehypeStringify)
     .process(postFile);
 
