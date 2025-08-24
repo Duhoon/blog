@@ -28,6 +28,13 @@ export const metadata: Metadata = {
     images: "https://bit.ly/3Vdhrjg",
     description: "Trying to record my dev journey",
   },
+  alternates: {
+    canonical: "https://412ock.dev",
+    languages: {
+      "en-US": "https://www.412ock.dev/en-US",
+      ko: "https://www.412ock.dev/ko",
+    },
+  },
 };
 
 export default async function RootLayout({

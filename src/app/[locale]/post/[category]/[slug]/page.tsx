@@ -57,10 +57,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     siteName: "ALROCK Blog",
     tags,
     images: thumbnail,
+    type: "article",
+    locale: locale,
   };
 
   return {
-    title,
+    title: `${title} - ALROCK Blog`,
     description,
     keywords: tags,
     openGraph,
@@ -72,6 +74,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
     },
     publisher: "412ock",
+    alternates: {
+      canonical: `https://412ock.dev/${locale}/post/${category}/${slug}`,
+    },
   };
 }
 

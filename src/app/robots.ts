@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/",
     },
-    sitemap: "https://412ock.dev/sitemap.xml",
+    sitemap: "https://www.412ock.dev/sitemap.xml",
   };
 }

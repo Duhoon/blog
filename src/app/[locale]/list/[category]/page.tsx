@@ -1,6 +1,7 @@
 import Link from "next/link";
 import dayjs from "dayjs";
 import Image from "next/image";
+import { Metadata } from "next";
 import { PostCategoryType } from "@/api/post";
 import { getPostList } from "@/api/posts.supabase";
 import Pagination from "@/components/list/pagination";
@@ -15,6 +16,25 @@ type Props = {
     page?: string;
   }>;
 };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale, category } = await params;
+
+  return {
+    title: `${category} Posts - ALROCK Blog`,
+    description: `Browse all ${category} posts and articles on ALROCK Blog. Find the latest insights, tutorials, and discussions about ${category}.`,
+    keywords: `${category}, blog posts, articles, ${locale}`,
+    openGraph: {
+      title: `${category} Posts - ALROCK Blog`,
+      description: `Browse all ${category} posts and articles on ALROCK Blog.`,
+      type: "website",
+      locale: locale,
+    },
+    alternates: {
+      canonical: `https://412ock.dev/${locale}/list/${category}`,
+    },
+  };
+}
 
 export default async function ListPage({ params, searchParams }: Props) {
   const { locale, category } = await params;
