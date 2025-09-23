@@ -5,6 +5,7 @@ import { Metadata } from "next";
 import { PostCategoryType } from "@/api/post";
 import { getPostList } from "@/api/posts.supabase";
 import Pagination from "@/components/list/pagination";
+import { Separator } from "@/components/ui/separator";
 
 type Props = {
   params: Promise<{
@@ -47,6 +48,19 @@ export default async function ListPage({ params, searchParams }: Props) {
 
   return (
     <div className={"p-4 w-full flex flex-col justify-center"}>
+      <div
+        className={
+          "flex justify-center flex-col items-center justify-center gap-2 mb-4"
+        }
+      >
+        <h1 className={"w-auto text-muted-foreground font-semibold"}>
+          412ock Blog
+          <Separator className={"mt-4 w-4"} />
+        </h1>
+        <h2 className={"font-bold text-2xl"}>
+          {category[0].toUpperCase() + category.slice(1)}
+        </h2>
+      </div>
       <ul
         className={
           "w-full grid grid-cols-1 place-items-center md:grid-cols-2 lg:grid-cols-3 gap-8"
