@@ -6,6 +6,7 @@ import { routing } from "@/i18n/routing";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata: Metadata = {
   title: "ALROCK Blog",
@@ -61,6 +62,7 @@ export default async function RootLayout({
             </main>
           </SidebarProvider>
         </NextIntlClientProvider>
+        <Analytics />
       </body>
     </html>
   );
