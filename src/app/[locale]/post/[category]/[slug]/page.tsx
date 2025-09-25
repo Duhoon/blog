@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import dayjs from "dayjs";
-import Image from "next/image";
 import { OpenGraph } from "next/dist/lib/metadata/types/opengraph-types";
 import { getPostDetailed, getPostList } from "@/api/posts.supabase";
 import "highlight.js/styles/github-dark.css";
@@ -10,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { PostCategory } from "@/api/constants";
 import { locales } from "@/i18n/routing";
+import ResponsiveImage from "@/components/utils/ResponsiveImage";
 
 type Params = {
   locale: string;
@@ -106,13 +106,7 @@ export default async function PostPage({ params }: Props) {
           {dayjs(published).format("MMMM DD, YYYY")}
         </p>
         <Separator className="my-4" />
-        {thumbnail ? (
-          <div
-            className={"flex justify-center h-[600px] relative overflow-hidden"}
-          >
-            <Image src={thumbnail} alt="thumbnail" fill={true} />
-          </div>
-        ) : null}
+        {thumbnail ? <ResponsiveImage thumbnail={thumbnail} /> : null}
         <div dangerouslySetInnerHTML={{ __html: content }}></div>
       </div>
     </article>
