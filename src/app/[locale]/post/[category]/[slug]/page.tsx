@@ -2,13 +2,11 @@ import { Metadata } from "next";
 import Link from "next/link";
 import dayjs from "dayjs";
 import { OpenGraph } from "next/dist/lib/metadata/types/opengraph-types";
-import { getPostDetailed, getPostList } from "@/api/posts.supabase";
+import { getPostDetailed, getPostStaticParams } from "@/api/posts.service";
 import "highlight.js/styles/github-dark.css";
 import { PostCategoryType } from "@/api/post";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { PostCategory } from "@/api/constants";
-import { locales } from "@/i18n/routing";
 import ResponsiveImage from "@/components/utils/ResponsiveImage";
 
 type Params = {
@@ -22,24 +20,7 @@ type Props = {
 };
 
 export async function generateStaticParams() {
-  const params: Params[] = [];
-
-  for (const locale of locales) {
-    for (const category of PostCategory) {
-      const postLists = await getPostList(locale, category, 1, 99);
-      params.push(
-        ...postLists.metadatas.map(
-          (metadata): Params => ({
-            locale,
-            category,
-            slug: metadata.slug,
-          }),
-        ),
-      );
-    }
-  }
-
-  return params;
+  return getPostStaticParams();
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

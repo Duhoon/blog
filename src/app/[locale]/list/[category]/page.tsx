@@ -3,7 +3,7 @@ import dayjs from "dayjs";
 import Image from "next/image";
 import { Metadata } from "next";
 import { PostCategoryType } from "@/api/post";
-import { getPostList } from "@/api/posts.supabase";
+import { getPostList } from "@/api/posts.service";
 import Pagination from "@/components/list/pagination";
 import { Separator } from "@/components/ui/separator";
 
