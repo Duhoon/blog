@@ -34,3 +34,6 @@ Pull requests should include a concise description, screenshots for visible UI c
 ## Security & Configuration Tips
 
 Keep secrets in `.env.local`; do not commit environment files or Supabase keys. When editing content rendering, be careful with markdown, KaTeX, and rehype/remark changes because they affect user-facing post output and build-time rendering.
+
+# PLAN MODE
+In plan mode, write file in @root/docs/plan.md before implementation.
