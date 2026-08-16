@@ -1,33 +1,36 @@
-# Add Global Blog Search
+# Improve Post List Pagination
 
 ## Summary
 
-Add a search bar at the top of every locale page through the shared locale layout. Submitting search from any page navigates to `/{locale}/list?q=...`, where the all-post listing shows title-matched results.
+Update blog list pagination to show nearby page links and the last page. Users will see up to 2 pages before and 2 pages after the current page, plus a direct link to the final page and a clear page indicator.
 
 ## Key Changes
 
-- Add a shared global search component that renders in `src/app/[locale]/layout.tsx`.
-- Use a GET form with input name `q` and action `/{locale}/list`.
-- Extend `getPostList()` with optional title search while preserving existing category filtering.
-- Update `/{locale}/list` to read `q`, pass it to the post service, and preserve it during pagination.
-- Keep category pages unfiltered; submitting search always lands on all-post search results.
+- Update `src/components/list/pagination.tsx` to compute `totalPages = Math.ceil(total / limit)`.
+- Render previous/next controls only when they can move.
+- Show nearby page links from `currentPage - 2` through `currentPage + 2`, clamped to valid pages.
+- Show first/last page links and ellipses when there are gaps around the nearby page window.
+- Show a compact `Page X of Y` indicator.
+- Preserve existing query params, including search `q`, on every pagination link.
 
 ## Interface Changes
 
-- `getPostList(locale, category?, page?, limit?, searchQuery?)` supports title search.
-- List pagination accepts optional query params so `q` can be preserved across pages.
+- No route or API changes.
+- `ListPagination` keeps the same public props: `path`, `total`, `page`, `limit`, and optional `query`.
+- `ListPagination` clamps invalid page values for display and link generation.
 
 ## Test Plan
 
 - Run `pnpm lint`.
 - Run `pnpm build`.
-- Manually verify search appears on home, all-post list, category list, post detail, and portfolio pages.
-- Manually verify searching from any page navigates to `/{locale}/list?q=...`.
-- Manually verify results match title only, remain locale-scoped, and pagination preserves `q`.
-- Manually verify clearing search returns to `/{locale}/list`.
+- Manually verify the first page shows nearby pages, an ellipsis if needed, and the last page.
+- Manually verify a middle page shows two pages before and two pages after.
+- Manually verify a near-last page does not duplicate the last page.
+- Manually verify previous/next visibility is correct.
+- Manually verify search results preserve `q` while paginating.
+- Manually verify category pages use the same improved pagination.
 
 ## Assumptions
 
-- Search scope is title only.
-- Search results live on the all-post listing route.
-- The top search is a shared layout area, not a sticky overlay during scroll.
+- "2 more pages to move up or down" means showing up to 2 page-number links before and after the current page.
+- "Show last page" means the final page number should be directly clickable whenever more than one page exists.

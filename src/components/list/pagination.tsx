@@ -1,6 +1,7 @@
 import {
   Pagination,
   PaginationContent,
+  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
@@ -22,49 +23,86 @@ export default function ListPagination({
   limit = 6,
   query,
 }: ListPaginationProps) {
-  const isPersistNext = page * limit < total;
-  const isPersistPrevious = page > 1;
+  const totalPages = Math.max(1, Math.ceil(total / limit));
+  const currentPage = Math.min(Math.max(1, page), totalPages);
+  const hasNext = currentPage < totalPages;
+  const hasPrevious = currentPage > 1;
+  const pageWindowStart = Math.max(1, currentPage - 2);
+  const pageWindowEnd = Math.min(totalPages, currentPage + 2);
+  const pages = Array.from(
+    { length: pageWindowEnd - pageWindowStart + 1 },
+    (_, index) => pageWindowStart + index,
+  );
   const getQuery = (targetPage: number) => ({
     ...query,
     page: targetPage,
   });
+  const getHref = (targetPage: number) => ({
+    pathname: path,
+    query: getQuery(targetPage),
+  });
 
   return (
-    <Pagination className={"my-4"}>
+    <Pagination className={"mt-auto mb-4 flex-col items-center gap-2"}>
+      <p className="mt-8 text-muted-foreground text-sm">
+        Page {currentPage} of {totalPages}
+      </p>
       <PaginationContent>
         <PaginationItem>
-          {isPersistPrevious ? (
+          {hasPrevious ? (
             <PaginationPrevious
-              href={{
-                pathname: path,
-                query: getQuery(page - 1),
-              }}
-              disabled={isPersistPrevious}
-              aria-disabled={isPersistPrevious}
-              isActive={isPersistPrevious}
+              href={getHref(currentPage - 1)}
+              aria-label={`Go to page ${currentPage - 1}`}
             />
           ) : (
             <></>
           )}
         </PaginationItem>
+        {pageWindowStart > 1 ? (
+          <>
+            <PaginationItem>
+              <PaginationLink href={getHref(1)}>1</PaginationLink>
+            </PaginationItem>
+            {pageWindowStart > 2 ? (
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+            ) : null}
+          </>
+        ) : null}
+        {pages.map((pageNumber) => (
+          <PaginationItem key={pageNumber}>
+            <PaginationLink
+              href={getHref(pageNumber)}
+              isActive={pageNumber === currentPage}
+              aria-label={`Go to page ${pageNumber}`}
+            >
+              {pageNumber}
+            </PaginationLink>
+          </PaginationItem>
+        ))}
+        {pageWindowEnd < totalPages ? (
+          <>
+            {pageWindowEnd < totalPages - 1 ? (
+              <PaginationItem>
+                <PaginationEllipsis />
+              </PaginationItem>
+            ) : null}
+            <PaginationItem>
+              <PaginationLink
+                href={getHref(totalPages)}
+                aria-label={`Go to page ${totalPages}`}
+              >
+                {totalPages}
+              </PaginationLink>
+            </PaginationItem>
+          </>
+        ) : null}
         <PaginationItem>
-          <PaginationLink
-            href={{ pathname: path, query: getQuery(page) }}
-            isActive
-          >
-            {page}
-          </PaginationLink>
-        </PaginationItem>
-        <PaginationItem>
-          {isPersistNext ? (
+          {hasNext ? (
             <PaginationNext
-              href={{
-                pathname: path,
-                query: getQuery(page + 1),
-              }}
-              disabled={isPersistNext}
-              aria-disabled={isPersistNext}
-              isActive={isPersistNext}
+              href={getHref(currentPage + 1)}
+              aria-label={`Go to page ${currentPage + 1}`}
             />
           ) : (
             <></>

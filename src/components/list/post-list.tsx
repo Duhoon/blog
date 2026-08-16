@@ -25,7 +25,7 @@ export default function PostList({
   paginationQuery,
 }: PostListProps) {
   return (
-    <div className={"p-4 w-full flex flex-col justify-center"}>
+    <div className={"p-4 w-full min-h-[calc(100svh-3.5rem)] flex flex-col"}>
       <div
         className={
           "flex justify-center flex-col items-center justify-center gap-2 mb-4"
