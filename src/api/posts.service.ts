@@ -14,6 +14,7 @@ import { supabase } from "./supabase.server";
 type PostListRow = {
   slug: string;
   title: string;
+  category: PostCategoryType;
   thumbnail: string | null;
   published_at: string;
 };
@@ -51,9 +52,10 @@ export async function getPostList(
 
   let query = supabase
     .from("posts")
-    .select("slug,title,thumbnail,published_at", { count: "exact" })
+    .select("slug,title,category,thumbnail,published_at", { count: "exact" })
     .eq("locale", locale)
     .eq("is_published", true)
+    .not("category", "is", null)
     .order("published_at", { ascending: false })
     .range(from, to);
 
@@ -161,6 +163,7 @@ function mapPostListRow(row: PostListRow): PostList {
   return {
     slug: row.slug,
     title: row.title,
+    category: row.category,
     thumbnail: row.thumbnail ?? undefined,
     published: new Date(row.published_at),
   };

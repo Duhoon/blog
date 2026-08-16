@@ -27,6 +27,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
+  for (const locale of locales) {
+    sitemap.push({
+      url: `${baseUrl}/${locale}/list`,
+      lastModified: new Date(),
+      changeFrequency: "monthly",
+      priority: 0.8,
+    });
+  }
+
   sitemap.push(
     ...posts.map((post) => ({
       url: `${baseUrl}/${post.locale}/post/${post.category}/${post.slug}`,

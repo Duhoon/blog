@@ -5,6 +5,7 @@ export type PostCategoryType = (typeof PostCategory)[number];
 export type PostList = {
   slug: string;
   title: string;
+  category: PostCategoryType;
   thumbnail?: string;
   published: Date;
 };

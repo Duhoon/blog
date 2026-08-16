@@ -1,5 +1,6 @@
 import {
   LucideIcon,
+  List,
   Notebook,
   Clapperboard,
   BookOpenText,
@@ -27,6 +28,11 @@ interface CategoryItem {
 }
 
 const bloglist: CategoryItem[] = [
+  {
+    title: "All",
+    href: "/list",
+    icon: List,
+  },
   {
     title: "Development",
     href: "/list/development",

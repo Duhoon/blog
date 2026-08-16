@@ -1,11 +1,7 @@
-import Link from "next/link";
-import dayjs from "dayjs";
-import Image from "next/image";
 import { Metadata } from "next";
 import { PostCategoryType } from "@/api/post";
 import { getPostList } from "@/api/posts.service";
-import Pagination from "@/components/list/pagination";
-import { Separator } from "@/components/ui/separator";
+import PostList from "@/components/list/post-list";
 
 type Props = {
   params: Promise<{
@@ -47,62 +43,13 @@ export default async function ListPage({ params, searchParams }: Props) {
   const { total, metadatas } = await getPostList(locale, category, page);
 
   return (
-    <div className={"p-4 w-full flex flex-col justify-center"}>
-      <div
-        className={
-          "flex justify-center flex-col items-center justify-center gap-2 mb-4"
-        }
-      >
-        <h1 className={"w-auto text-muted-foreground font-semibold"}>
-          412ock Blog
-          <Separator className={"mt-4 w-4"} />
-        </h1>
-        <h2 className={"font-bold text-2xl"}>
-          {category[0].toUpperCase() + category.slice(1)}
-        </h2>
-      </div>
-      <ul
-        className={
-          "w-full grid grid-cols-1 place-items-center md:grid-cols-2 lg:grid-cols-3 gap-8"
-        }
-      >
-        {metadatas.length > 0 ? (
-          metadatas.map((metadata) => (
-            <li
-              className={
-                "relative min-h-96 w-full lg:w-84 shadow-md rounded-lg overflow-hidden"
-              }
-              key={metadata.slug}
-            >
-              <Link href={`/${locale}/post/${category}/${metadata.slug}`}>
-                <div className={"w-full h-64 relative overflow-hidden"}>
-                  <Image
-                    className={
-                      "absolute left-1/2 top-1/2 -translate-y-1/2 -translate-x-1/2 z-5"
-                    }
-                    src={
-                      metadata.thumbnail ||
-                      "https://placehold.co/600x400/png?text=No+Thumbnail"
-                    }
-                    alt={`${metadata.title} thumbnail`}
-                    width={600}
-                    height={400}
-                  />
-                </div>
-                <div className={"w-full absolute p-4 bottom-0"}>
-                  <h2 className={"font-bold text-lg mb-2"}>{metadata.title}</h2>
-                  <p>{dayjs(metadata.published).format("MMMM DD, YYYY")}</p>
-                </div>
-              </Link>
-            </li>
-          ))
-        ) : (
-          <li className={"text-center"}>
-            <a>There is no post</a>
-          </li>
-        )}
-      </ul>
-      <Pagination path={`/list/${category}`} total={total} page={page} />
-    </div>
+    <PostList
+      locale={locale}
+      title={category[0].toUpperCase() + category.slice(1)}
+      posts={metadatas}
+      total={total}
+      page={page}
+      paginationPath={`/list/${category}`}
+    />
   );
 }

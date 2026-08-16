@@ -10,7 +10,12 @@ import rehypeHighlight from "rehype-highlight";
 import remarkMath from "remark-math";
 import rehypeKatex from "rehype-katex";
 import classNames from "rehype-class-names";
-import { Root, Heading } from "mdast";
+
+type MarkdownRoot = Parameters<typeof visit>[0];
+type HeadingDepth = 1 | 2 | 3 | 4 | 5 | 6;
+type HeadingNode = {
+  depth?: number;
+};
 
 /**
  *
@@ -74,14 +79,14 @@ export default function remarkShiftHeading(
 ) {
   const { shift = 1, maxDepth = 6 } = options;
 
-  return (tree: Root) => {
-    visit(tree, "heading", (node) => {
+  return (tree: MarkdownRoot) => {
+    visit(tree, "heading", (node: HeadingNode) => {
       // ensure node.depth exists and is a number
       if (typeof node.depth === "number") {
         node.depth = Math.min(
           maxDepth,
           Math.max(1, node.depth + shift),
-        ) as Heading["depth"];
+        ) as HeadingDepth;
       }
     });
   };
