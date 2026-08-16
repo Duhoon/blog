@@ -9,6 +9,7 @@ type Props = {
   searchParams: Promise<{
     [key: string]: string | string[] | undefined;
     page?: string;
+    q?: string;
   }>;
 };
 
@@ -35,12 +36,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function AllPostListPage({ params, searchParams }: Props) {
   const { locale } = await params;
-  let { page = 1 } = await searchParams;
+  const { page: pageParam = 1, q } = await searchParams;
+  let page = pageParam;
   if (typeof page == "string") {
     page = parseInt(page);
   }
+  const searchQuery = typeof q === "string" ? q.trim() : undefined;
 
-  const { total, metadatas } = await getPostList(locale, undefined, page);
+  const { total, metadatas } = await getPostList(
+    locale,
+    undefined,
+    page,
+    undefined,
+    searchQuery,
+  );
 
   return (
     <PostList
@@ -50,6 +59,7 @@ export default async function AllPostListPage({ params, searchParams }: Props) {
       total={total}
       page={page}
       paginationPath={"/list"}
+      paginationQuery={searchQuery ? { q: searchQuery } : undefined}
     />
   );
 }

@@ -46,9 +46,11 @@ export async function getPostList(
   category?: PostCategoryType,
   page = 1,
   limit = 6,
+  searchQuery?: string,
 ): Promise<PostListResult> {
   const from = (page - 1) * limit;
   const to = from + limit - 1;
+  const normalizedSearchQuery = searchQuery?.trim();
 
   let query = supabase
     .from("posts")
@@ -61,6 +63,10 @@ export async function getPostList(
 
   if (category) {
     query = query.eq("category", category);
+  }
+
+  if (normalizedSearchQuery) {
+    query = query.ilike("title", `%${normalizedSearchQuery}%`);
   }
 
   const { data, error, count } = await query;

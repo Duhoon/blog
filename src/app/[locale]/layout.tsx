@@ -7,6 +7,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
+import GlobalSearch from "@/components/search/global-search";
 
 export const metadata: Metadata = {
   title: "ALROCK Blog",
@@ -57,7 +58,10 @@ export default async function RootLayout({
           <SidebarProvider>
             <AppSidebar />
             <main className="w-full">
-              <SidebarTrigger className="z-10 fixed" />
+              <header className="bg-background/95 sticky top-0 z-20 flex min-h-14 w-full items-center gap-2 border-b px-3 py-2 backdrop-blur">
+                <SidebarTrigger className="static shrink-0" />
+                <GlobalSearch locale={locale} />
+              </header>
               {children}
             </main>
           </SidebarProvider>

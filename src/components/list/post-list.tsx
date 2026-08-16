@@ -12,6 +12,7 @@ interface PostListProps {
   total: number;
   page: number;
   paginationPath: string;
+  paginationQuery?: Record<string, string | number | undefined>;
 }
 
 export default function PostList({
@@ -21,6 +22,7 @@ export default function PostList({
   total,
   page,
   paginationPath,
+  paginationQuery,
 }: PostListProps) {
   return (
     <div className={"p-4 w-full flex flex-col justify-center"}>
@@ -78,7 +80,12 @@ export default function PostList({
           </li>
         )}
       </ul>
-      <Pagination path={paginationPath} total={total} page={page} />
+      <Pagination
+        path={paginationPath}
+        total={total}
+        page={page}
+        query={paginationQuery}
+      />
     </div>
   );
 }
