@@ -54,6 +54,8 @@ export async function convertPostToHtml(postFile: string) {
       p: "text-base leading-relaxed mb-4",
       ul: "list-disc pl-6 mb-4",
       ol: "list-decimal pl-6 mb-4",
+      blockquote:
+        "my-6 rounded-md border-l-4 border-border bg-muted px-4 py-3 text-muted-foreground [&>p:last-child]:mb-0",
       code: "bg-gray-100 px-1 rounded text-sm text-red-500",
       pre: "mb-4",
       a: "text-blue-600 hover:underline",
