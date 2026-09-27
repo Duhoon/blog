@@ -1,13 +1,11 @@
 import { ReactNode } from "react";
 import "../globals.css";
 import { NextIntlClientProvider, hasLocale } from "next-intl";
+import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/sidebar/app-sidebar";
 import { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
-import GlobalSearch from "@/components/search/global-search";
 
 export const metadata: Metadata = {
   title: "ALROCK Blog",
@@ -54,17 +52,11 @@ export default async function RootLayout({
   return (
     <html lang={locale}>
       <body suppressHydrationWarning>
-        <NextIntlClientProvider>
-          <SidebarProvider>
-            <AppSidebar />
-            <main className="w-full">
-              <header className="bg-background/95 sticky top-0 z-20 flex min-h-14 w-full items-center gap-2 border-b px-3 py-2 backdrop-blur">
-                <SidebarTrigger className="static shrink-0" />
-                <GlobalSearch locale={locale} />
-              </header>
-              {children}
-            </main>
-          </SidebarProvider>
+        <NextIntlClientProvider
+          locale={locale}
+          messages={await getMessages({ locale })}
+        >
+          {children}
         </NextIntlClientProvider>
         <Analytics />
       </body>

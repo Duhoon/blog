@@ -1,3 +1,5 @@
+"use client";
+
 import {
   LucideIcon,
   List,
@@ -5,11 +7,13 @@ import {
   Clapperboard,
   BookOpenText,
   ChevronDown,
+  BriefcaseBusiness,
 } from "lucide-react";
 import {
   SidebarContent as SidebarContentWrapper,
   SidebarGroup,
   SidebarGroupLabel,
+  SidebarGroupContent,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -20,6 +24,7 @@ import {
   CollapsibleTrigger,
 } from "@/components/ui/collapsible";
 import Link from "next/link";
+import { Link as LocaleLink } from "@/i18n/navigation";
 
 interface CategoryItem {
   title: string;
@@ -53,8 +58,28 @@ const bloglist: CategoryItem[] = [
 export default function SidebarContent() {
   return (
     <SidebarContentWrapper>
+      <PageMenu title="Portfolio" href="/portfolio" icon={BriefcaseBusiness} />
       <Category title={"Blog"} list={bloglist} />
     </SidebarContentWrapper>
+  );
+}
+
+function PageMenu({ title, href, icon: Icon }: CategoryItem) {
+  return (
+    <SidebarGroup>
+      <SidebarGroupContent>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild className="text-lg font-medium">
+              <LocaleLink href={href}>
+                <Icon />
+                <span>{title}</span>
+              </LocaleLink>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarGroupContent>
+    </SidebarGroup>
   );
 }
 

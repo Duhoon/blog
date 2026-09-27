@@ -1,3 +1,40 @@
 {
-  
+  "Portfolio": {
+    "sections": {
+      "intro": "소개",
+      "work": "대표 작업",
+      "archive": "작업 아카이브",
+      "experience": "경험과 연락처"
+    },
+    "eyebrow": "PORTFOLIO / SELECTED WORK",
+    "blog": "블로그",
+    "viewWork": "대표 작업 보기",
+    "role": "역할",
+    "problem": "문제",
+    "outcome": "결과",
+    "example": "예시",
+    "exampleNotice": "프로젝트와 경험은 화면 구성 예시입니다.",
+    "project": "프로젝트",
+    "archiveLead": "만들고, 실험하고, 기여한 것들.",
+    "experienceTitle": "경험과 소개",
+    "experienceLead": "어떤 일을 해왔고, 어떻게 문제를 풀어가는지 소개합니다.",
+    "emptyProjects": "아직 공개된 프로젝트가 없습니다.",
+    "emptyExperience": "경험을 준비하고 있습니다.",
+    "emptyContact": "연락 정보를 준비하고 있습니다.",
+    "previous": "이전 화면",
+    "next": "다음 화면",
+    "navigation": "포트폴리오 탐색",
+    "projectSelection": "대표 프로젝트 선택",
+    "scrollHint": "스크롤로 다음 화면 보기",
+    "preview": "프로젝트 미리보기",
+    "previewLabel": "EXAMPLE INTERFACE",
+    "dashboard": "Overview",
+    "activity": "Activity",
+    "tasks": "Tasks",
+    "notes": "Notes",
+    "previewCaption": "실제 작업 이미지가 등록될 공간입니다.",
+    "allWork": "전체 작업",
+    "projectLink": "프로젝트 보기",
+    "skip": "콘텐츠로 건너뛰기"
+  }
 }

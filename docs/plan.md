@@ -1,29 +1,63 @@
-# Style Markdown Blockquotes
+# Markdown portfolio implementation
 
-## Summary
+## Scope
+Build introduction, selected work, archive, and experience/contact. Desktop
+(>=1024px) keeps one header and footer stationary and slides only center content.
+Mobile displays the same sections vertically. Project detail routes are deferred.
 
-Make markdown quote blocks visually distinct from normal post content by styling rendered `<blockquote>` elements in the existing markdown-to-HTML pipeline.
+## Content
+Read version-controlled Markdown from content/portfolio/{ko,en-US} on the server.
+Use profile.md, projects/*.md, and experiences/*.md. YAML holds metadata and
+Markdown holds prose. Validate fields and local assets with file-specific errors.
+Exclude drafts and sort by order then filename. Matching filenames identify
+translations. No Supabase dependency or browser-side parser. Render Markdown/GFM
+without executing HTML or MDX. Include labeled examples and an authoring README.
+Publish content by committing and deploying.
 
-## Key Changes
+## Layout and interaction
+Move home/list/post into a (blog) route group without changing URLs. Keep shared
+locale providers and analytics. Add a sidebar portfolio link. Use Swiper with one
+slide, no spacing, looping, or autoplay, and 600ms transitions. Support vertical
+wheel, trackpad, touch/drag, arrows, menu, and progress controls. Prioritize nested
+scrolling and require a fresh gesture at boundaries. Guard inertia and repeated
+transitions. Honor reduced motion; inactive desktop slides are inert. Mobile uses
+native scrolling, one header, and anchor navigation. Preserve section/project
+selection in URL parameters, locale changes, and responsive transitions.
 
-- Update `convertPostToHtml()` in `src/api/utils.ts`.
-- Add a `blockquote` entry to the existing `rehype-class-names` mapping.
-- Style blockquotes with a left border, muted background, padding, vertical margin, muted text color, and rounded corners.
-- Keep markdown parsing and content behavior unchanged.
+## Fixed navigation revision
 
-## Interface Changes
+- Render one shared header and bottom area outside Swiper. Use a 100dvh desktop
+  grid with rows `auto minmax(0, 1fr) auto`; slides fill only the center row.
+- Keep long Markdown vertically scrollable inside the center. Attach wheel input
+  only to the Swiper element, so scrolling over navigation does not switch slides.
+- Synchronize the shared footer with the active section, including disabled
+  previous/next buttons and progress indicators. Keep example notices below it.
+- Preserve focus on shared navigation controls; move focus out of content that
+  becomes inactive. Retain mobile native vertical scrolling, one sticky header,
+  and the hidden slide-navigation footer.
+- Check header/footer coordinates before, during, and after transitions, nested
+  scrolling, short viewports, both locales, mobile, and state restoration.
+- Run lint and a production build in an isolated copy to avoid disturbing the
+  running development server.
 
-- No route, API, schema, or content format changes.
-- Existing markdown syntax like `> quoted text` renders with the new visual style.
+## Validation
+Check Markdown edits/additions/deletion, order, drafts, malformed fields, missing
+translations/assets, long content, keyboard/focus, reduced motion, wheel boundaries,
+resizing, URL restore, both locales, and legacy routes. Run pnpm lint and pnpm build.
+Document environment-related limitations.
 
-## Test Plan
+## Completed validation
 
-- Run `pnpm lint`.
-- Run `pnpm build`.
-- Manually verify a post containing markdown blockquote syntax renders the quote separated from surrounding content.
-- Verify normal paragraphs, lists, code blocks, and headings keep their current appearance.
-
-## Assumptions
-
-- "Quote in markdown" means markdown blockquotes using `>`.
-- The desired behavior is visual separation, not changing quote parsing or adding a custom quote component.
+- `pnpm lint` and TypeScript checks passed.
+- `pnpm build` passed, generating both portfolio locales and all 47 static pages.
+  The existing blog requires Supabase network access during the full build.
+- Headless Chrome verified wheel/trackpad/drag, inertia guards, keyboard focus,
+  project selection, mobile reflow, URL reload/back navigation, language changes,
+  reduced motion, and existing home/list/category/post routes.
+- Temporary Markdown fixtures verified discovery, sorting, drafts, local images,
+  GFM rendering, unsafe HTML/link handling, long-content scrolling, missing
+  translations, field/YAML/image errors, and removal. Fixtures were cleaned up.
+- Fixed navigation revision passed lint and an isolated production build. Chrome
+  verified stationary header/footer coordinates during transitions, center-only
+  wheel handling, shared-control focus, both locales, mobile, short viewports,
+  reduced motion, URL restoration, and nested long-content scroll boundaries.

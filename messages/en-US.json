@@ -1,3 +1,40 @@
 {
-  
+  "Portfolio": {
+    "sections": {
+      "intro": "Intro",
+      "work": "Selected work",
+      "archive": "Archive",
+      "experience": "Experience & contact"
+    },
+    "eyebrow": "PORTFOLIO / SELECTED WORK",
+    "blog": "Blog",
+    "viewWork": "Explore selected work",
+    "role": "Role",
+    "problem": "Problem",
+    "outcome": "Outcome",
+    "example": "Example",
+    "exampleNotice": "Projects and experience are illustrative examples.",
+    "project": "Project",
+    "archiveLead": "Things built, explored, and contributed.",
+    "experienceTitle": "Experience & approach",
+    "experienceLead": "The work behind me. The way I approach what comes next.",
+    "emptyProjects": "No published projects yet.",
+    "emptyExperience": "Experience coming soon.",
+    "emptyContact": "Contact information coming soon.",
+    "previous": "Previous section",
+    "next": "Next section",
+    "navigation": "Portfolio navigation",
+    "projectSelection": "Select a featured project",
+    "scrollHint": "Scroll to explore",
+    "preview": "Project preview",
+    "previewLabel": "EXAMPLE INTERFACE",
+    "dashboard": "Overview",
+    "activity": "Activity",
+    "tasks": "Tasks",
+    "notes": "Notes",
+    "previewCaption": "A space for the actual project screenshot.",
+    "allWork": "All work",
+    "projectLink": "View project",
+    "skip": "Skip to content"
+  }
 }
