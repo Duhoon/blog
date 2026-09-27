@@ -9,8 +9,10 @@ export default function WorkSection({
   projects,
   projectId,
   selectProject,
+  openGallery,
 }: {
   projects: Project[];
+  openGallery: (project: Project, trigger: HTMLButtonElement) => void;
   projectId: string;
   selectProject: (id: string, navigate?: boolean) => void;
 }) {
@@ -75,7 +77,11 @@ export default function WorkSection({
           role="tabpanel"
           aria-labelledby={`pf-tab-${project.id}`}
         >
-          <ProjectPreview project={project} variant={projectIndex} />
+          <ProjectPreview
+            project={project}
+            variant={projectIndex}
+            openGallery={openGallery}
+          />
           <div className="pf-project-copy">
             <p className="pf-eyebrow">
               PROJECT {number(projectIndex)}

@@ -35,6 +35,18 @@
     "previewCaption": "A space for the actual project screenshot.",
     "allWork": "All work",
     "projectLink": "View project",
-    "skip": "Skip to content"
+    "skip": "Skip to content",
+    "gallery": {
+      "open": "View images for {title}",
+      "view": "View images",
+      "close": "Close gallery",
+      "previous": "Previous image",
+      "next": "Next image",
+      "thumbnails": "Project images",
+      "show": "View image {number}",
+      "description": "Explore project images using thumbnails, previous and next buttons, or the left and right arrow keys.",
+      "empty": "Project images are coming soon.",
+      "failed": "Unable to load this image."
+    }
   }
 }

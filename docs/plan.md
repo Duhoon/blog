@@ -61,3 +61,23 @@ Document environment-related limitations.
   verified stationary header/footer coordinates during transitions, center-only
   wheel handling, shared-control focus, both locales, mobile, short viewports,
   reduced motion, URL restoration, and nested long-content scroll boundaries.
+
+## Project image gallery
+
+- Discover direct image files in public/portfolio/{Markdown filename ID}; include
+  PNG, JPEG, WebP, GIF, AVIF and SVG, cover first then natural filename order.
+  Pass serializable src/alt entries in Project.images without changing Markdown.
+- Open one Radix Dialog portal from work/archive covers. Show a contained large
+  image, thumbnails, counter, buttons, arrow keys and touch Swiper navigation.
+  Keep archive project navigation separate; no nested buttons.
+- Preserve background section, URL and scrolling; block background input while
+  open. Trap focus, restore the opener, support Escape/backdrop/close and reduced
+  motion. Handle empty folders, single images and load failures.
+- Document authoring, localize labels, verify both locales and mobile/desktop,
+  then run lint and an isolated production build.
+
+Gallery validation completed: lint, TypeScript and isolated production build passed
+(47 static pages). Chrome verified both locales, cover-first natural order,
+thumbnail/keyboard navigation, archive actions, focus trap/return, backdrop and
+Escape dismissal, background locking, single GIF, mobile drag/scroll restoration,
+empty folders and failed images. Temporary fixtures were removed.

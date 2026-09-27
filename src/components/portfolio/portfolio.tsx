@@ -1,5 +1,8 @@
 "use client";
 
+import { useRef, useState } from "react";
+import ProjectGallery from "./project-gallery";
+import type { Project } from "@/lib/portfolio/types";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
@@ -29,6 +32,12 @@ export default function Portfolio({
 }) {
   const t = useTranslations("Portfolio");
   const { profile, projects, experiences } = content;
+  const [galleryProject, setGalleryProject] = useState<Project | null>(null);
+  const galleryTrigger = useRef<HTMLButtonElement | null>(null);
+  const openGallery = (project: Project, trigger: HTMLButtonElement) => {
+    galleryTrigger.current = trigger;
+    setGalleryProject(project);
+  };
   const {
     root,
     desktop,
@@ -42,7 +51,7 @@ export default function Portfolio({
     selectProject,
     handleSlideChange,
     handleTransitionEnd,
-  } = usePortfolioNavigation(projects);
+  } = usePortfolioNavigation(projects, Boolean(galleryProject));
 
   const languageHref = (language: string) =>
     `/${language}/portfolio?${new URLSearchParams({ section, ...(projectId ? { project: projectId } : {}) })}`;
@@ -136,6 +145,7 @@ export default function Portfolio({
       className="portfolio"
       onKeyDown={(event) => {
         if (
+          galleryProject ||
           !desktop ||
           event.altKey ||
           event.ctrlKey ||
@@ -173,6 +183,7 @@ export default function Portfolio({
       <Swiper
         className="pf-swiper"
         enabled={desktop}
+        allowTouchMove={!galleryProject}
         slidesPerView={1}
         spaceBetween={0}
         speed={reducedMotion ? 0 : 600}
@@ -205,12 +216,14 @@ export default function Portfolio({
                     projects={projects}
                     projectId={projectId}
                     selectProject={selectProject}
+                    openGallery={openGallery}
                   />
                 )}
                 {id === "archive" && (
                   <ArchiveSection
                     projects={projects}
                     selectProject={selectProject}
+                    openGallery={openGallery}
                   />
                 )}
                 {id === "experience" && (
@@ -224,6 +237,14 @@ export default function Portfolio({
           </SwiperSlide>
         ))}
       </Swiper>
+      <ProjectGallery
+        project={galleryProject}
+        onClose={() => setGalleryProject(null)}
+        restoreFocus={() =>
+          galleryTrigger.current?.focus({ preventScroll: true })
+        }
+        reducedMotion={reducedMotion}
+      />
       <div className="pf-bottom-bar">
         {footer(activeIndex)}
         {(projects.some((item) => item.example) ||

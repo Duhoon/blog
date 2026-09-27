@@ -15,6 +15,7 @@ export type Project = {
   example: boolean;
   cover?: string;
   coverAlt?: string;
+  images: { src: string; alt: string }[];
   stack: string[];
   role?: string;
   problem?: string;

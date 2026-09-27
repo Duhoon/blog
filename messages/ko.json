@@ -35,6 +35,18 @@
     "previewCaption": "실제 작업 이미지가 등록될 공간입니다.",
     "allWork": "전체 작업",
     "projectLink": "프로젝트 보기",
-    "skip": "콘텐츠로 건너뛰기"
+    "skip": "콘텐츠로 건너뛰기",
+    "gallery": {
+      "open": "{title} 이미지 보기",
+      "view": "이미지 보기",
+      "close": "갤러리 닫기",
+      "previous": "이전 이미지",
+      "next": "다음 이미지",
+      "thumbnails": "프로젝트 이미지 목록",
+      "show": "{number}번째 이미지 보기",
+      "description": "썸네일, 이전·다음 버튼 또는 좌우 방향키로 프로젝트 이미지를 확인하세요.",
+      "empty": "프로젝트 이미지를 준비하고 있습니다.",
+      "failed": "이미지를 불러오지 못했습니다."
+    }
   }
 }

@@ -6,8 +6,10 @@ import ProjectPreview from "./project-preview";
 export default function ArchiveSection({
   projects,
   selectProject,
+  openGallery,
 }: {
   projects: Project[];
+  openGallery: (project: Project, trigger: HTMLButtonElement) => void;
   selectProject: (id: string, navigate?: boolean) => void;
 }) {
   const t = useTranslations("Portfolio");
@@ -28,25 +30,26 @@ export default function ArchiveSection({
               .filter((item) => item.id !== projects[0]?.id)
               .slice(0, 2)
               .map((item) => (
-                <button
-                  type="button"
-                  className="pf-project-card"
-                  key={item.id}
-                  onClick={() => selectProject(item.id, true)}
-                >
+                <article className="pf-project-card" key={item.id}>
                   <ProjectPreview
+                    openGallery={openGallery}
                     project={item}
                     variant={projects.indexOf(item)}
                   />
                   <div>
                     <h3>
-                      {item.title}
+                      <button
+                        type="button"
+                        onClick={() => selectProject(item.id, true)}
+                      >
+                        {item.title}
+                      </button>
                       {item.example && <span>{t("example")}</span>}
                     </h3>
                     <ArrowUpRight size={20} />
                   </div>
                   <p>{item.summary}</p>
-                </button>
+                </article>
               ))}
           </div>
           <div className="pf-archive-list">

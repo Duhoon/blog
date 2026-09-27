@@ -15,7 +15,12 @@ function writeLocation(section: PortfolioSection, project: string) {
   window.history.replaceState(window.history.state, "", url);
 }
 
-export default function usePortfolioNavigation(projects: Project[]) {
+export default function usePortfolioNavigation(
+  projects: Project[],
+  paused = false,
+) {
+  const pausedRef = useRef(paused);
+  pausedRef.current = paused;
   const [desktop, setDesktop] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [swiper, setSwiper] = useState<SwiperInstance>();
@@ -45,6 +50,7 @@ export default function usePortfolioNavigation(projects: Project[]) {
 
   const goTo = useCallback(
     (next: PortfolioSection, focus = false) => {
+      if (pausedRef.current) return;
       if (desktop && swiper) {
         if (swiper.animating) return;
         shouldFocus.current = focus;
@@ -143,7 +149,11 @@ export default function usePortfolioNavigation(projects: Project[]) {
     const onScroll = () => {
       cancelAnimationFrame(frame);
       frame = requestAnimationFrame(() => {
-        if (restoring.current || Date.now() < mobileNavigationUntil.current)
+        if (
+          pausedRef.current ||
+          restoring.current ||
+          Date.now() < mobileNavigationUntil.current
+        )
           return;
         const threshold = window.innerHeight * 0.35;
         let next: PortfolioSection = "intro";
@@ -169,7 +179,7 @@ export default function usePortfolioNavigation(projects: Project[]) {
     let consumed = false;
     let distance = 0;
     const onWheel = (event: WheelEvent) => {
-      if (event.ctrlKey || event.defaultPrevented) return;
+      if (pausedRef.current || event.ctrlKey || event.defaultPrevented) return;
       const now = performance.now();
       if (now - lastEvent > 180) {
         consumed = false;

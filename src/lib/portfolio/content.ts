@@ -163,6 +163,44 @@ function sort<T extends { order: number; id: string }>(items: T[]) {
   return items.sort((a, b) => a.order - b.order || a.id.localeCompare(b.id));
 }
 
+async function projectImages(
+  id: string,
+  title: string,
+  cover?: string,
+  coverAlt?: string,
+) {
+  const directory = path.join(publicRoot, "portfolio", id);
+  try {
+    const entries = await readdir(directory, { withFileTypes: true });
+    return entries
+      .filter(
+        (entry) =>
+          entry.isFile() &&
+          /\.(png|jpe?g|webp|gif|avif|svg)$/i.test(entry.name),
+      )
+      .sort(
+        (a, b) =>
+          a.name.localeCompare(b.name, "en", { numeric: true }) ||
+          a.name.localeCompare(b.name, "en"),
+      )
+      .map((entry) => ({
+        src: `/portfolio/${encodeURIComponent(id)}/${encodeURIComponent(entry.name)}`,
+        alt: `${title} — ${entry.name}`,
+      }))
+      .map((image) =>
+        decodeURIComponent(image.src) ===
+        (cover ? decodeURIComponent(cover) : undefined)
+          ? { ...image, alt: coverAlt ?? title, isCover: true }
+          : { ...image, isCover: false },
+      )
+      .sort((a, b) => Number(b.isCover) - Number(a.isCover))
+      .map(({ src, alt }) => ({ src, alt }));
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === "ENOENT") return [];
+    throw error;
+  }
+}
+
 export async function getPortfolioContent(
   locale: string,
 ): Promise<PortfolioContent> {
@@ -192,15 +230,19 @@ export async function getPortfolioContent(
     if (!links || typeof links !== "object" || Array.isArray(links)) {
       fail(file, "links", "must be an object");
     }
+    const id = path.basename(file, ".md");
+    const title = stringField(fields, "title", file, true)!;
+    const coverAlt = stringField(fields, "coverAlt", file, Boolean(cover));
     projects.push({
-      id: path.basename(file, ".md"),
-      title: stringField(fields, "title", file, true)!,
+      id,
+      title,
+      images: await projectImages(id, title, cover, coverAlt),
       summary: stringField(fields, "summary", file, true)!,
       order: orderField(fields, file),
       featured: booleanField(fields, "featured", file),
       example: booleanField(fields, "example", file),
       cover,
-      coverAlt: stringField(fields, "coverAlt", file, Boolean(cover)),
+      coverAlt,
       stack: stack as string[],
       role: stringField(fields, "role", file),
       problem: stringField(fields, "problem", file),

@@ -1126,3 +1126,161 @@
     scroll-behavior: auto !important;
   }
 }
+
+/* The gallery is portalled outside the portfolio's sliding content. */
+.pf-cover-label {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 7px 11px;
+  background: #1c2220e6;
+  color: white;
+  border-radius: 4px;
+  font-size: 12px;
+}
+.pf-gallery-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  background: #101613b3;
+}
+.pf-gallery {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(1200px, calc(100vw - 64px));
+  height: min(900px, calc(100dvh - 64px));
+  z-index: 111;
+  background: #fdfdfb;
+  color: #1c2220;
+  border-radius: 12px;
+  overflow: hidden;
+  font-family: Arial, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  box-shadow: 0 24px 80px #0004;
+}
+.pf-gallery-body {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  height: 100%;
+  min-width: 0;
+}
+.pf-gallery-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  border-bottom: 1px solid #d8dcd8;
+}
+.pf-gallery-header h2 {
+  flex: 1;
+  min-width: 0;
+  font-size: 16px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+.pf-gallery-header > span {
+  white-space: nowrap;
+  color: #747b77;
+  font-size: 13px;
+}
+.pf-gallery button {
+  cursor: pointer;
+}
+.pf-gallery button:disabled {
+  cursor: default;
+  opacity: 0.3;
+}
+.pf-gallery button:focus-visible {
+  outline: 2px solid #47765a;
+  outline-offset: 2px;
+}
+.pf-gallery-header button,
+.pf-gallery-controls button {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #eef2ed;
+}
+.pf-gallery-stage {
+  position: relative;
+  min-height: 0;
+  min-width: 0;
+  padding: 16px 64px;
+}
+.pf-gallery-swiper {
+  width: 100%;
+  height: 100%;
+}
+.pf-gallery-swiper .swiper-slide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.pf-gallery img {
+  object-fit: contain;
+}
+.pf-gallery-controls {
+  position: absolute;
+  inset: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  pointer-events: none;
+}
+.pf-gallery-controls button {
+  pointer-events: auto;
+}
+.pf-gallery-thumbnails {
+  display: flex;
+  gap: 10px;
+  padding: 12px 20px;
+  overflow-x: auto;
+  overscroll-behavior: contain;
+  border-top: 1px solid #d8dcd8;
+}
+.pf-gallery-thumbnails button {
+  position: relative;
+  flex: 0 0 80px;
+  height: 60px;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  overflow: hidden;
+  opacity: 0.6;
+}
+.pf-gallery-thumbnails button[aria-pressed="true"] {
+  border-color: #47765a;
+  opacity: 1;
+}
+.pf-gallery-empty {
+  align-self: center;
+  text-align: center;
+  padding: 24px;
+  color: #747b77;
+}
+@media (max-width: 767px) {
+  .pf-gallery {
+    width: 100%;
+    height: 100dvh;
+    border-radius: 0;
+  }
+  .pf-gallery-header {
+    padding: max(8px, env(safe-area-inset-top)) 12px 8px;
+    gap: 8px;
+  }
+  .pf-gallery-stage {
+    padding: 12px 0 56px;
+  }
+  .pf-gallery-controls {
+    top: auto;
+    bottom: 6px;
+    justify-content: center;
+    gap: 24px;
+  }
+  .pf-gallery-thumbnails {
+    padding-bottom: max(12px, env(safe-area-inset-bottom));
+  }
+}

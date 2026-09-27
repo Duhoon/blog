@@ -6,21 +6,30 @@ import type { Project } from "@/lib/portfolio/types";
 export default function ProjectPreview({
   project,
   variant = 0,
+  openGallery,
 }: {
   project: Project;
   variant?: number;
+  openGallery: (project: Project, trigger: HTMLButtonElement) => void;
 }) {
   const t = useTranslations("Portfolio");
   if (project.cover) {
     return (
-      <div className="pf-cover">
+      <button
+        type="button"
+        className="pf-cover"
+        aria-label={t("gallery.open", { title: project.title })}
+        aria-haspopup="dialog"
+        onClick={(event) => openGallery(project, event.currentTarget)}
+      >
         <Image
           src={project.cover}
           alt={project.coverAlt ?? project.title}
           fill
           sizes="(min-width: 1024px) 55vw, 100vw"
         />
-      </div>
+        <span className="pf-cover-label">{t("gallery.view")}</span>
+      </button>
     );
   }
   return (
