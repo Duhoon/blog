@@ -20,7 +20,7 @@
   opacity: 0.3;
 }
 .portfolio :is(a, button, [tabindex]):focus-visible {
-  outline: 2px solid #47765a;
+  outline: 2px solid var(--pf-accent, #47765a);
   outline-offset: 5px;
 }
 .portfolio button,
@@ -31,7 +31,7 @@
 }
 .portfolio a:hover,
 .portfolio button:hover:not(:disabled) {
-  color: #47765a;
+  color: var(--pf-accent, #47765a);
 }
 .pf-announcement {
   position: absolute;
@@ -63,8 +63,54 @@
   letter-spacing: 0.16em;
   margin: 0 0 20px;
 }
+.pf-swiper {
+  --pf-ink: #f3f5f2;
+  --pf-muted: #b4bdb6;
+  --pf-line: #39443d;
+  --pf-sage: #222824;
+  --pf-accent: #a6d6b2;
+  color: var(--pf-ink);
+  background: #151817;
+  border-radius: 16px;
+  overflow: hidden;
+}
+.pf-swiper .pf-scroll {
+  scrollbar-color: #65736a transparent;
+}
+.pf-swiper
+  :is(
+    .pf-intro .pf-prose,
+    .pf-summary,
+    .pf-facts dd,
+    .pf-project-card > p,
+    .pf-archive-stack,
+    .pf-experience-role,
+    .pf-contact > p,
+    .pf-contact-empty,
+    .pf-contact-signature span
+  ) {
+  color: var(--pf-muted);
+}
+.pf-swiper
+  :is(
+    .pf-contact,
+    .pf-prose blockquote,
+    .pf-prose pre,
+    .pf-prose :not(pre) > code
+  ) {
+  background: var(--pf-sage);
+}
+.pf-swiper .pf-prose a {
+  color: var(--pf-accent);
+}
+.pf-swiper .pf-prose blockquote {
+  border-left-color: var(--pf-accent);
+}
+.pf-swiper .pf-timeline article::before {
+  background: var(--pf-accent);
+}
 .pf-page {
-  padding: 0 clamp(24px, 4.4vw, 88px);
+  padding: 0 clamp(24px, 3vw, 48px);
   outline: none;
 }
 .pf-header {
@@ -885,8 +931,9 @@
     position: relative;
   }
   .pf-swiper {
-    height: 100%;
-    width: 100%;
+    height: calc(100% - 24px);
+    width: calc(100% - 2 * clamp(24px, 4.4vw, 88px));
+    margin: 12px clamp(24px, 4.4vw, 88px);
     min-width: 0;
     min-height: 0;
   }
@@ -944,7 +991,9 @@
 }
 @media (max-width: 1023px) {
   .pf-swiper {
-    overflow: visible;
+    width: calc(100% - 24px);
+    margin: 12px;
+    border-radius: 12px;
   }
   .pf-swiper > .swiper-wrapper {
     display: block;
@@ -991,7 +1040,7 @@
   }
   .pf-page {
     scroll-margin-top: 130px;
-    padding: 0 24px;
+    padding: 0 20px;
   }
   .pf-scroll {
     overflow: visible;

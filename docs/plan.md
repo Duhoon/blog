@@ -81,3 +81,19 @@ Gallery validation completed: lint, TypeScript and isolated production build pas
 thumbnail/keyboard navigation, archive actions, focus trap/return, backdrop and
 Escape dismissal, background locking, single GIF, mobile drag/scroll restoration,
 empty folders and failed images. Temporary fixtures were removed.
+
+## Dark central content panel
+
+Keep the white header, footer and outer frame. Theme only the central Swiper
+with charcoal #151817, raised surfaces #222824, text #F3F5F2, secondary text
+#B4BDB6, dividers #39443D and accent #A6D6B2. Preserve image/preview colors
+and the gallery. Desktop uses existing outer horizontal spacing, 12px vertical
+gaps, 16px corners and 24–48px inner padding; mobile uses 12px outer spacing,
+20px inner padding and 12px corners. Keep fixed bars and current navigation.
+Verify both locales, all sections, short desktop/mobile layouts, transitions,
+scrolling and gallery behavior; run lint and an isolated production build.
+
+Dark panel validation passed: pnpm lint and isolated pnpm build (48 static
+pages). Chrome checked both locales, all sections, fixed bars during transitions,
+white gallery, panel margins, short desktop and mobile navigation/overflow.
+Desktop and mobile screenshots were visually reviewed.
