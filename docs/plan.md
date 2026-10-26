@@ -97,3 +97,21 @@ Dark panel validation passed: pnpm lint and isolated pnpm build (48 static
 pages). Chrome checked both locales, all sections, fixed bars during transitions,
 white gallery, panel margins, short desktop and mobile navigation/overflow.
 Desktop and mobile screenshots were visually reviewed.
+
+## English portfolio translation
+
+- Translate all nine Korean portfolio Markdown files into en-US with matching
+  filenames: profile, four experiences, and four projects.
+- Replace the five English example project/experience files. Preserve YAML keys,
+  ordering, flags, stacks, asset paths, URLs, and contact details. Translate prose
+  and dates faithfully, including planned completion and launch status.
+- Leave Korean content and application code unchanged. Validate file parity,
+  metadata and assets; run pnpm lint and pnpm build, then check both portfolio
+  locales in the development server, including layout, links and galleries.
+
+Translation validation: all nine paths match the Korean originals; YAML parsing,
+metadata parity, cover assets and untranslated-text checks passed. pnpm lint and
+pnpm build passed (48 pages; build required network access for existing blog data).
+Both development routes returned translated/original content as expected, including
+contact links and gallery asset references. Visual layout and gallery interaction
+checks remain unverified: browser automation stalled at Chrome profile selection.
