@@ -8,6 +8,7 @@ import { useTranslations } from "next-intl";
 import { Swiper, SwiperSlide } from "swiper/react";
 import type { Swiper as SwiperInstance } from "swiper";
 import type { Project } from "@/lib/portfolio/types";
+import "swiper/css";
 
 function GalleryImage({ image }: { image: Project["images"][number] }) {
   const t = useTranslations("Portfolio.gallery");
@@ -20,6 +21,7 @@ function GalleryImage({ image }: { image: Project["images"][number] }) {
       alt={image.alt}
       fill
       unoptimized
+      className="object-contain"
       sizes="90vw"
       onError={() => setFailed(true)}
     />
@@ -39,7 +41,7 @@ function GalleryContent({
   const images = project.images;
   return (
     <div
-      className="pf-gallery-body"
+      className="grid h-full min-w-0 grid-rows-[auto_minmax(0,1fr)_auto]"
       onKeyDown={(event) => {
         if (event.altKey || event.ctrlKey || event.metaKey) return;
         if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
@@ -50,23 +52,32 @@ function GalleryContent({
         }
       }}
     >
-      <div className="pf-gallery-header">
-        <Dialog.Title>{project.title}</Dialog.Title>
-        <span aria-live="polite" aria-atomic="true">
+      <div className="flex items-center gap-4 border-b border-[#d8dcd8] px-5 py-4 max-md:gap-2 max-md:px-3 max-md:pt-[max(8px,env(safe-area-inset-top))] max-md:pb-2">
+        <Dialog.Title className="min-w-0 flex-1 text-base font-semibold [overflow-wrap:anywhere]">
+          {project.title}
+        </Dialog.Title>
+        <span
+          className="text-[13px] whitespace-nowrap text-[#747b77]"
+          aria-live="polite"
+          aria-atomic="true"
+        >
           {images.length ? `${index + 1} / ${images.length}` : "0 / 0"}
         </span>
-        <Dialog.Close aria-label={t("close")}>
+        <Dialog.Close
+          className="grid size-11 shrink-0 place-items-center rounded-full bg-[#eef2ed]"
+          aria-label={t("close")}
+        >
           <X size={22} />
         </Dialog.Close>
       </div>
-      <Dialog.Description className="pf-announcement">
+      <Dialog.Description className="sr-only">
         {t("description")}
       </Dialog.Description>
       {images.length ? (
         <>
-          <div className="pf-gallery-stage">
+          <div className="relative min-h-0 min-w-0 px-16 py-4 max-md:px-0 max-md:pt-3 max-md:pb-14">
             <Swiper
-              className="pf-gallery-swiper"
+              className="h-full w-full"
               onSwiper={setSwiper}
               onSlideChange={(instance) => setIndex(instance.activeIndex)}
               slidesPerView={1}
@@ -74,15 +85,20 @@ function GalleryContent({
               speed={reducedMotion ? 0 : 250}
             >
               {images.map((image, i) => (
-                <SwiperSlide key={image.src} aria-hidden={i !== index}>
+                <SwiperSlide
+                  className="relative flex! items-center justify-center"
+                  key={image.src}
+                  aria-hidden={i !== index}
+                >
                   <GalleryImage image={image} />
                 </SwiperSlide>
               ))}
             </Swiper>
             {images.length > 1 && (
-              <div className="pf-gallery-controls">
+              <div className="pointer-events-none absolute inset-y-0 inset-x-2.5 flex items-center justify-between max-md:top-auto max-md:bottom-1.5 max-md:justify-center max-md:gap-6">
                 <button
                   type="button"
+                  className="pointer-events-auto grid size-11 shrink-0 place-items-center rounded-full bg-[#eef2ed]"
                   aria-label={t("previous")}
                   disabled={index === 0}
                   onClick={() => swiper?.slidePrev()}
@@ -91,6 +107,7 @@ function GalleryContent({
                 </button>
                 <button
                   type="button"
+                  className="pointer-events-auto grid size-11 shrink-0 place-items-center rounded-full bg-[#eef2ed]"
                   aria-label={t("next")}
                   disabled={index === images.length - 1}
                   onClick={() => swiper?.slideNext()}
@@ -100,22 +117,35 @@ function GalleryContent({
               </div>
             )}
           </div>
-          <div className="pf-gallery-thumbnails" aria-label={t("thumbnails")}>
+          <div
+            className="flex gap-2.5 overflow-x-auto overscroll-contain border-t border-[#d8dcd8] px-5 py-3 max-md:pb-[max(12px,env(safe-area-inset-bottom))]"
+            aria-label={t("thumbnails")}
+          >
             {images.map((image, i) => (
               <button
                 type="button"
+                className="relative h-[60px] basis-20 shrink-0 grow-0 overflow-hidden rounded border-2 border-transparent opacity-60 aria-pressed:border-[#47765a] aria-pressed:opacity-100"
                 key={image.src}
                 aria-label={t("show", { number: i + 1 })}
                 aria-pressed={i === index}
                 onClick={() => swiper?.slideTo(i)}
               >
-                <Image src={image.src} alt="" fill unoptimized sizes="80px" />
+                <Image
+                  className="object-contain"
+                  src={image.src}
+                  alt=""
+                  fill
+                  unoptimized
+                  sizes="80px"
+                />
               </button>
             ))}
           </div>
         </>
       ) : (
-        <p className="pf-gallery-empty">{t("empty")}</p>
+        <p className="self-center p-6 text-center text-[#747b77]">
+          {t("empty")}
+        </p>
       )}
     </div>
   );
@@ -140,9 +170,9 @@ export default function ProjectGallery({
       }}
     >
       <Dialog.Portal>
-        <Dialog.Overlay className="pf-gallery-overlay" />
+        <Dialog.Overlay className="fixed inset-0 z-[110] bg-[#101613b3]" />
         <Dialog.Content
-          className="pf-gallery"
+          className="fixed inset-0 z-[111] m-auto h-[min(900px,calc(100dvh-64px))] w-[min(1200px,calc(100vw-64px))] overflow-hidden rounded-xl bg-[#fdfdfb] text-[#1c2220] shadow-[0_24px_80px_#0004] font-[Arial,'Apple_SD_Gothic_Neo','Malgun_Gothic',sans-serif] max-md:h-dvh max-md:w-full max-md:rounded-none [&_button]:cursor-pointer [&_button:disabled]:cursor-default [&_button:disabled]:opacity-30 [&_button:focus-visible]:outline-2 [&_button:focus-visible]:outline-offset-2 [&_button:focus-visible]:outline-[#47765a]"
           onCloseAutoFocus={(event) => {
             event.preventDefault();
             restoreFocus();

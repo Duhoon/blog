@@ -1,4 +1,4 @@
-import Image from "next/image";
+import ProjectCover from "./project-cover";
 import { useTranslations } from "next-intl";
 import { LayoutDashboard, Rows3, FileText, Search, Plus } from "lucide-react";
 import type { Project } from "@/lib/portfolio/types";
@@ -6,30 +6,22 @@ import type { Project } from "@/lib/portfolio/types";
 export default function ProjectPreview({
   project,
   variant = 0,
+  coverClassName,
   openGallery,
 }: {
   project: Project;
   variant?: number;
+  coverClassName?: string;
   openGallery: (project: Project, trigger: HTMLButtonElement) => void;
 }) {
   const t = useTranslations("Portfolio");
   if (project.cover) {
     return (
-      <button
-        type="button"
-        className="pf-cover"
-        aria-label={t("gallery.open", { title: project.title })}
-        aria-haspopup="dialog"
-        onClick={(event) => openGallery(project, event.currentTarget)}
-      >
-        <Image
-          src={project.cover}
-          alt={project.coverAlt ?? project.title}
-          fill
-          sizes="(min-width: 1024px) 55vw, 100vw"
-        />
-        <span className="pf-cover-label">{t("gallery.view")}</span>
-      </button>
+      <ProjectCover
+        project={project}
+        className={coverClassName}
+        openGallery={openGallery}
+      />
     );
   }
   return (

@@ -1,7 +1,7 @@
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import type { Project } from "@/lib/portfolio/types";
 import { ArrowUpRight } from "lucide-react";
-import Markdown from "./markdown";
+import Link from "next/link";
 import ProjectPreview from "./project-preview";
 const number = (index: number) => String(index + 1).padStart(2, "0");
 
@@ -17,6 +17,7 @@ export default function WorkSection({
   selectProject: (id: string, navigate?: boolean) => void;
 }) {
   const t = useTranslations("Portfolio");
+  const locale = useLocale();
   const project = projects.find((item) => item.id === projectId) ?? projects[0];
   const projectIndex = projects.findIndex((item) => item.id === project?.id);
   const featured = projects.filter(
@@ -78,6 +79,7 @@ export default function WorkSection({
           aria-labelledby={`pf-tab-${project.id}`}
         >
           <ProjectPreview
+            coverClassName="lg:[@media(max-height:800px)]:aspect-[1.4]"
             project={project}
             variant={projectIndex}
             openGallery={openGallery}
@@ -89,7 +91,6 @@ export default function WorkSection({
             </p>
             <h3>{project.title}</h3>
             <p className="pf-summary">{project.summary}</p>
-            <Markdown html={project.html} />
             <dl className="pf-facts">
               {(["role", "problem", "outcome"] as const).map(
                 (key) =>
@@ -109,6 +110,13 @@ export default function WorkSection({
               </ul>
             )}
             <div className="pf-project-links">
+              <Link
+                className="pf-text-link"
+                href={`/${locale}/portfolio/projects/${encodeURIComponent(project.id)}`}
+              >
+                {t("detail.view")}
+                <ArrowUpRight size={15} />
+              </Link>
               {Object.entries(project.links).map(
                 ([key, href]) =>
                   href && (

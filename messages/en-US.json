@@ -47,6 +47,17 @@
       "description": "Explore project images using thumbnails, previous and next buttons, or the left and right arrow keys.",
       "empty": "Project images are coming soon.",
       "failed": "Unable to load this image."
+    },
+    "detail": {
+      "view": "View details",
+      "back": "Back to portfolio",
+      "language": "Project language",
+      "unavailable": "Translation unavailable.",
+      "overview": "Project overview",
+      "stack": "Technology stack",
+      "navigation": "Project navigation",
+      "previous": "Previous project",
+      "next": "Next project"
     }
   }
 }

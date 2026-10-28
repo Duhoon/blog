@@ -1,18 +1,18 @@
-import { useTranslations } from "next-intl";
+import Link from "next/link";
+import { useLocale, useTranslations } from "next-intl";
 import type { Project } from "@/lib/portfolio/types";
 import { ArrowUpRight } from "lucide-react";
 import ProjectPreview from "./project-preview";
 
 export default function ArchiveSection({
   projects,
-  selectProject,
   openGallery,
 }: {
   projects: Project[];
   openGallery: (project: Project, trigger: HTMLButtonElement) => void;
-  selectProject: (id: string, navigate?: boolean) => void;
 }) {
   const t = useTranslations("Portfolio");
+  const locale = useLocale();
 
   return (
     <div className="pf-section-content">
@@ -32,18 +32,18 @@ export default function ArchiveSection({
               .map((item) => (
                 <article className="pf-project-card" key={item.id}>
                   <ProjectPreview
+                    coverClassName="aspect-[1.7] lg:aspect-[2.25]"
                     openGallery={openGallery}
                     project={item}
                     variant={projects.indexOf(item)}
                   />
                   <div>
                     <h3>
-                      <button
-                        type="button"
-                        onClick={() => selectProject(item.id, true)}
+                      <Link
+                        href={`/${locale}/portfolio/projects/${encodeURIComponent(item.id)}`}
                       >
                         {item.title}
-                      </button>
+                      </Link>
                       {item.example && <span>{t("example")}</span>}
                     </h3>
                     <ArrowUpRight size={20} />
@@ -54,10 +54,9 @@ export default function ArchiveSection({
           </div>
           <div className="pf-archive-list">
             {projects.map((item) => (
-              <button
-                type="button"
+              <Link
                 key={item.id}
-                onClick={() => selectProject(item.id, true)}
+                href={`/${locale}/portfolio/projects/${encodeURIComponent(item.id)}`}
               >
                 <span className="pf-archive-title">
                   {item.title}
@@ -68,7 +67,7 @@ export default function ArchiveSection({
                   {item.stack.slice(0, 2).join(" / ")}
                 </span>
                 <ArrowUpRight size={17} />
-              </button>
+              </Link>
             ))}
           </div>
         </>

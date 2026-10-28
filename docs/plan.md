@@ -1,5 +1,49 @@
 # Markdown portfolio implementation
 
+## Tailwind conversion for project details and shared UI
+
+Replace detail styles with JSX Tailwind utilities and delete project-detail.css.
+Details must not import or depend on portfolio.css. Convert shared Markdown,
+cover buttons and gallery styling to Tailwind, retaining existing portfolio
+layouts and placeholder previews. Move context-specific sizes into component
+props/caller classes and remove obsolete shared CSS rules. Keep Swiper's vendor
+CSS. Preserve visuals, responsive behavior, accessibility, navigation and content.
+Verify direct/client navigation, both locales, Markdown, covers and galleries on
+desktop/mobile; run lint and production build. No new packages or CSS files.
+
+Tailwind validation completed: lint and production build passed (56 pages).
+Chrome verified Korean desktop and English mobile detail layouts, direct entry
+without portfolio.css, client navigation from the portfolio, and gallery sizing,
+image navigation and focus restoration. Existing portfolio intro/experience text
+sizes and work/archive cover ratios were checked at desktop and mobile widths.
+A temporary Markdown fixture verified headings, lists, quote colors, tables,
+images, code scrolling, disabled translations and no mobile page overflow. The
+fixture was removed and the viewport override was reset. Shared UI no longer
+uses pf-prose, pf-cover or pf-gallery CSS; project-detail.css was removed.
+
+## Project detail pages
+
+Build localized static /{locale}/portfolio/projects/{projectId} case studies.
+Reuse Markdown metadata for the overview and its body for detail prose; leave
+existing project content untouched. Use a white header, dark panel, 1120px outer
+width and 760px prose with native vertical scrolling on all screen sizes.
+Link selected work and archive to details, preserve cover galleries, return to
+the selected project, and offer ordered previous/next and available translations.
+Reject missing/draft projects, add project metadata and sitemap entries, and
+document a Markdown authoring template. Check both locales, empty/long content,
+optional fields, missing translations, navigation and galleries; run lint/build.
+
+Validation completed: lint and production build passed (56 pages, including eight
+localized project details). Development HTTP checks covered all eight routes,
+metadata, alternate/canonical links, neighboring projects, overview links and 404s.
+Temporary Markdown fixtures verified long prose, headings, lists, tables, code,
+images, absent optional fields, no inherited share image without a cover, disabled
+missing translations and draft/untranslated 404s. Fixtures were removed. The final
+sitemap contains exactly eight detail URLs. Korean desktop layout was visually
+reviewed. Gallery interaction, focus restoration, English visual layout and mobile
+checks remain unverified because native browser automation timed out and then
+reported conflicting user input. No existing project content was changed.
+
 ## Scope
 Build introduction, selected work, archive, and experience/contact. Desktop
 (>=1024px) keeps one header and footer stationary and slides only center content.

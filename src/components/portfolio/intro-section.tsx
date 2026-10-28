@@ -22,7 +22,10 @@ export default function IntroSection({
       <div className="pf-intro-copy">
         <p className="pf-eyebrow">{t("eyebrow")}</p>
         <h1 id="pf-heading-intro">{profile.title}</h1>
-        <Markdown html={profile.html} />
+        <Markdown
+          html={profile.html}
+          className="max-w-[600px] text-sm text-[var(--pf-muted)] lg:text-base"
+        />
         <div className="pf-intro-links">
           <button
             type="button"

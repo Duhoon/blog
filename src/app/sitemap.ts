@@ -1,5 +1,6 @@
 import { getPostSitemapEntries } from "@/api/posts.service";
 import { PostCategory } from "@/api/constants";
+import { getPortfolioContent } from "@/lib/portfolio/content";
 import { MetadataRoute } from "next";
 
 const baseUrl = "https://www.412ock.dev";
@@ -28,6 +29,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   for (const locale of locales) {
+    const { projects } = await getPortfolioContent(locale);
+    sitemap.push(
+      ...projects.map((project) => ({
+        url: `${baseUrl}/${locale}/portfolio/projects/${encodeURIComponent(project.id)}`,
+        changeFrequency: "monthly" as const,
+        priority: 0.7,
+      })),
+    );
     sitemap.push({
       url: `${baseUrl}/${locale}/portfolio`,
       changeFrequency: "monthly",

@@ -222,7 +222,6 @@ export default function Portfolio({
                 {id === "archive" && (
                   <ArchiveSection
                     projects={projects}
-                    selectProject={selectProject}
                     openGallery={openGallery}
                   />
                 )}

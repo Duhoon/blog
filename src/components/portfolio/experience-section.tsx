@@ -28,7 +28,10 @@ export default function ExperienceSection({
                 </p>
                 <h3>{item.title}</h3>
                 {item.role && <p className="pf-experience-role">{item.role}</p>}
-                <Markdown html={item.html} />
+                <Markdown
+                  html={item.html}
+                  className="text-xs text-[var(--pf-muted)]"
+                />
               </article>
             ))
           ) : (
