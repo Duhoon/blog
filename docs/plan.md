@@ -1,5 +1,20 @@
 # Markdown portfolio implementation
 
+## Home viewport fit
+
+Reuse SidebarInset with min-h-dvh and min-w-0 for the blog column. Keep the
+search header from shrinking and replace Home's h-screen with flex-1/min-h-0
+so it occupies the remaining viewport height. Preserve centered title styling
+and natural scrolling on lists and posts; do not hide overflow or subtract a
+hardcoded header height. Verify both locales, desktop/mobile, sidebar states,
+and list/post scrolling; run pnpm lint and pnpm build.
+
+Validation: pnpm lint and pnpm build passed (56 pages). Development HTTP checks
+passed for home, list and a post in both locales, confirming SidebarInset,
+non-shrinking sticky headers and removal of Home's h-screen. Browser geometry,
+sidebar interactions and visual scroll checks could not run because computer-use
+startup failed and no connected browser was available.
+
 ## Tailwind conversion for project details and shared UI
 
 Replace detail styles with JSX Tailwind utilities and delete project-detail.css.
