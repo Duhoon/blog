@@ -1,5 +1,6 @@
 "use client";
 
+import { portfolioClasses } from "./portfolio-styles";
 import { useRef, useState } from "react";
 import ProjectGallery from "./project-gallery";
 import type { Project } from "@/lib/portfolio/types";
@@ -8,7 +9,6 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import "./portfolio.css";
 import {
   portfolioSections,
   type PortfolioContent,
@@ -57,9 +57,9 @@ export default function Portfolio({
     `/${language}/portfolio?${new URLSearchParams({ section, ...(projectId ? { project: projectId } : {}) })}`;
 
   const header = () => (
-    <header className="pf-header">
-      <Link className="pf-wordmark" href={`/${locale}`}>
-        412ock<span className="pf-wordmark-dot">.</span>
+    <header className={portfolioClasses("pf-header")}>
+      <Link className={portfolioClasses("pf-wordmark")} href={`/${locale}`}>
+        412ock<span className={portfolioClasses("pf-wordmark-dot")}>.</span>
       </Link>
       <nav aria-label={t("navigation")}>
         {portfolioSections.map((id) => (
@@ -72,12 +72,15 @@ export default function Portfolio({
             {t(`sections.${id}`)}
           </button>
         ))}
-        <Link className="pf-blog-link" href={`/${locale}/list`}>
+        <Link
+          className={portfolioClasses("pf-blog-link")}
+          href={`/${locale}/list`}
+        >
           {t("blog")}
           <ArrowUpRight size={13} />
         </Link>
       </nav>
-      <div className="pf-languages">
+      <div className={portfolioClasses("pf-languages")}>
         <Link
           href={languageHref("ko")}
           hrefLang="ko"
@@ -100,9 +103,9 @@ export default function Portfolio({
   );
 
   const footer = (index: number) => (
-    <footer className="pf-footer">
-      <span className="pf-mono">412ock / PORTFOLIO</span>
-      <div className="pf-dots">
+    <footer className={portfolioClasses("pf-footer")}>
+      <span className={portfolioClasses("pf-mono")}>412ock / PORTFOLIO</span>
+      <div className={portfolioClasses("pf-dots")}>
         {portfolioSections.map((id, i) => (
           <button
             type="button"
@@ -115,8 +118,8 @@ export default function Portfolio({
           </button>
         ))}
       </div>
-      <div className="pf-step">
-        <span className="pf-mono">
+      <div className={portfolioClasses("pf-step")}>
+        <span className={portfolioClasses("pf-mono")}>
           {number(index)} <i>/ 04</i>
         </span>
         <button
@@ -142,7 +145,7 @@ export default function Portfolio({
   return (
     <main
       ref={root}
-      className="portfolio"
+      className={portfolioClasses("portfolio")}
       onKeyDown={(event) => {
         if (
           galleryProject ||
@@ -167,7 +170,7 @@ export default function Portfolio({
       }}
     >
       <a
-        className="pf-skip"
+        className={portfolioClasses("pf-skip")}
         href={`#portfolio-${section}`}
         onClick={(event) => {
           event.preventDefault();
@@ -177,11 +180,15 @@ export default function Portfolio({
         {t("skip")}
       </a>
       {header()}
-      <div className="pf-announcement" aria-live="polite" aria-atomic="true">
+      <div
+        className={portfolioClasses("pf-announcement")}
+        aria-live="polite"
+        aria-atomic="true"
+      >
         {t(`sections.${section}`)} · {number(activeIndex)} / 04
       </div>
       <Swiper
-        className="pf-swiper"
+        className={portfolioClasses("pf-swiper")}
         enabled={desktop}
         allowTouchMove={!galleryProject}
         slidesPerView={1}
@@ -202,12 +209,12 @@ export default function Portfolio({
             aria-hidden={desktop && section !== id ? true : undefined}
           >
             <section
-              className={`pf-page pf-page-${id}`}
+              className={portfolioClasses(`pf-page pf-page-${id}`)}
               id={`portfolio-${id}`}
               tabIndex={-1}
               aria-labelledby={`pf-heading-${id}`}
             >
-              <div className="pf-scroll">
+              <div className={portfolioClasses("pf-scroll")}>
                 {id === "intro" && (
                   <IntroSection profile={profile} goTo={goTo} />
                 )}
@@ -244,11 +251,13 @@ export default function Portfolio({
         }
         reducedMotion={reducedMotion}
       />
-      <div className="pf-bottom-bar">
+      <div className={portfolioClasses("pf-bottom-bar")}>
         {footer(activeIndex)}
         {(projects.some((item) => item.example) ||
           experiences.some((item) => item.example)) && (
-          <p className="pf-example-notice">{t("exampleNotice")}</p>
+          <p className={portfolioClasses("pf-example-notice")}>
+            {t("exampleNotice")}
+          </p>
         )}
       </div>
     </main>

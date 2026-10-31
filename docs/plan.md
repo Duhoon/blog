@@ -174,3 +174,20 @@ pnpm build passed (48 pages; build required network access for existing blog dat
 Both development routes returned translated/original content as expected, including
 contact links and gallery asset references. Visual layout and gallery interaction
 checks remain unverified: browser automation stalled at Chrome profile selection.
+
+## Remaining portfolio Tailwind migration
+
+Replace all overview and placeholder stylesheet rules with static Tailwind utilities, preserving responsive layouts, theme variables, accessibility and Swiper behavior. Remove portfolio.css; retain vendor CSS. Validate lint/build and both locales before committing.
+
+Implementation: all remaining stylesheet declarations now compile through static
+Tailwind classes in portfolio-styles.ts, composed with cn(). Existing selector
+hooks remain for nested illustrations and state styling. Swiper overrides retain
+priority over vendor styles. No CSS file or dependency was added.
+
+Validation: pnpm lint, git diff --check and production build passed (56 pages;
+network access was required for existing blog data). Generated CSS includes the
+responsive layout and scrollbar rules. Browser verification remains incomplete:
+Chrome now connects successfully to the development server on its reported port
+(3001). Korean desktop rendering and navigation to Selected Work were verified.
+English, mobile and gallery interactions remain unverified. The user explicitly
+requested committing with these remaining verification limitations.

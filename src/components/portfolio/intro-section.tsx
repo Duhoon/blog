@@ -1,3 +1,4 @@
+import { portfolioClasses } from "./portfolio-styles";
 import { useTranslations } from "next-intl";
 import {
   portfolioSections,
@@ -18,39 +19,42 @@ export default function IntroSection({
   const t = useTranslations("Portfolio");
 
   return (
-    <div className="pf-intro">
+    <div className={portfolioClasses("pf-intro")}>
       <div className="pf-intro-copy">
-        <p className="pf-eyebrow">{t("eyebrow")}</p>
+        <p className={portfolioClasses("pf-eyebrow")}>{t("eyebrow")}</p>
         <h1 id="pf-heading-intro">{profile.title}</h1>
         <Markdown
           html={profile.html}
           className="max-w-[600px] text-sm text-[var(--pf-muted)] lg:text-base"
         />
-        <div className="pf-intro-links">
+        <div className={portfolioClasses("pf-intro-links")}>
           <button
             type="button"
-            className="pf-text-link"
+            className={portfolioClasses("pf-text-link")}
             onClick={() => goTo("work", true)}
           >
             {t("viewWork")}
             <ArrowRight size={18} />
           </button>
           {profile.github && (
-            <a className="pf-text-link" href={profile.github}>
+            <a
+              className={portfolioClasses("pf-text-link")}
+              href={profile.github}
+            >
               GitHub
               <ArrowUpRight size={16} />
             </a>
           )}
         </div>
-        <span className="pf-scroll-hint">
+        <span className={portfolioClasses("pf-scroll-hint")}>
           <ArrowDown size={14} />
           {t("scrollHint")}
         </span>
       </div>
-      <div className="pf-index">
+      <div className={portfolioClasses("pf-index")}>
         {portfolioSections.map((item, i) => (
           <button type="button" key={item} onClick={() => goTo(item, true)}>
-            <span className="pf-mono">{number(i)}</span>
+            <span className={portfolioClasses("pf-mono")}>{number(i)}</span>
             <span>{t(`sections.${item}`)}</span>
             <ArrowUpRight size={15} />
           </button>

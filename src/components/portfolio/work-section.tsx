@@ -1,3 +1,4 @@
+import { portfolioClasses } from "./portfolio-styles";
 import { useLocale, useTranslations } from "next-intl";
 import type { Project } from "@/lib/portfolio/types";
 import { ArrowUpRight } from "lucide-react";
@@ -25,15 +26,15 @@ export default function WorkSection({
   );
 
   return (
-    <div className="pf-section-content">
-      <div className="pf-section-heading">
+    <div className={portfolioClasses("pf-section-content")}>
+      <div className={portfolioClasses("pf-section-heading")}>
         <div>
-          <p className="pf-eyebrow">01 / SELECTED WORK</p>
+          <p className={portfolioClasses("pf-eyebrow")}>01 / SELECTED WORK</p>
           <h2 id="pf-heading-work">{t("sections.work")}</h2>
         </div>
         {featured.length > 0 && (
           <div
-            className="pf-project-tabs"
+            className={portfolioClasses("pf-project-tabs")}
             role="tablist"
             aria-label={t("projectSelection")}
           >
@@ -73,7 +74,7 @@ export default function WorkSection({
       </div>
       {project ? (
         <div
-          className="pf-featured"
+          className={portfolioClasses("pf-featured")}
           id="pf-project-panel"
           role="tabpanel"
           aria-labelledby={`pf-tab-${project.id}`}
@@ -84,14 +85,14 @@ export default function WorkSection({
             variant={projectIndex}
             openGallery={openGallery}
           />
-          <div className="pf-project-copy">
-            <p className="pf-eyebrow">
+          <div className={portfolioClasses("pf-project-copy")}>
+            <p className={portfolioClasses("pf-eyebrow")}>
               PROJECT {number(projectIndex)}
               {project.example && ` · ${t("example")}`}
             </p>
             <h3>{project.title}</h3>
-            <p className="pf-summary">{project.summary}</p>
-            <dl className="pf-facts">
+            <p className={portfolioClasses("pf-summary")}>{project.summary}</p>
+            <dl className={portfolioClasses("pf-facts")}>
               {(["role", "problem", "outcome"] as const).map(
                 (key) =>
                   project[key] && (
@@ -103,15 +104,15 @@ export default function WorkSection({
               )}
             </dl>
             {project.stack.length > 0 && (
-              <ul className="pf-stack">
+              <ul className={portfolioClasses("pf-stack")}>
                 {project.stack.map((item, i) => (
                   <li key={`${item}-${i}`}>{item}</li>
                 ))}
               </ul>
             )}
-            <div className="pf-project-links">
+            <div className={portfolioClasses("pf-project-links")}>
               <Link
-                className="pf-text-link"
+                className={portfolioClasses("pf-text-link")}
                 href={`/${locale}/portfolio/projects/${encodeURIComponent(project.id)}`}
               >
                 {t("detail.view")}
@@ -120,7 +121,11 @@ export default function WorkSection({
               {Object.entries(project.links).map(
                 ([key, href]) =>
                   href && (
-                    <a className="pf-text-link" key={key} href={href}>
+                    <a
+                      className={portfolioClasses("pf-text-link")}
+                      key={key}
+                      href={href}
+                    >
                       {key === "github" ? "GitHub" : "Demo"}
                       <ArrowUpRight size={15} />
                     </a>
@@ -130,7 +135,7 @@ export default function WorkSection({
           </div>
         </div>
       ) : (
-        <p className="pf-empty">{t("emptyProjects")}</p>
+        <p className={portfolioClasses("pf-empty")}>{t("emptyProjects")}</p>
       )}
     </div>
   );

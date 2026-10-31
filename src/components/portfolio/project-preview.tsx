@@ -1,3 +1,4 @@
+import { portfolioClasses } from "./portfolio-styles";
 import ProjectCover from "./project-cover";
 import { useTranslations } from "next-intl";
 import { LayoutDashboard, Rows3, FileText, Search, Plus } from "lucide-react";
@@ -26,12 +27,12 @@ export default function ProjectPreview({
   }
   return (
     <div
-      className={`pf-preview pf-preview-${variant % 3}`}
+      className={portfolioClasses(`pf-preview pf-preview-${variant % 3}`)}
       role="img"
       aria-label={`${t("preview")}: ${project.title}. ${t("previewCaption")}`}
     >
-      <div className="pf-preview-app" aria-hidden="true">
-        <aside className="pf-preview-sidebar">
+      <div className={portfolioClasses("pf-preview-app")} aria-hidden="true">
+        <aside className={portfolioClasses("pf-preview-sidebar")}>
           <strong>{variant % 3 === 2 ? "dev / notes" : "Workspace."}</strong>
           <span>
             <LayoutDashboard size={12} /> {t("dashboard")}
@@ -42,15 +43,17 @@ export default function ProjectPreview({
           <span>
             <FileText size={12} /> {t("notes")}
           </span>
-          <div className="pf-preview-sidebar-bottom">412ock / studio</div>
+          <div className={portfolioClasses("pf-preview-sidebar-bottom")}>
+            412ock / studio
+          </div>
         </aside>
-        <div className="pf-preview-main">
-          <div className="pf-preview-toolbar">
+        <div className={portfolioClasses("pf-preview-main")}>
+          <div className={portfolioClasses("pf-preview-toolbar")}>
             <span>{variant % 3 === 2 ? "index.tsx" : t("dashboard")}</span>
             <Search size={12} />
           </div>
           {variant % 3 === 2 ? (
-            <div className="pf-code-preview">
+            <div className={portfolioClasses("pf-code-preview")}>
               <p>
                 <i>01</i>
                 <span>export</span> function Project() &#123;
@@ -84,14 +87,17 @@ export default function ProjectPreview({
               </p>
             </div>
           ) : variant % 3 === 1 ? (
-            <div className="pf-board-preview">
+            <div className={portfolioClasses("pf-board-preview")}>
               {["Ideas", "In progress", "Done"].map((label, index) => (
                 <div key={label}>
                   <h4>
                     {label} <Plus size={10} />
                   </h4>
                   {[0, 1, 2].slice(0, 3 - (index % 2)).map((item) => (
-                    <div className="pf-mini-card" key={item}>
+                    <div
+                      className={portfolioClasses("pf-mini-card")}
+                      key={item}
+                    >
                       <b />
                       <b />
                       <span />
@@ -102,11 +108,11 @@ export default function ProjectPreview({
             </div>
           ) : (
             <>
-              <div className="pf-preview-greeting">
+              <div className={portfolioClasses("pf-preview-greeting")}>
                 <span>WORK IN PROGRESS</span>
                 <h4>A little better, every day.</h4>
               </div>
-              <div className="pf-preview-stats">
+              <div className={portfolioClasses("pf-preview-stats")}>
                 {["Projects", "In progress", "Completed"].map((label) => (
                   <div key={label}>
                     <span>{label}</span>
@@ -114,7 +120,7 @@ export default function ProjectPreview({
                   </div>
                 ))}
               </div>
-              <div className="pf-preview-widgets">
+              <div className={portfolioClasses("pf-preview-widgets")}>
                 <div>
                   <span>{t("activity")}</span>
                   <svg viewBox="0 0 240 100" fill="none">
@@ -126,7 +132,7 @@ export default function ProjectPreview({
                     <path d="M0 99H240" stroke="currentColor" opacity=".15" />
                   </svg>
                 </div>
-                <div className="pf-mini-list">
+                <div className={portfolioClasses("pf-mini-list")}>
                   {[0, 1, 2, 3].map((i) => (
                     <span key={i}>
                       <i />
@@ -139,7 +145,9 @@ export default function ProjectPreview({
           )}
         </div>
       </div>
-      <span className="pf-preview-caption">{t("previewLabel")}</span>
+      <span className={portfolioClasses("pf-preview-caption")}>
+        {t("previewLabel")}
+      </span>
     </div>
   );
 }

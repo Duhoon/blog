@@ -1,3 +1,4 @@
+import { portfolioClasses } from "./portfolio-styles";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import type { Project } from "@/lib/portfolio/types";
@@ -15,22 +16,25 @@ export default function ArchiveSection({
   const locale = useLocale();
 
   return (
-    <div className="pf-section-content">
-      <div className="pf-section-heading">
+    <div className={portfolioClasses("pf-section-content")}>
+      <div className={portfolioClasses("pf-section-heading")}>
         <div>
-          <p className="pf-eyebrow">02 / ARCHIVE</p>
+          <p className={portfolioClasses("pf-eyebrow")}>02 / ARCHIVE</p>
           <h2 id="pf-heading-archive">{t("sections.archive")}</h2>
         </div>
-        <p className="pf-subtitle">{t("archiveLead")}</p>
+        <p className={portfolioClasses("pf-subtitle")}>{t("archiveLead")}</p>
       </div>
       {projects.length ? (
         <>
-          <div className="pf-archive-grid">
+          <div className={portfolioClasses("pf-archive-grid")}>
             {projects
               .filter((item) => item.id !== projects[0]?.id)
               .slice(0, 2)
               .map((item) => (
-                <article className="pf-project-card" key={item.id}>
+                <article
+                  className={portfolioClasses("pf-project-card")}
+                  key={item.id}
+                >
                   <ProjectPreview
                     coverClassName="aspect-[1.7] lg:aspect-[2.25]"
                     openGallery={openGallery}
@@ -52,18 +56,20 @@ export default function ArchiveSection({
                 </article>
               ))}
           </div>
-          <div className="pf-archive-list">
+          <div className={portfolioClasses("pf-archive-list")}>
             {projects.map((item) => (
               <Link
                 key={item.id}
                 href={`/${locale}/portfolio/projects/${encodeURIComponent(item.id)}`}
               >
-                <span className="pf-archive-title">
+                <span className={portfolioClasses("pf-archive-title")}>
                   {item.title}
                   {item.example && <small>{t("example")}</small>}
                 </span>
-                <span className="pf-archive-summary">{item.summary}</span>
-                <span className="pf-mono pf-archive-stack">
+                <span className={portfolioClasses("pf-archive-summary")}>
+                  {item.summary}
+                </span>
+                <span className={portfolioClasses("pf-mono pf-archive-stack")}>
                   {item.stack.slice(0, 2).join(" / ")}
                 </span>
                 <ArrowUpRight size={17} />
@@ -72,7 +78,7 @@ export default function ArchiveSection({
           </div>
         </>
       ) : (
-        <p className="pf-empty">{t("emptyProjects")}</p>
+        <p className={portfolioClasses("pf-empty")}>{t("emptyProjects")}</p>
       )}
     </div>
   );
